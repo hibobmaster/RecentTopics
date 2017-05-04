@@ -71,6 +71,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'Mit Komma trennen (Beispiel: 7,9)<br />Wenn kein Thema ausgeschlossen werden soll „1“ eingeben. Wenn Sie „0“ eingeben, werden so viele Seiten angezeigt, wie benötigt werden, um alle Themen auszugeben.',
 	'RT_PARENTS'                    => 'Übergeordnete Foren anzeigen',
 	'RT_PARENTS_EXP'                => 'Übergeordnete Foren in der Liste der aktuellen Themen anzeigen.',
+	'RT_RESET_DEFAULT'              => 'User Einstellungen zurücksetzen',
+	'RT_RESET_DEFAULT_EXP'          => 'Setzt die User Einstellungen zurück auf die Standard Einstellungen',
 
 	//Enable for extensions
 	'RT_VIEW_ON'                    => 'Aktuelle Themen anzeigen auf:',
