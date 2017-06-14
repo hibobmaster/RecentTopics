@@ -55,6 +55,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'Separados por "," (Por ejemplo: 7,9)<br />Si no quiere excluir un tema, simplemente introduzca 0.',
 	'RT_PARENTS'                    => 'Mostrar foros padre',
 	'RT_PARENTS_EXP'                => 'Mostrar foros padre dentro de la fila tema, de temas recientes.',
+	'RT_PAGE_NUMBERMAX'		=> 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'		=> 'Set the page maximum (1-999)',
 
 	//extensiones
 	'RT_VIEW_ON'                    => 'Ver temas recientes en:',

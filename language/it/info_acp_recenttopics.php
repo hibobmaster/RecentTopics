@@ -45,6 +45,8 @@ $lang = array_merge(
 	'RT_SORT_START_TIME_EXP'       => 'Abilitare per mostrare gli argomenti in base alla loro data d’apertura e non per l’ultimo messaggio.',
 	'RT_UNREAD_ONLY'               => 'Mostra solo non letti',
 	'RT_UNREAD_ONLY_EXP'           => 'Abilita per mostrare solo gli argomenti non letti, recenti o meno; questa funzione usa le stesse impostazioni (esclusione di forum, topic eccetera) della modalità normale.<br />Nota: funziona solo per gli utenti registrati; gli ospiti vedranno l’elenco normale.',
+	'RT_PAGE_NUMBERMAX'		=> 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'		=> 'Set the page maximum (1-999)',
 
 
 	//global settings

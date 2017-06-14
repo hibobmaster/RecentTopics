@@ -214,7 +214,8 @@ class recenttopics
 
 		$topics_per_page = $this->config['rt_number'];
 		$enable_pagination = $this->config['rt_page_number'];
-		$total_topics_limit = $topics_per_page * $enable_pagination;
+		$rt_page_numbermax = $this->config['rt_page_numbermax'];
+		$total_topics_limit = $topics_per_page * $rt_page_numbermax * $enable_pagination;
 
 		$display_parent_forums = $this->config['rt_parents'];
 
@@ -291,7 +292,7 @@ class recenttopics
 			'LEFT_JOIN' => array(
 				array(
 					'FROM' => array(TOPICS_POSTED_TABLE => 'tp'),
-					'ON'   => 't.topic_id = tp.topic_id AND tp.user_id = ' . $this->user->data['user_id'],
+					'ON'   => 't.topic_id = tp.topic_id AND tp.user_id = ' . (int) $this->user->data['user_id'],
 				),
 				array(
 					'FROM' => array(FORUMS_TABLE => 'f'),
@@ -424,8 +425,8 @@ class recenttopics
 			 * Event to modify the topic title
 			 *
 			 * @event paybas.recenttopics.modify_topictitle
-			 * @var  row  forum_row
-			 * @var  string  topic_title topic title to modify
+			 * @var   array    row      the forum row
+			 * @var   string    prefix  the topic title prefix
 			 * @since 2.1.3
 			 */
 			$vars = array('row', 'prefix');
@@ -660,16 +661,16 @@ class recenttopics
 		{
 			// Get the allowed topics
 			$sql_array = array(
-				'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tt.mark_time, ft.mark_time as f_mark_time, t.' . $sort_topics . ' as sortcr ',
+				'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tt.mark_time, ft.mark_time as f_mark_time, FROM_UNIXTIME(t.' . $sort_topics . ') as sortcr ',
 				'FROM'      => array(TOPICS_TABLE => 't'),
 				'LEFT_JOIN' => array(
 					array(
 						'FROM' => array(TOPICS_TRACK_TABLE => 'tt'),
-						'ON'   => 'tt.topic_id = t.topic_id AND tt.user_id = ' . $this->user->data['user_id'],
+						'ON'   => 'tt.topic_id = t.topic_id AND tt.user_id = ' . (int) $this->user->data['user_id'],
 					),
 					array(
 						'FROM' => array(FORUMS_TRACK_TABLE => 'ft'),
-						'ON'   => 'ft.forum_id = t.forum_id AND ft.user_id = ' . $this->user->data['user_id'],
+						'ON'   => 'ft.forum_id = t.forum_id AND ft.user_id = ' . (int) $this->user->data['user_id'],
 					),
 				),
 				'WHERE'     => $this->db->sql_in_set('t.topic_id', $excluded_topics, true) . '

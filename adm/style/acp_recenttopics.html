@@ -18,7 +18,7 @@
 
 		<dl>
 			<dt>
-				<label>{L_RT_PAGE_NUMBER}:</label><br/><span>{L_RT_PAGE_NUMBER_EXP}</span>
+				<label>{L_RT_PAGE_NUMBER}{L_COLON}</label><br/><span>{L_RT_PAGE_NUMBER_EXP}</span>
 			</dt>
 			<dd><input type="checkbox" class="checkbox" name="rt_page_number" id="rt_page_number" {RT_PAGE_NUMBER}  />
 			</dd>
@@ -90,7 +90,7 @@
 	<fieldset>
 		<legend>{L_RT_VIEW_ON}</legend>
 		<dl>
-			<dt><label for="rt_on_newspage">nickvergessen/newspage</label></dt>
+			<dt><label for="rt_on_newspage">{L_RT_NICKVERGESSEN_NEWSPAGE}</label></dt>
 			<dd>
 				<label><input type="radio" class="radio" name="rt_on_newspage" value="1" id="rt_on_newspage"<!-- IF RT_ON_NEWSPAGE --> checked="checked"<!-- ENDIF -->/> {L_YES}</label>
 				<label><input type="radio" class="radio" name="rt_on_newspage" value="0" <!-- IF not RT_ON_NEWSPAGE --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
