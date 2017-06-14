@@ -214,7 +214,8 @@ class recenttopics
 
 		$topics_per_page = $this->config['rt_number'];
 		$enable_pagination = $this->config['rt_page_number'];
-		$total_topics_limit = $topics_per_page * $enable_pagination;
+		$rt_page_numbermax = $this->config['rt_page_numbermax'];
+		$total_topics_limit = $topics_per_page * $rt_page_numbermax * $enable_pagination;
 
 		$display_parent_forums = $this->config['rt_parents'];
 

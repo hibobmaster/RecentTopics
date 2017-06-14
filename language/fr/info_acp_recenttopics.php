@@ -77,6 +77,8 @@ $lang = array_merge($lang, array(
 	'RT_PARENTS_EXP'                => 'Permet d’afficher les forums parents dans l’arborescence des forums de la liste des sujets récents.',
 	'RT_RESET_DEFAULT'              => 'Réinitialisation des paramètres utilisateur',
 	'RT_RESET_DEFAULT_EXP'          => 'Permet de réinitialiser les paramètres par défaut (ceux sur cette page) aux utilisateurs.',
+	'RT_PAGE_NUMBERMAX'		=> 'Nombre maximal de pages',
+	'RT_PAGE_NUMBERMAX_EXP'		=> 'Détermine le nombre maximal de page (1-999)',
 
 	//Enable for extensions
 	'RT_NICKVERGESSEN_NEWSPAGE'     => 'Support de l’extension « NewsPage »',

@@ -1,6 +1,9 @@
 
 ### Changelog
 
+- 2.2.1 (14/06/2017)
+  - [UPD] add paging limit
+
 - 2.2.0 (22/01/2017)
   - [UPD] Update for phpbb 3.2.0 
   - [FIX] #20 Adjust 3.2 pagination css 

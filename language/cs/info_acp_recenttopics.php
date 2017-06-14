@@ -50,7 +50,11 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'Identifikátory témat k vyloučení, oddělené čárkou „,“ (příklad: 7,9)<br />',
 	'RT_PARENTS'                    => 'Zobrazit nadřazená fóra',
 	'RT_PARENTS_EXP'                => 'Zobrazit nadřazená fóra v řádku podrobností pod názvem nedávného tématu.',
-	//Enable for extensions
+	'RT_PAGE_NUMBERMAX'				=> 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'			=> 'Set the page maximum (1-999)',
+
+
+		//Enable for extensions
 	'RT_VIEW_ON'                     => 'Zobrazit nedávná témata na:',
 	)
 );
