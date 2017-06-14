@@ -52,10 +52,10 @@ $lang = array_merge(
 	'RT_MIN_TOPIC_LEVEL'            => 'Minimum topic type level',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Determines the minimum level of the topic-type to display. It will only display topics of the set level, and higher.',
 	'RT_ANTI_TOPICS'                => 'Excluded topics',
-	'RT_ANTI_TOPICS_EXP'            => 'The IDs of topics to exclude, seperated by "," (Example: 7,9)<br />',
+	'RT_ANTI_TOPICS_EXP'            => 'The IDs of topics to exclude, seperated by "," (Example: 7,9)<br />The value O disables this behaviour.',
 	'RT_PARENTS'                    => 'Display parent forums',
 	'RT_PARENTS_EXP'                => 'Display parent forums inside the topic row of recent topics.',
-	'RT_RESET_DEFAULT'              => 'Reset user settings.',
+	'RT_RESET_DEFAULT'              => 'Reset user settings',
 	'RT_RESET_DEFAULT_EXP'          => 'Reset user settings to default.',
 
 	//Enable for extensions
