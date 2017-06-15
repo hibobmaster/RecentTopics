@@ -66,7 +66,7 @@ $lang = array_merge($lang, array(
 	//global settings
 	'RT_GLOBAL_SETTINGS'            => 'Paramètres globaux',
 	'RT_NUMBER'                     => 'Nombre de sujets récents affichés',
-	'RT_NUMBER_EXP'                 => 'Permet de saisir le nombre de sujets récents à afficher sur la page de l’index forum.',
+	'RT_NUMBER_EXP'                 => 'Permet de saisir le nombre de sujets récents à afficher sur la page de l’index du forum.',
 	'RT_PAGE_NUMBER'                => 'Pagination des sujets récents',
 	'RT_PAGE_NUMBER_EXP'            => 'Permet de désactiver l’affichage de la pagination des sujets récents. Décocher la case pour activer la pagination. Si la pagination est active, voir l’option « Nombre maximal de pages » pour choisir le nombre de pages à afficher.',
 	'RT_MIN_TOPIC_LEVEL'            => 'Niveau minimum du type de sujets affichés',
