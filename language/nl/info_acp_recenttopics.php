@@ -57,6 +57,9 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'Gescheiden door een komma (Voorbeeld: 7,9)<br />Als je geen onderwerpen wil uitsluiten, vul dan een 0 in.',
 	'RT_PARENTS'                    => 'Weergeven van hoofdforums',
 	'RT_PARENTS_EXP'                => 'Toont de hoofdforums in de onderwerpregel van de recente onderwerpen.',
+	'RT_PAGE_NUMBERMAX'				=> 'Maximum pagina aantal',
+	'RT_PAGE_NUMBERMAX_EXP'			=> 'Stel hier het maximum aantal pagina’s in (1-999)',
+
 
 	//voor extensies
 	'RT_VIEW_ON'                    => 'Activeer weergave van recente onderwerpen voor de volgende extensies:',

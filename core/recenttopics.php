@@ -145,19 +145,19 @@ class recenttopics
 	 * @param topicprefixes|NULL   $topicprefixes
 	 */
 	public function __construct(auth $auth,
-	                            \phpbb\cache\service $cache,
-	                            config $config,
-	                            content_visibility $content_visibility,
-	                            driver_interface $db,
-	                            dispatcher_interface $dispatcher,
-	                            pagination $pagination,
-	                            request_interface $request,
-	                            template $template,
-	                            \phpbb\user $user,
-	                            $root_path,
-	                            $phpEx,
-	                            topicprefixes $topicprefixes = null,
-	                            \imkingdavid\prefixed\core\manager $prefixed = null
+		\phpbb\cache\service $cache,
+		config $config,
+		content_visibility $content_visibility,
+		driver_interface $db,
+		dispatcher_interface $dispatcher,
+		pagination $pagination,
+		request_interface $request,
+		template $template,
+		\phpbb\user $user,
+		$root_path,
+		$phpEx,
+		topicprefixes $topicprefixes = null,
+		\imkingdavid\prefixed\core\manager $prefixed = null
 	)
 	{
 		$this->auth = $auth;
@@ -214,7 +214,8 @@ class recenttopics
 
 		$topics_per_page = $this->config['rt_number'];
 		$enable_pagination = $this->config['rt_page_number'];
-		$total_topics_limit = $topics_per_page * $enable_pagination;
+		$rt_page_numbermax = $this->config['rt_page_numbermax'];
+		$total_topics_limit = $topics_per_page * $rt_page_numbermax * $enable_pagination;
 
 		$display_parent_forums = $this->config['rt_parents'];
 
@@ -349,8 +350,7 @@ class recenttopics
 		extract(
 			$this->dispatcher->trigger_event(
 				'paybas.recenttopics.modify_topics_list',
-				array( 'topic_list' => $this->topic_list,
-				       'rowset' => $rowset)
+				array( 'topic_list' => $this->topic_list,'rowset' => $rowset)
 			)
 		);
 
@@ -438,13 +438,12 @@ class recenttopics
 				{
 					// pre:fixed extension
 					$prefix_instances = $this->prefixed->get_prefix_instances();
-					foreach($prefix_instances as $key1)
+					foreach ($prefix_instances as $key1)
 					{
 						if ($row['topic_id'] == $key1['topic'])
 						{
 							$prefixes = $this->prefixed->get_prefixes();
 							$prefix = '[' . $prefixes[$key1['prefix']]['title'] . '] ';
-
 						}
 					}
 				}
