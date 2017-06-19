@@ -55,8 +55,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'			=> 'Разделённый запятыми список идентификаторов тем, которые не должны отображаться в списке последних тем (например: 7, 9)<br />Установите 0 для отключения данной функции.',
 	'RT_PARENTS'                    => 'Показать родительские форумы',
 	'RT_PARENTS_EXP'                => 'Показать родительские форумы внутри тем в блоке последних тем.',
-	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
+	'RT_PAGE_NUMBERMAX'             => 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 
 	//Enable for extensions

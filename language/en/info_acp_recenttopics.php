@@ -57,8 +57,8 @@ $lang = array_merge(
 	'RT_PARENTS_EXP'                => 'Display parent forums inside the topic row of recent topics.',
 	'RT_RESET_DEFAULT'              => 'Reset user settings',
 	'RT_RESET_DEFAULT_EXP'          => 'Reset user settings to default.',
-	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
+	'RT_PAGE_NUMBERMAX'             => 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//Enable for extensions
 	'RT_NICKVERGESSEN_NEWSPAGE'     => 'Support for NewsPage Extension',

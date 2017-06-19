@@ -55,8 +55,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'Os IDs de tópicos a excluir, separados por "," (Exemplo: 7,9) </ b>',
 	'RT_PARENTS'                    => 'Mostrar Fórum Pai',
 	'RT_PARENTS_EXP'                => 'Exibir fóruns pai dentro da linha tópico de tópicos recentes.',
-	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
+	'RT_PAGE_NUMBERMAX'             => 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//extensões
 	'RT_VIEW_ON'                    => 'Ver tópicos recentes:',

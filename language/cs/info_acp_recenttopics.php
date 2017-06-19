@@ -50,8 +50,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'Identifikátory témat k vyloučení, oddělené čárkou „,“ (příklad: 7,9)<br />',
 	'RT_PARENTS'                    => 'Zobrazit nadřazená fóra',
 	'RT_PARENTS_EXP'                => 'Zobrazit nadřazená fóra v řádku podrobností pod názvem nedávného tématu.',
-	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
+	'RT_PAGE_NUMBERMAX'             => 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 
 		//Enable for extensions
