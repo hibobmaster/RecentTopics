@@ -73,8 +73,8 @@ $lang = array_merge(
 	'RT_PARENTS_EXP'                => 'Übergeordnete Foren in der Liste der aktuellen Themen anzeigen.',
 	'RT_RESET_DEFAULT'              => 'User Einstellungen zurücksetzen',
 	'RT_RESET_DEFAULT_EXP'          => 'Setzt die User Einstellungen zurück auf die Standard Einstellungen',
-	'RT_PAGE_NUMBERMAX'		=> 'Maximale Seitenanzahl',
-	'RT_PAGE_NUMBERMAX_EXP'		=> 'Stelle die Maximale Seitenanzahl ein (1-999)',
+	'RT_PAGE_NUMBERMAX'             => 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//Enable for extensions
 	'RT_VIEW_ON'                    => 'Aktuelle Themen anzeigen auf:',
