@@ -67,8 +67,8 @@ $lang = array_merge($lang, array(
 	'RT_GLOBAL_SETTINGS'            => 'Paramètres globaux',
 	'RT_NUMBER'                     => 'Nombre de sujets récents affichés',
 	'RT_NUMBER_EXP'                 => 'Permet de saisir le nombre de sujets récents à afficher sur la page de l’index du forum.',
-	'RT_PAGE_NUMBER'                => 'Pagination des sujets récents',
-	'RT_PAGE_NUMBER_EXP'            => 'Permet de désactiver l’affichage de la pagination des sujets récents. Décocher la case pour activer la pagination. Si la pagination est active, voir l’option « Nombre maximal de pages » pour choisir le nombre de pages à afficher.',
+	'RT_PAGE_NUMBER'                => 'Affichage complet de la pagination des sujets récents',
+	'RT_PAGE_NUMBER_EXP'            => 'Permet de désactiver l’affichage complet de la pagination des sujets récents. Si activé, tous les sujets du forum seront paginés et autant de pages que nécessaire seront affichées (non recommandé). Si désactivé, merci de saisir le nombre de page à afficher dans l’option « Nombre maximal de pages ».',
 	'RT_MIN_TOPIC_LEVEL'            => 'Niveau minimum du type de sujets affichés',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Permet de sélectionner le niveau minimum du type de sujets à afficher dans la liste des sujets récents. Les sujets correspondants au niveau paramétré et aux niveaux supérieurs seront affichés.',
 	'RT_ANTI_TOPICS'                => 'Exclusion de sujets de l’affichage',
@@ -78,7 +78,7 @@ $lang = array_merge($lang, array(
 	'RT_RESET_DEFAULT'              => 'Réinitialisation des paramètres utilisateur',
 	'RT_RESET_DEFAULT_EXP'          => 'Permet de réinitialiser les paramètres par défaut (ceux sur cette page) aux utilisateurs.',
 	'RT_PAGE_NUMBERMAX'             => 'Nombre maximal de pages',
-	'RT_PAGE_NUMBERMAX_EXP'         => 'Permet de saisir le nombre maximal de pages (1 à 999) à afficher dans la pagination des sujets récents.',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Permet de saisir le nombre maximal de pages (1 à 999) à afficher dans la pagination des sujets récents lorsque l’option « Pagination des sujets récents » est désactivée.',
 
 	//Enable for extensions
 	'RT_NICKVERGESSEN_NEWSPAGE'     => 'Support de l’extension « NewsPage »',
