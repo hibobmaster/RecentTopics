@@ -56,8 +56,8 @@ Gå også dit bruger-panel har indstillinger administrator panel efter denne pri
 	'RT_ANTI_TOPICS_EXP'            => 'Adskilt af et komma (eksempel: 7,9). Hvis du ønsker at ekskludere nogen emner, kan du bruge en 0.',
 	'RT_PARENTS'                    => 'Vis over fora',
 	'RT_PARENTS_EXP'                => 'Vis over fora',
-	'RT_PAGE_NUMBERMAX'				=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'			=> 'Set the page maximum (1-999)',
+	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//udvidelser
 	'RT_VIEW_ON'                    => 'Vis seneste emner på:',

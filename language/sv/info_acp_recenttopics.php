@@ -56,8 +56,8 @@ Gå också användarpanelenhar inställningar admin panel för denna prioriterin
 	'RT_ANTI_TOPICS_EXP'            => 'Separerade med ett kommatecken (exempel : 7,9). Om du vill utesluta någon produkt som du kan använda en 0',
 	'RT_PARENTS'                    => 'visa förälder forum',
 	'RT_PARENTS_EXP'                => 'Display förälder forum inuti ämnet raden av senaste ämnen',
-	'RT_PAGE_NUMBERMAX'		=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'		=> 'Set the page maximum (1-999)',
+	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//förlängningar
 	'RT_VIEW_ON'                    => 'Visa de senaste ämnen på :',

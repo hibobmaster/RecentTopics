@@ -61,6 +61,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'           => 'Gli ID degli argomenti da escludere, separati da una virgola (es.: 7,9)<br />Per non escudere alcun argomento, digitare 0.',
 	'RT_PARENTS'                   => 'Mostra forum genitore',
 	'RT_PARENTS_EXP'               => 'Mostra il forum genitore nella riga dell’argomento dell’elenco dei topic recenti',
+	'RT_PAGE_NUMBERMAX'.............=> 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'.........=> 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//estensioni
 	'RT_VIEW_ON'                   => 'Abilita visualizzazione di argomenti recenti per le seguenti estensioni:',
