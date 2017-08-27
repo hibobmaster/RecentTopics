@@ -3,8 +3,6 @@
 
 - 2.2.2 (dev)
   - [NEW] #48 added support for pbWoW 3.2 style 
-  - [FIX] # 
-
 
 - 2.2.1 (14/06/2017)
   - [UPD] add paging limit
