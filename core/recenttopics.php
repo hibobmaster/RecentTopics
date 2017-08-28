@@ -212,9 +212,9 @@ class recenttopics
 		//load language
 		$this->user->add_lang_ext('paybas/recenttopics', 'recenttopics');
 
-		$topics_per_page = $this->config['rt_number'];
-		$enable_pagination = $this->config['rt_page_number'];
-		$rt_page_numbermax = $this->config['rt_page_numbermax'];
+		$topics_per_page = (int) $this->config['rt_number'];
+		$enable_pagination = (int) $this->config['rt_page_number'];
+		$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
 		$total_topics_limit = $topics_per_page * $rt_page_numbermax * $enable_pagination;
 
 		$display_parent_forums = $this->config['rt_parents'];
