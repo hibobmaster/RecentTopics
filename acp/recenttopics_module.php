@@ -42,7 +42,7 @@ class recenttopics_module extends admin
 		$meta_data  = $ext_meta_manager->get_metadata();
 		$ext_version  = $meta_data['version'];
 		$versionurl = $meta_data['extra']['version-check']['host'].$meta_data['extra']['version-check']['directory'].'/'.$meta_data['extra']['version-check']['filename'];
-		$latest_version  = $this->version_check($request->variable('versioncheck_force', false), $versionurl);
+		$latest_version  = $this->version_check($versionurl, $request->variable('versioncheck_force', false));
 
 		if ($request->is_set_post('submit'))
 		{
@@ -169,12 +169,9 @@ class recenttopics_module extends admin
 				'U_VERSIONCHECK_FORCE'  => append_sid($this->u_action . '&amp;versioncheck_force=1'),
 				'EXT_VERSION'           => $ext_version,
 				'RT_LATESTVERSION'      => $latest_version,
-
-
 			)
 		);
 	}
-
 
 	/**
 	 * retrieve latest version
@@ -183,7 +180,7 @@ class recenttopics_module extends admin
 	 * @param  int  $ttl          Cache version information for $ttl seconds. Defaults to 86400 (24 hours).
 	 * @return bool
 	 */
-	public final function version_check($force_update = false, $versionurl, $ttl = 86400)
+	public final function version_check($versionurl, $force_update = false, $ttl = 86400)
 	{
 		global $user, $cache;
 
@@ -193,7 +190,7 @@ class recenttopics_module extends admin
 		//if update is forced or cache expired then make the call to refresh latest productversion
 		if ($latest_version === false || $force_update)
 		{
-			$data = parent::curl($versionurl , false, false, false);
+			$data = parent::curl($versionurl, false, false, false);
 			if (0 === count($data) )
 			{
 				$cache->destroy('recenttopics_versioncheck');

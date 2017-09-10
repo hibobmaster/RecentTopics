@@ -249,7 +249,6 @@ class recenttopics
 
 		$topics_count = $this->gettopiclist($start, $topics_per_page, $total_topics_limit, $sort_topics);
 
-
 		// If topics to display
 		if (sizeof($this->topic_list))
 		{
@@ -570,7 +569,6 @@ class recenttopics
 
 				$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, $start);
-
 
 				$this->template->assign_vars(
 					array(
