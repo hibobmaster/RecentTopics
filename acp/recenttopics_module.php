@@ -159,4 +159,78 @@ class recenttopics_module
 			)
 		);
 	}
+
+
+	/**
+	 * retrieve latest version
+	 *
+	 * @param  bool $force_update Ignores cached data. Defaults to false.
+	 * @param  int  $ttl          Cache version information for $ttl seconds. Defaults to 86400 (24 hours).
+	 * @return bool
+	 */
+	public final function version_check($force_update = false, $ttl = 86400)
+	{
+		global $user, $cache;
+
+		//get latest productversion from cache
+		$latest_version = $cache->get('recenttopics_versioncheck');
+		$filename = 'pbwowext.json';
+
+		//if update is forced or cache expired then make the call to refresh latest productversion
+		if ($latest_version === false || $force_update)
+		{
+			$data = parent::curl($user->lang['PBWOW_CHECK_URL'] , false, false, false);
+			if (0 === count($data) )
+			{
+				$cache->destroy('pbwowext_versioncheck');
+				trigger_error($user->lang['PBWOW_VERSION_ERROR'], E_USER_WARNING);
+				return false;
+			}
+
+			$response = $data['response'];
+			$latest_version = json_decode($response, true);
+			$latest_version_array = $latest_version['stable']['3.2'];
+
+			//put this info in the cache
+			$cache->put('pbwowext_versioncheck', $latest_version_array, $ttl);
+
+			$latest_version = $latest_version_array;
+		}
+
+		return $latest_version;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
