@@ -5,6 +5,7 @@
   - [FIX] Corrected confusing ACP labels regarding the number of pages.
   - [FIX] Fixed the number of pages limitation
   - [FIX] Jump to page fix. If a user selects a page outside the range, the last page will be displayed  (todo!!!)
+  - [NEW] Added placeholder feature if no new Topics.
   - [NEW] Added support for pbWoW 3.2 style
   - [NEW] Added Paypal donation link 
   - [NEW] Added version checking in ACP page
