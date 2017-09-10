@@ -213,9 +213,17 @@ class recenttopics
 		$this->user->add_lang_ext('paybas/recenttopics', 'recenttopics');
 
 		$topics_per_page = (int) $this->config['rt_number'];
-		$enable_pagination = (int) $this->config['rt_page_number'];
 		$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
-		$total_topics_limit = $topics_per_page * $rt_page_numbermax * $enable_pagination;
+
+		$nolimitpages = (int) $this->config['rt_page_number'];
+		if ($nolimitpages == 0)
+		{
+			$total_topics_limit = $topics_per_page * $rt_page_numbermax;
+		}
+		else
+		{
+			$total_topics_limit = $topics_per_page * 100;
+		}
 
 		$display_parent_forums = $this->config['rt_parents'];
 
@@ -229,7 +237,7 @@ class recenttopics
 
 		if (!function_exists('display_forums'))
 		{
-			include $this->root_path . 'includes/functions_display.' . $this->phpEx;
+			include( $this->root_path . 'includes/functions_display.' . $this->phpEx);
 		}
 
 		$this->getforumlist();
@@ -240,6 +248,7 @@ class recenttopics
 		}
 
 		$topics_count = $this->gettopiclist($start, $topics_per_page, $total_topics_limit, $sort_topics);
+
 
 		// No topics to display
 		if (!sizeof($this->topic_list))

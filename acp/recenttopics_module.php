@@ -111,7 +111,7 @@ class recenttopics_module extends admin
 				'topiclevel_row',
 				array(
 					'VALUE'    => $key,
-					'SELECTED' => ($config['rt_min_topic_level'] == $key) ? 'selected="selected"' : '',
+					'SELECTED' => ($config['rt_min_topic_level'] == $key) ? ' selected="selected"' : '',
 					'OPTION'   => $topic_type,
 				)
 			);
@@ -129,7 +129,7 @@ class recenttopics_module extends admin
 				'location_row',
 				array(
 					'VALUE'    => $key,
-					'SELECTED' => ($config['rt_location'] == $key) ? 'selected="selected"' : '',
+					'SELECTED' => ($config['rt_location'] == $key) ? ' selected="selected"' : '',
 					'OPTION'   => $display_type,
 				)
 			);
