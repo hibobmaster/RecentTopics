@@ -1,15 +1,5 @@
 <!-- IF S_LOCATION_BOTTOM || S_LOCATION_TOP -->
 
-<!--suppress ProblematicWhitespace -->
-<a id="recent-topics"></a>
-<!-- IF .pagination -->
-<div class="action-bar">
-	<div class="pagination">
-		<!-- INCLUDE pagination.html -->
-	</div>
-</div>
-<!-- ENDIF -->
-
 <!-- BEGIN recent_topics -->
 <!-- IF not recent_topics.S_TOPIC_TYPE_SWITCH and not recent_topics.S_FIRST_ROW -->
 </ul>
@@ -18,11 +8,11 @@
 <!-- ENDIF -->
 
 <!-- IF recent_topics.S_FIRST_ROW or not recent_topics.S_TOPIC_TYPE_SWITCH -->
-<div id="recent-topics-box" class="forabg recent-topics">
+<div class="forumbg recent-topics">
 	<div class="inner">
 		<ul class="topiclist">
 			<li class="header">
-				<dl class="row-item">
+				<dl class="icon">
 					<dt><div class="list-inner">{L_RECENT_TOPICS}</div></dt>
 					<dd class="posts">{L_REPLIES}</dd>
 					<dd class="views">{L_VIEWS}</dd>
@@ -32,7 +22,7 @@
 		</ul>
 		<ul class="topiclist topics">
 			<!-- ENDIF -->
-			<li class="row<!-- IF recent_topics.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF --><!-- IF recent_topics.S_POST_GLOBAL --> global-announce<!-- ENDIF --><!-- IF recent_topics.S_POST_ANNOUNCE --> announce<!-- ENDIF --><!-- IF recent_topics.S_POST_STICKY --> sticky<!-- ENDIF --><!-- IF recent_topics.S_TOPIC_REPORTED --> reported<!-- ENDIF -->">
+			<li class="row<!-- IF recent_topics.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF --><!-- IF recent_topics.S_POST_GLOBAL --> global-announce<!-- ENDIF --><!-- IF recent_topics.S_POST_ANNOUNCE --> announce<!-- ENDIF --><!-- IF recent_topics.S_POST_STICKY --> sticky<!-- ENDIF --><!-- IF recent_topics.S_TOPIC_REPORTED --> pbwow reported<!-- ENDIF -->">
 
 				<dl class="row-item {recent_topics.TOPIC_IMG_STYLE}">
 					<dt<!-- IF recent_topics.TOPIC_ICON_IMG and S_TOPIC_ICONS --> style="background-image: url({T_ICONS_PATH}{recent_topics.TOPIC_ICON_IMG}); background-repeat: no-repeat;"<!-- ENDIF --> title="{recent_topics.TOPIC_FOLDER_IMG_ALT}">
@@ -117,7 +107,7 @@
 </div>
 <!-- END recent_topics -->
 
-<!-- IF .pagination and S_LOCATION_BOTTOM || S_LOCATION_TOP -->
+<!-- IF .pagination and (S_LOCATION_BOTTOM || S_LOCATION_TOP) -->
 <div class="action-bar">
 	<div class="pagination">
 		<!-- INCLUDE pagination.html -->
