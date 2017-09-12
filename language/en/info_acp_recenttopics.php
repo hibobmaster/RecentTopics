@@ -66,7 +66,6 @@ $lang = array_merge(
 
 	//Version checker
 	'RT_CHECK_URL'                  => 'http://www.avathar.be/versioncheck/recenttopics22.json',
-	'RT_VERSION_ERROR'				=> 'Unable to check latest version!',
 	'RT_VERSION_CHECK'				=> 'Version Check',
 	'RT_LATEST_VERSION'				=> 'Latest version',
 	'RT_EXT_VERSION'				=> 'Extension version',
