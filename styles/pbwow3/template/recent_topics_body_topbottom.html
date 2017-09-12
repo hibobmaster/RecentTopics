@@ -1,5 +1,13 @@
 <!-- IF S_LOCATION_BOTTOM || S_LOCATION_TOP -->
 
+<!-- IF .pagination and (S_LOCATION_TOP) -->
+<div class="action-bar">
+	<div class="pagination">
+		<!-- INCLUDE pagination.html -->
+	</div>
+</div>
+<!-- ENDIF -->
+
 <!-- BEGIN recent_topics -->
 <!-- IF not recent_topics.S_TOPIC_TYPE_SWITCH and not recent_topics.S_FIRST_ROW -->
 </ul>
@@ -107,7 +115,7 @@
 </div>
 <!-- END recent_topics -->
 
-<!-- IF .pagination and (S_LOCATION_BOTTOM || S_LOCATION_TOP) -->
+<!-- IF .pagination and (S_LOCATION_BOTTOM) -->
 <div class="action-bar">
 	<div class="pagination">
 		<!-- INCLUDE pagination.html -->
