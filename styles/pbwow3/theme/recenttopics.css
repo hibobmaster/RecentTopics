@@ -46,6 +46,7 @@
 
 #recent-topics li.row dl {
     padding: 9px 5px 13px 0;
+    position: relative;
 }
 
 #recent-topics li.row dl:after {
