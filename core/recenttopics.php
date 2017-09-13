@@ -214,7 +214,6 @@ class recenttopics
 
 		$topics_per_page = (int) $this->config['rt_number'];
 		$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
-
 		$nolimitpages = (int) $this->config['rt_page_number'];
 		if ($nolimitpages == 0)
 		{
@@ -222,6 +221,7 @@ class recenttopics
 		}
 		else
 		{
+			// max 100 pages
 			$total_topics_limit = $topics_per_page * 100;
 		}
 
@@ -247,7 +247,7 @@ class recenttopics
 			return;
 		}
 
-		$topics_count = $this->gettopiclist($start, $topics_per_page, $total_topics_limit, $sort_topics);
+		$topics_count = $this->gettopiclist(min($start,$total_topics_limit)-$topics_per_page , $topics_per_page, $total_topics_limit, $sort_topics);
 
 		// If topics to display
 		if (sizeof($this->topic_list))
@@ -568,7 +568,7 @@ class recenttopics
 				}
 
 				$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
-				$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, $start);
+				$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, min($start,$total_topics_limit)- $topics_per_page);
 
 				$this->template->assign_vars(
 					array(
