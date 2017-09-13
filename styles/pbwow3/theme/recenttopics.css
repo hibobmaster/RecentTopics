@@ -55,6 +55,10 @@
     display: block;
 }
 
+#recent-topics .reported {
+    background-color: transparent;
+}
+
 #recent-topics a.topictitle {
     display: block;
     overflow: hidden;
