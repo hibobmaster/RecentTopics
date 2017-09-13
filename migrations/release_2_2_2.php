@@ -36,9 +36,11 @@ class release_2_2_2 extends \phpbb\db\migration\migration
 
 	public function revert_data()
 	{
-		// fixes bug in 2.0.6 migration
 		return array(
+			// fixes bug in 2.0.6 migration
 			array('config.remove', array('rt_unreadonly')),
+			// fixes bug in 2.1.2 migration
+			array('permission.remove', array('u_rt_view')),
 		);
 
 	}
