@@ -85,7 +85,6 @@ $lang = array_merge($lang, array(
 	'RT_VIEW_ON'                    => 'Permet d’afficher les sujets récents sur les pages de l’extension :',
 
 	//Version checker
-	'RT_CHECK_URL'                  => 'http://www.avathar.be/versioncheck/recenttopics22.json',
 	'RT_VERSION_CHECK'				=> 'Vérification de la version',
 	'RT_LATEST_VERSION'				=> 'dernière version',
 	'RT_EXT_VERSION'				=> 'Version de l’extension',
@@ -99,7 +98,5 @@ $lang = array_merge($lang, array(
 	'RT_DONATE'					=> 'Soutenir le développement',
 	'RT_DONATE_SHORT'			=> 'Faire un don PayPal',
 	'RT_DONATE_EXPLAIN'			=> 'Permet de soutenir le développement de l’extension « Recent Topics » qui est distribuée librement. L’auteur consacre temps et argent à son développement, sur ton temps libre, et parce qu’il y trouve un certain plaisir. Si cette extension est appréciée il est recommandé, de faire un don pour soutenir ce projet, et comme le dit l’auteur : « J’apprécierai grandement votre geste, d’avance mes remerciements ! ».',
-
-
 	)
 );
