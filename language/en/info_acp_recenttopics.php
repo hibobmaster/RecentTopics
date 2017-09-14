@@ -65,7 +65,6 @@ $lang = array_merge(
 	'RT_VIEW_ON'                    => 'Display recent topics on:',
 
 	//Version checker
-	'RT_CHECK_URL'                  => 'http://www.avathar.be/versioncheck/recenttopics22.json',
 	'RT_VERSION_CHECK'				=> 'Version Check',
 	'RT_LATEST_VERSION'				=> 'Latest version',
 	'RT_EXT_VERSION'				=> 'Extension version',
@@ -79,7 +78,5 @@ $lang = array_merge(
 	'RT_DONATE'					=> 'Donate to RecentTopics',
 	'RT_DONATE_SHORT'			=> 'Make a donation to RecentTopics',
 	'RT_DONATE_EXPLAIN'			=> 'RecentTopics is 100% free. It is a hobby project that I am spending my time and money on, just for the fun of it. If you enjoy using RecentTopics, please consider making a donation. I would really appreciate it. No strings attached.',
-
-
 	)
 );
