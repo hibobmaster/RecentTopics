@@ -21,10 +21,10 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge(
 	$lang, array(
-	'ACL_U_RT_VIEW'            => 'Temas recientes: Puedes ocultar la lista de temas recientes',
-	'ACL_U_RT_ENABLE'          => 'Temas recientes: Puedes activar la lista de temas recientes',
-	'ACL_U_RT_LOCATION'        => 'Temas recientes: Selecciona la posición de visualización',
-	'ACL_U_RT_SORT_START_TIME' => 'Temas recientes: Puedes cambiar el método de clasificación de temas recientes',
-	'ACL_U_RT_UNREAD_ONLY'     => 'Temas recientes: Puedes ver la lista de los últimos temas temas no leídos',
+	'ACL_U_RT_VIEW'            => 'Temas recientes: Puedes ver la lista de temas recientes',
+	'ACL_U_RT_ENABLE'          => 'Temas recientes: Puedes activar o desactivar la lista de temas recientes',
+	'ACL_U_RT_LOCATION'        => 'Temas recientes: Puedes seleccionar la posición donde será mostrada',
+	'ACL_U_RT_SORT_START_TIME' => 'Temas recientes: Puedes cambiar el método de ordenación',
+	'ACL_U_RT_UNREAD_ONLY'     => 'Temas recientes: Puedes activar el módo “solo no leídos”',
 	)
 );
