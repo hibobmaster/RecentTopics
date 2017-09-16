@@ -10,12 +10,14 @@
 
 namespace paybas\recenttopics\acp;
 
+use paybas\recenttopics\core\admin;
+
 /**
  * Class recenttopics_module
  *
  * @package paybas\recenttopics\acp
  */
-class recenttopics_module
+class recenttopics_module extends admin
 {
 	public $u_action;
 
@@ -25,7 +27,7 @@ class recenttopics_module
 	 */
 	public function main($id, $mode)
 	{
-		global $config, $phpbb_extension_manager, $request, $template, $user, $db;
+		global $config, $phpbb_extension_manager, $request, $template, $user, $db, $phpbb_container;
 
 		$user->add_lang(array('acp/common', 'ucp', 'viewforum'));
 		$this->tpl_name = 'acp_recenttopics';
@@ -33,6 +35,14 @@ class recenttopics_module
 
 		$form_key = 'acp_recenttopics';
 		add_form_key($form_key);
+
+		//version check
+		$ext_manager = $phpbb_container->get('ext.manager');
+		$ext_meta_manager = $ext_manager->create_extension_metadata_manager('paybas/recenttopics', $phpbb_container->get('template'));
+		$meta_data  = $ext_meta_manager->get_metadata();
+		$ext_version  = $meta_data['version'];
+		$versionurl = $meta_data['extra']['version-check']['host'].$meta_data['extra']['version-check']['directory'].'/'.$meta_data['extra']['version-check']['filename'];
+		$latest_version  = $this->version_check($versionurl, $request->variable('versioncheck_force', false));
 
 		if ($request->is_set_post('submit'))
 		{
@@ -44,7 +54,7 @@ class recenttopics_module
 			/*
 			* acp options for everyone
 			*/
-			//number of most recent topics shown
+			//number of most recent topics shown per page
 			$rt_number = $request->variable('rt_number', 5);
 			$config->set('rt_number', $rt_number);
 
@@ -88,24 +98,6 @@ class recenttopics_module
 			trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 		}
 
-		$sql='';
-		//reset user preferences
-		if ($request->is_set_post('rt_reset_default'))
-		{
-			$rt_unread_only = isset($config['rt_unread_only']) ? ($config['rt_unread_only']=='' ? 0 :$config['rt_unread_only'])  : 0;
-			$rt_sort_start_time = isset($config['rt_sort_start_time']) ?  ($config['rt_sort_start_time']=='' ? 0 : $config['rt_sort_start_time'])  : 0;
-			$rt_enable =  isset($config['rt_index']) ? ($config['rt_index']== '' ? 0 : $config['rt_index']) : 0;
-			$rt_location = $config['rt_location'];
-
-			$sql = 'UPDATE ' . USERS_TABLE . " SET
-			user_rt_enable = '" . (int) $rt_enable . "',
-			user_rt_sort_start_time = '" . (int) $rt_sort_start_time . "',
-			user_rt_unread_only = '" . (int) $rt_unread_only . "',
-			user_rt_location =  '" . $rt_location . "'" ;
-
-			$db->sql_query($sql);
-		}
-
 		$topic_types = array (
 			0 => $user->lang('POST'),
 			1 => $user->lang('POST_STICKY'),
@@ -119,7 +111,7 @@ class recenttopics_module
 				'topiclevel_row',
 				array(
 					'VALUE'    => $key,
-					'SELECTED' => ($config['rt_min_topic_level'] == $key) ? 'selected="selected"' : '',
+					'SELECTED' => ($config['rt_min_topic_level'] == $key) ? ' selected="selected"' : '',
 					'OPTION'   => $topic_type,
 				)
 			);
@@ -137,10 +129,27 @@ class recenttopics_module
 				'location_row',
 				array(
 					'VALUE'    => $key,
-					'SELECTED' => ($config['rt_location'] == $key) ? 'selected="selected"' : '',
+					'SELECTED' => ($config['rt_location'] == $key) ? ' selected="selected"' : '',
 					'OPTION'   => $display_type,
 				)
 			);
+		}
+
+		//reset user preferences
+		if ($request->is_set_post('rt_reset_default'))
+		{
+			$rt_unread_only = isset($config['rt_unread_only']) ? ($config['rt_unread_only']=='' ? 0 :$config['rt_unread_only'])  : 0;
+			$rt_sort_start_time = isset($config['rt_sort_start_time']) ?  ($config['rt_sort_start_time']=='' ? 0 : $config['rt_sort_start_time'])  : 0;
+			$rt_enable =  isset($config['rt_index']) ? ($config['rt_index']== '' ? 0 : $config['rt_index']) : 0;
+			$rt_location = $config['rt_location'];
+
+			$sql = 'UPDATE ' . USERS_TABLE . " SET
+			user_rt_enable = '" . (int) $rt_enable . "',
+			user_rt_sort_start_time = '" . (int) $rt_sort_start_time . "',
+			user_rt_unread_only = '" . (int) $rt_unread_only . "',
+			user_rt_location =  '" . $rt_location . "'" ;
+
+			$db->sql_query($sql);
 		}
 
 		$template->assign_vars(
@@ -156,7 +165,81 @@ class recenttopics_module
 				'RT_ON_NEWSPAGE'     => isset($config['rt_on_newspage']) ? $config['rt_on_newspage'] : false,
 				'S_RT_NEWSPAGE'      => $phpbb_extension_manager->is_enabled('nickvergessen/newspage'),
 				'U_ACTION'           => $this->u_action,
+
+				'U_VERSIONCHECK_FORCE'  => append_sid($this->u_action . '&amp;versioncheck_force=1'),
+				'EXT_VERSION'           => $ext_version,
+				'RT_LATESTVERSION'      => $latest_version,
 			)
 		);
 	}
+
+	/**
+	 * retrieve latest version
+	 *
+	 * @param  bool $force_update Ignores cached data. Defaults to false.
+	 * @param  int  $ttl          Cache version information for $ttl seconds. Defaults to 86400 (24 hours).
+	 * @return bool
+	 */
+	public final function version_check($versionurl, $force_update = false, $ttl = 86400)
+	{
+		global $user, $cache;
+
+		//get latest productversion from cache
+		$latest_version = $cache->get('recenttopics_versioncheck');
+
+		//if update is forced or cache expired then make the call to refresh latest productversion
+		if ($latest_version === false || $force_update)
+		{
+			$data = parent::curl($versionurl, false, false, false);
+			if (0 === count($data) )
+			{
+				$cache->destroy('recenttopics_versioncheck');
+				return false;
+			}
+
+			$response = $data['response'];
+			$latest_version = json_decode($response, true);
+			$latest_version = $latest_version['stable']['3.2']['current'];
+
+			//put this info in the cache
+			$cache->put('recenttopics_versioncheck', $latest_version, $ttl);
+
+		}
+
+		return $latest_version;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

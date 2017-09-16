@@ -1,8 +1,8 @@
 <!-- IF S_LOCATION_BOTTOM || S_LOCATION_TOP -->
 
+<!--suppress ProblematicWhitespace -->
 <a id="recent-topics"></a>
-
-<!-- IF .pagination and (S_LOCATION_TOP) -->
+<!-- IF .pagination -->
 <div class="action-bar">
 	<div class="pagination">
 		<!-- INCLUDE pagination.html -->
@@ -24,8 +24,7 @@
 			<li class="header">
 				<dl class="row-item">
 					<dt><div class="list-inner">{L_RECENT_TOPICS}</div></dt>
-					<dd class="posts">{L_REPLIES}</dd>
-					<dd class="views">{L_VIEWS}</dd>
+					<dd class="posts">{L_STATISTICS}</dd>
 					<dd class="lastpost"><span>{L_LAST_POST}</span></dd>
 				</dl>
 			</li>
@@ -33,20 +32,16 @@
 		<ul class="topiclist topics">
 			<!-- ENDIF -->
 			<li class="row<!-- IF recent_topics.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF --><!-- IF recent_topics.S_POST_GLOBAL --> global-announce<!-- ENDIF --><!-- IF recent_topics.S_POST_ANNOUNCE --> announce<!-- ENDIF --><!-- IF recent_topics.S_POST_STICKY --> sticky<!-- ENDIF --><!-- IF recent_topics.S_TOPIC_REPORTED --> reported<!-- ENDIF -->">
-
-				<dl class="row-item {recent_topics.TOPIC_IMG_STYLE}">
-					<dt<!-- IF recent_topics.TOPIC_ICON_IMG and S_TOPIC_ICONS --> style="background-image: url({T_ICONS_PATH}{recent_topics.TOPIC_ICON_IMG}); background-repeat: no-repeat;"<!-- ENDIF --> title="{recent_topics.TOPIC_FOLDER_IMG_ALT}">
+			<dl title="{recent_topics.TOPIC_FOLDER_IMG_ALT}">
+				<dt class="row-item {recent_topics.TOPIC_IMG_STYLE}"><!-- IF recent_topics.TOPIC_ICON_IMG and S_TOPIC_ICONS --><img src="{T_ICONS_PATH}{recent_topics.TOPIC_ICON_IMG}" alt="" title="" /><!-- ENDIF --></dt>
+				<dd>
 					<!-- IF recent_topics.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{recent_topics.U_NEWEST_POST}" class="icon-link"></a><!-- ENDIF -->
 					<div class="list-inner">
 						<!-- EVENT topiclist_row_prepend -->
-						<!-- IF recent_topics.S_UNREAD_TOPIC and not S_IS_BOT -->
-						<a href="{recent_topics.U_NEWEST_POST}">
+						<!-- IF recent_topics.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{recent_topics.U_NEWEST_POST}">
 						<i class="icon fa-file fa-fw icon-red icon-md" aria-hidden="true"></i><span class="sr-only"></span>
 						</a> <!-- ENDIF --><a href="{recent_topics.U_VIEW_TOPIC}" class="topictitle">{recent_topics.TOPIC_TITLE}</a>
-
-
 						<!-- IF recent_topics.ATTACH_ICON_IMG --><i class="icon fa-paperclip fa-fw" aria-hidden="true"></i><!-- ENDIF -->
-
 						<!-- IF recent_topics.S_TOPIC_UNAPPROVED or recent_topics.S_POSTS_UNAPPROVED --><a href="{recent_topics.U_MCP_QUEUE}">
 						<i class="icon fa-question fa-fw icon-blue" aria-hidden="true"></i><span class="sr-only"></span></a>
 						<!-- ENDIF -->
@@ -58,7 +53,7 @@
 							{L_LAST_POST} {L_POST_BY_AUTHOR} {recent_topics.LAST_POST_AUTHOR_FULL} &laquo; <a href="{recent_topics.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{recent_topics.LAST_POST_TIME}</a>
 							<!-- IF recent_topics.S_POST_GLOBAL and FORUM_ID != recent_topics.FORUM_ID --><br />{L_POSTED} {L_IN} <a href="{recent_topics.U_VIEW_FORUM}">{recent_topics.FORUM_NAME}</a><!-- ENDIF -->
 						</div>
-						<!-- IF recent_topics.REPLIES --><span class="responsive-show left-box" style="display: none;">{L_REPLIES}{L_COLON} <strong>{recent_topics.REPLIES}</strong></span><!-- ENDIF -->
+						<!-- IF recent_topics.REPLIES --><span class="responsive-show left-box" style="display: none;">{L_REPLIES}{L_COLON} <strong>{topicrow.REPLIES}</strong></span><!-- ENDIF -->
 						<!-- ENDIF -->
 
 						<!-- IF .recent_topics.pagination -->
@@ -89,18 +84,21 @@
 						<!-- EVENT topiclist_row_append -->
 					</div>
 					</dt>
-					<dd class="posts">{recent_topics.REPLIES} <dfn>{L_REPLIES}</dfn></dd>
-					<dd class="views">{recent_topics.VIEWS} <dfn>{L_VIEWS}</dfn></dd>
-					<dd class="lastpost">
-
+					<dd class="posts">
+					{L_REPLIES}: <strong>{recent_topics.REPLIES}</strong><br />
+					{L_VIEWS}: <strong>{recent_topics.VIEWS}</strong>
+					</dd>
+						<dd class="lastpost">
 						<span><dfn>{L_LAST_POST} </dfn>{L_POST_BY_AUTHOR} {recent_topics.LAST_POST_AUTHOR_FULL}
-						<!-- IF not S_IS_BOT -->
-							<a href="{recent_topics.U_LAST_POST}" title="{L_GOTO_LAST_POST}">
+						<!-- IF not S_IS_BOT --><a href="{recent_topics.U_LAST_POST}" title="{L_GOTO_LAST_POST}">
 								<i class="icon fa-external-link-square fa-fw icon-lightgray icon-md" aria-hidden="true"></i>
 								<span class="sr-only">{VIEW_LATEST_POST}</span>
 							</a> <!-- ENDIF --><br />{recent_topics.LAST_POST_TIME}
 						</span>
 					</dd>
+					</dt>
+
+
 				</dl>
 			</li>
 			<!-- IF recent_topics.S_LAST_ROW -->
@@ -117,7 +115,7 @@
 </div>
 <!-- END recent_topics -->
 
-<!-- IF .pagination and (S_LOCATION_BOTTOM) -->
+<!-- IF .pagination and RT_LOCATION -->
 <div class="action-bar">
 	<div class="pagination">
 		<!-- INCLUDE pagination.html -->

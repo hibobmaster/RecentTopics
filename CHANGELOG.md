@@ -1,6 +1,19 @@
 
 ### Changelog
 
+- 2.2.2 (dev)
+  - [FIX] Corrected confusing ACP labels regarding the number of pages.
+  - [FIX] Fixed the number of pages limitation option in ACP. Now the number of recent topic pages can be limited. 
+  - [FIX] Fixed the override the maximum number of pages shown ACP checkbox.
+  - [FIX] Jump to page fix. If a user selects a page outside the range, the last page will be displayed.
+  - [FIX] removed double pagination in horizontal view
+  - [FIX] u_rt_view, rt_unreadonly was still present in database after full uninstall.
+  - [FIX] Fixed an error in PostgreSQL/Mssql installation (usage of from_unixtime) 
+  - [NEW] Added placeholder feature if no new Topics.
+  - [NEW] Added support for pbWoW 3.2 style
+  - [NEW] Added Paypal donation link 
+  - [NEW] Added version checking in ACP page
+
 - 2.2.1 (14/06/2017)
   - [UPD] add paging limit
 

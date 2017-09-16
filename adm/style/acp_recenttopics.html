@@ -2,6 +2,7 @@
 <h1>{L_RECENT_TOPICS}</h1>
 <p>{L_RECENT_TOPICS_EXPLAIN}</p>
 <form id="acp_board" method="post" action="{U_ACTION}">
+
 	<fieldset>
 		<legend>{L_RT_GLOBAL_SETTINGS}</legend>
 		<dl>
@@ -22,6 +23,10 @@
 			</dt>
 			<dd><input type="checkbox" class="checkbox" name="rt_page_number" id="rt_page_number" {RT_PAGE_NUMBER}  />
 			</dd>
+		</dl>
+		<dl>
+			<dt><label for="rt_page_numbermax">{L_RT_PAGE_NUMBERMAX}{L_COLON}</label><br /><span>{L_RT_PAGE_NUMBERMAX_EXP}</span></dt>
+			<dd><input type="number" id="rt_page_numbermax" name="rt_page_numbermax" size="3" min="1" max="999" value="{RT_PAGE_NUMBERMAX}" /></dd>
 		</dl>
 
 		<dl>
@@ -60,7 +65,6 @@
 				</select>
 			</dd>
 		</dl>
-
 		<dl>
 			<dt><label for="rt_sort_start_time">{L_RT_SORT_START_TIME}{L_COLON}</label><br /><span>{L_RT_SORT_START_TIME_EXP}</span></dt>
 			<dd>
@@ -77,7 +81,7 @@
 		</dl>
 
 		<dl>
-			<dt style="width: 35%;"><label>{L_RT_RESET_DEFAULT}</label><br /><span>{L_RT_RESET_DEFAULT_EXP}</span></dt>
+			<dt><label>{L_RT_RESET_DEFAULT}</label><br /><span>{L_RT_RESET_DEFAULT_EXP}</span></dt>
 			<dd>
 				<input class="button1" type="submit" id="rt_reset_default" name="rt_reset_default" value="{L_RT_RESET_DEFAULT}"  />
 			</dd>
@@ -98,6 +102,7 @@
 		</dl>
 	</fieldset>
 	<!-- ENDIF -->
+
 	<fieldset>
 		<legend>{L_ACP_SUBMIT_CHANGES}</legend>
 		<p class="submit-buttons">
@@ -106,5 +111,31 @@
 		</p>
 		{S_FORM_TOKEN}
 	</fieldset>
+
+	<fieldset>
+		<legend>{L_RT_VERSION_CHECK}</legend>
+		<dl>
+			<dt><label>{L_RT_EXT_VERSION}</label></dt>
+			<dd>
+				<strong class="<!-- IF S_RT_OK -->success<!-- ELSEIF S_RT_OLD -->error<!-- ELSE -->syntaxcomment<!-- ENDIF -->">{EXT_VERSION}</strong>
+				<!-- IF not S_RT_OK -->({L_RT_LATEST_VERSION}{L_COLON} {RT_LATESTVERSION})<!-- ENDIF -->
+			</dd>
+		</dl>
+		<dl>
+			<dt><p><small>{L_RT_CHECK_UPDATE}</small></p></dt>
+			<dd><!-- IF not RT_LATESTVERSION --><strong class="error">{L_VERSIONCHECK_FAIL}</strong><!-- ENDIF -->
+				<a href="{U_VERSIONCHECK_FORCE}">{L_VERSIONCHECK_FORCE_UPDATE}</a></dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{L_RT_DONATE}</legend>
+		<dl>
+			<dt><label>{L_RT_DONATE_SHORT}{L_COLON}</label><br /><span>{L_RT_DONATE_EXPLAIN}</span></dt>
+			<dd><a href="{L_RT_DONATE_URL}" target="_blank"><img src="{L_PAYPAL_IMAGE_URL}" border="0" alt="{L_PAYPAL_ALT}" style="cursor:pointer"></a></dd>
+		</dl>
+	</fieldset>
+
+
 </form>
 <!-- INCLUDE overall_footer.html -->

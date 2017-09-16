@@ -5,14 +5,14 @@ Extension for phpBB 3.2 to display recent topics.
 Based on NV Recent Topics for phpBB 3.0, by Joas Schilling ([nickvergessen](https://github.com/nickvergessen))
 
 #### Version
-v2.2.1 (14-06-2017)
+v2.2.2 (dev)
 [![Build Status](https://api.travis-ci.org/Sajaki/RecentTopics.svg)](https://travis-ci.org/Sajaki/RecentTopics)
 
 #### Support
 - [Support forum] (http://www.avathar.be/bbdkp/viewforum.php?f=65)
 
 #### Requirements
-- phpBB 3.2.0
+- phpBB 3.2.0 or higher
 
 #### Features
 - Adds a list of recent (or unread) topics to the index page.
@@ -23,7 +23,8 @@ v2.2.1 (14-06-2017)
   - sort by topic start time, instead of last post time
   - only show unread topics
 - ACP Options  
-  - number of topics to show
+  - number of topics to show per page
+  - Show all recent topic pages
   - max. number of pages
   - set minimum topic type level to display (normal/sticky/announcement/global)
   - exclusion of topics (by ID)
@@ -31,12 +32,13 @@ v2.2.1 (14-06-2017)
 - Inherits all styling from regular "viewforum" templates
 - compatible with "Pre:fixed" Extension from imkingdavid and “Topic Prefix“ Extension from Stathis. 
 - Tested on:
-  - prosilver
+  - prosilver, we_clearblue, proflat, pbWow3
 
 ![Screenshot](screenshot.png)
 
 #### Languages supported
-- English, German, French, Dutch, Spanish, Italian, Portuguese, Swedish, Danish, Czech
+- English, German, French, Dutch (translation done)
+- Spanish, Italian, Portuguese, Swedish, Danish, Czech (translation to do)
   
 ### Installation
 1. [Download the latest release](https://github.com/sajaki/RecentTopics/releases) and unzip it.

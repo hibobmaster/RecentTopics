@@ -2,3 +2,4 @@
 /composer.phar
 .idea
 phpunit.xml.dist
+/composer.lock

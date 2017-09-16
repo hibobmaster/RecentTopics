@@ -2,7 +2,7 @@
 /**
  *
  * @package Recent Topics Extension
- * Russian translation by HD321kbps
+ * Spanish translation by Raul [ThE KuKa] (www.phpbb-es.com)
  *
  * @copyright (c) 2015 PayBas
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -35,14 +35,16 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” …
 //
 
-$lang = array_merge($lang, array(
-	'RT_ENABLE'				=> 'Показывать последние темы',
-	'RT_LOCATION' 			=> 'Расположение последних тем',
-	'RT_LOCATION_EXP' 		=> 'Выберите расположение для отображения блока последних тем.',
-	'RT_SORT_START_TIME'	=> 'Сортировать по дате создания',
-	'RT_SORT_START_TIME_EXP'=> 'Если включено, темы будут отсортированы по дате их создания, а не по дате последнего сообщения.',
-	'RT_UNREAD_ONLY'		=> 'Только непрочтённые',
-	'RT_TOP' 				=> 'Показывать вверху',
-	'RT_BOTTOM' 			=> 'Показывать внизу',
-	'RT_SIDE' 				=> 'Показывать сбоку',
-));
+$lang = array_merge(
+	$lang, array(
+	'RT_ENABLE'              => 'Mostrar la lista de temas recientes',
+	'RT_LOCATION'            => 'Seleccionar posición',
+	'RT_LOCATION_EXP'        => 'Elige una posición para mostrar la lista de temas recientes',
+	'RT_SORT_START_TIME'     => 'Ordenar los temas recientes por la hora de inicio de los temas',
+	'RT_SORT_START_TIME_EXP' => 'Los temas están ordenados de acuerdo con su respectiva fecha de inicio y no de acuerdo a la del último mensaje',
+	'RT_UNREAD_ONLY'         => 'Mostrar solo los temas no leídos en la lista de temas recientes',
+	'RT_TOP'                 => 'Mostrar en la parte superior',
+	'RT_BOTTOM'              => 'Mostrar en la parte inferior',
+	'RT_SIDE'                => 'Mostrar en el lado derecho',
+	)
+);

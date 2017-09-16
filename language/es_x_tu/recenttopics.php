@@ -10,7 +10,6 @@
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  */
 
-
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -23,5 +22,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge(
 	$lang, array(
 	'RECENT_TOPICS'    => 'Temas Recientes',
+	'RT_NO_TOPICS'		=> 'No hay nuevos temas que mostrar.',
 	)
 );

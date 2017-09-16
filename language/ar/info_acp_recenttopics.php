@@ -55,8 +55,8 @@ $lang = array_merge(
 	'RT_ANTI_TOPICS_EXP'            => 'اكتب علامة الفاصلة ", " بين أرقام المواضيع التي تريد عدم ظهورها في "أحدث المواضيع" ( مثال : 7,9 )',
 	'RT_PARENTS'                    => 'إظهار المنتدى الأب ',
 	'RT_PARENTS_EXP'                => 'إظهار إسم "المنتدى الأب" في التفاصيل المذكورة تحت أسم الموضوع.',
-	'RT_PAGE_NUMBERMAX'				=> 'Maximum number of pages',
-	'RT_PAGE_NUMBERMAX_EXP'			=> 'Set the page maximum (1-999)',
+	'RT_PAGE_NUMBERMAX'             => 'Maximum number of pages',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Set the page maximum (1-999) to display in the recent topics pagination where the option “Full displaying of recent topics pages” is disabled.',
 
 	//Enable for extensions
 	'RT_VIEW_ON'                     => 'إظهار أحدث المواضيع في :',

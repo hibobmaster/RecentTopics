@@ -2,7 +2,7 @@
 /**
  *
  * @package Recent Topics Extension
- * German translation by Joas Schilling (nickvergessen) & Sajaki (http://www.avathar.be)
+ * German translation by Andreas Vandenberghe
  *
  * @copyright (c) 2015 PayBas
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -38,19 +38,34 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge(
 	$lang, array(
 	//forum acp
-	'RECENT_TOPICS_LIST'            => 'In „aktuelle Themen“ anzeigen',
-	'RECENT_TOPICS_LIST_EXPLAIN'    => 'Sollen Themen aus diesem Forum in „aktuelle Themen“ angezeigt werden?',
+	'RECENT_TOPICS_LIST'            => 'In aktuellen Themen anzeigen',
+	'RECENT_TOPICS_LIST_EXPLAIN'    => 'Aktiviere dieses Kontrollkästchen, um Themen in diesem Forum in der Erweiterung ”Aktuelle Themen” anzuzeigen.',
 
 	//acp title
 	'RECENT_TOPICS'                 => 'Aktuelle Themen',
-	'RT_CONFIG'                     => 'Konfiguration von aktuelle Themen',
-	'RECENT_TOPICS_EXPLAIN'         => 'Auf dieser Seite können Sie die Erweiterung Einstellungen „Aktuelle Themen“ bearbeiten.<br /><br />Spezifische Foren können durch ändern der Einstellungen der jeweiligen Foren eingeschlossen oder ausgeschlossen werden<br />Es wird empfohlen, die Berechtigungen von Benutzern zu überprüfen, so dass sie sich einige Parameter ändern können.',
+	'RT_CONFIG'                     => 'Einstellungen',
+	'RECENT_TOPICS_EXPLAIN'         => 'Auf dieser Seite können Sie die Einstellungen der aktuellen Themenerweiterung anpassen.<br /><br />Spezifische Foren können durch ändern der Einstellungen der jeweiligen Foren eingeschlossen oder ausgeschlossen werden.<br />Überprüfen Sie doch auch die Benutzerberechtigungen, so dass die Benutzer sich einige Parameter ändern können, die Vorrang haben vor den Einstellungen des Admin-Panels.',
 
-	//Overridable settings in ucp
-	'RT_OVERRIDABLE'                => 'individualisierbare Einstellungen',
+	//allgemeine Einstellungen
+	'RT_GLOBAL_SETTINGS'            => 'Globale Einstellungen',
 	'RT_DISPLAY_INDEX'              => 'Anzeigen auf der Index-Seite',
+	'RT_NUMBER'                     => 'Anzahl Aktuelle Themen',
+	'RT_NUMBER_EXP'                 => 'Maximale Anzahl Themen pro Seite',
+	'RT_PAGE_NUMBER'                => 'Alle Seiten anzeigen',
+	'RT_PAGE_NUMBER_EXP'            => 'Aktivieren Sie diese Option, um alle Seiten anzuzeigen.',
+	'RT_PAGE_NUMBERMAX'             => 'Maximale Seitenanzahl',
+	'RT_PAGE_NUMBERMAX_EXP'         => 'Legt die maximale Anzahl der Seiten fest (1-999).',
+	'RT_MIN_TOPIC_LEVEL'            => 'Minimaler Thementyp',
+	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Definiert das Minimum eines Thementyps, der angezeigt wird. Wenn Sie ein Thementyp angeben, werden nur Themen dieses oder eines höheren Typs angezeigt.',
+	'RT_ANTI_TOPICS'                => 'Ausgeschlossene Themen',
+	'RT_ANTI_TOPICS_EXP'            => 'Gebe die Subjekt-IDs ein, kommagetrennt (z. B. 7,9), andernfalls 0 um alle Themen an zu zeigen. (wie im url viewtopic.php?t=12345).',
+	'RT_PARENTS'                    => 'Übergeordnete Foren anzeigen',
+	'RT_PARENTS_EXP'                => 'Übergeordnete Foren in der Liste der aktuellen Themen anzeigen.',
+
+	//Benutzereinstellungen
+	'RT_OVERRIDABLE'                => 'Einstellungen, für die das Benutzerfeld Priorität hat',
 	'RT_LOCATION'                   => 'Anzeigelage',
-	'RT_LOCATION_EXP'               => 'Wähle den Anzeigeort der aktuellen Themen.',
+	'RT_LOCATION_EXP'               => 'Wählen Sie den Anzeigeort der aktuellen Themen.',
 	'RT_TOP'                        => 'Ansicht oben',
 	'RT_BOTTOM'                     => 'Ansicht unten',
 	'RT_SIDE'                       => 'Ansicht auf die Seite',
@@ -58,26 +73,26 @@ $lang = array_merge(
 	'RT_SORT_START_TIME_EXP'        => 'Wenn diese Option aktiviert ist, werden die Themen nach dem Datum des ersten Beitrags anstelle des letzten Beitrags sortiert.',
 	'RT_UNREAD_ONLY'                => 'Nur ungelesene Themen anzeigen',
 	'RT_UNREAD_ONLY_EXP'            => 'Diese Option zeigt nur ungelesene Themen an (egal ob diese aktuell sind oder nicht). Diese Funktion nutzt die gleichen Einstellungen (Ausgeschlossene Foren / Themen, etc.) wie die normale Version. Hinweis: diese Funktion steht nur eingeloggten Benutzern zur Verfügung; Gäste sehen die normale „Aktuelle Themen“ Liste.',
-
-	//global settings
-	'RT_GLOBAL_SETTINGS'            => 'Globale Einstellungen',
-	'RT_NUMBER'                     => 'Aktuelle Themen',
-	'RT_NUMBER_EXP'                 => 'Anzahl der Themen, die angezeigt werden',
-	'RT_PAGE_NUMBER'                => 'Seitenanzahl „Aktuelle Themen“',
-	'RT_PAGE_NUMBER_EXP'            => 'Du kannst weitere aktuelle Themen mit einer kleinen Seitennavigation anzeigen lassen. Um das Feature zu deaktivieren einfach „0“ eintragen.',
-	'RT_MIN_TOPIC_LEVEL'            => 'Minimaler Thementyp',
-	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Definiert das Minimum eines Thementyps, der angezeigt wird. Wenn Sie nur einen Thementyp angeben, werden nur Themen dieses oder eines höheren Typs angezeigt.',
-	'RT_ANTI_TOPICS'                => 'Ausgeschlossene Themen',
-	'RT_ANTI_TOPICS_EXP'            => 'Mit Komma trennen (Beispiel: 7,9)<br />Wenn kein Thema ausgeschlossen werden soll „1“ eingeben. Wenn Sie „0“ eingeben, werden so viele Seiten angezeigt, wie benötigt werden, um alle Themen auszugeben.',
-	'RT_PARENTS'                    => 'Übergeordnete Foren anzeigen',
-	'RT_PARENTS_EXP'                => 'Übergeordnete Foren in der Liste der aktuellen Themen anzeigen.',
 	'RT_RESET_DEFAULT'              => 'User Einstellungen zurücksetzen',
 	'RT_RESET_DEFAULT_EXP'          => 'Setzt die User Einstellungen zurück auf die Standard Einstellungen',
-	'RT_PAGE_NUMBERMAX'		=> 'Maximale Seitenanzahl',
-	'RT_PAGE_NUMBERMAX_EXP'		=> 'Stelle die Maximale Seitenanzahl ein (1-999)',
 
 	//Enable for extensions
+	'RT_NICKVERGESSEN_NEWSPAGE'     => 'Unterstützung für erweiterung ’Newspage’ von Nickvergessen',
 	'RT_VIEW_ON'                    => 'Aktuelle Themen anzeigen auf:',
 
+	//Versie controle
+	'RT_VERSION_CHECK'				=> 'Versionskontrolle',
+	'RT_LATEST_VERSION'				=> 'Letzte version',
+	'RT_EXT_VERSION'				=> 'Extensionsversion',
+	'RT_VERSION_ERROR'				=> 'Kann die neueste Version nicht abrufen!',
+	'RT_CHECK_UPDATE'				=> 'Besuche <a href="http://www.avathar.be/bbdkp/index.php">avathar.be</a> für neuere versionen.',
+
+	//Donatiies
+	'RT_DONATE_URL'             => 'http://www.avathar.be/bbdkp/app.php/page/donate',
+	'PAYPAL_IMAGE_URL'          => 'https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-pill-paypal-26px.png',
+	'PAYPAL_ALT'                => 'Machen eine Spende über PayPal',
+	'RT_DONATE'					=> 'Spende an RecentTopics',
+	'RT_DONATE_SHORT'			=> 'Spende an RecentTopics',
+	'RT_DONATE_EXPLAIN'			=> 'RecentTopics ist zu 100% kostenlos. Wenn Sie dies eine nützliche Erweiterung findest und Sie die Autoren unterstützen möchten, könnten Sie eine unverbindliche Spende in Erwägung ziehen.',
 	)
 );
