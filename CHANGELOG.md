@@ -1,7 +1,7 @@
 
 ### Changelog
 
-- 2.2.2 (dev)
+- 2.2.2 (16/09/2017)
   - [FIX] Corrected confusing ACP labels regarding the number of pages.
   - [FIX] Fixed the number of pages limitation option in ACP. Now the number of recent topic pages can be limited. 
   - [FIX] Fixed the override the maximum number of pages shown ACP checkbox.
