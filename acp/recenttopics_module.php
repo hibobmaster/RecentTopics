@@ -165,10 +165,12 @@ class recenttopics_module extends admin
 				'RT_ON_NEWSPAGE'     => isset($config['rt_on_newspage']) ? $config['rt_on_newspage'] : false,
 				'S_RT_NEWSPAGE'      => $phpbb_extension_manager->is_enabled('nickvergessen/newspage'),
 				'U_ACTION'           => $this->u_action,
-
 				'U_VERSIONCHECK_FORCE'  => append_sid($this->u_action . '&amp;versioncheck_force=1'),
 				'EXT_VERSION'           => $ext_version,
 				'RT_LATESTVERSION'      => $latest_version,
+				'S_RT_OK'           => version_compare($ext_version, $latest_version, '=='),
+				'S_RT_OLD'          => version_compare($ext_version, $latest_version, '<'),
+				'S_RT_DEV'          => version_compare($ext_version, $latest_version, '>'),
 			)
 		);
 	}
