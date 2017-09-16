@@ -194,7 +194,6 @@ class recenttopics_module extends admin
 			if (0 === count($data) )
 			{
 				$cache->destroy('recenttopics_versioncheck');
-				trigger_error($user->lang['RT_VERSION_ERROR'], E_USER_WARNING);
 				return false;
 			}
 
