@@ -59,7 +59,7 @@ $lang = array_merge(
 	'RT_UNREAD_ONLY_EXP'            => 'Activar para mostrar solo temas no leídos (tanto si son “recientes” o no). Esta función utiliza la misma configuración (excluyendo foros, temas, etc.) que el modo normal. Nota: esto sólo funciona para usuarios identificados; los invitados verán la lista normal.',
 	'RT_RESET_DEFAULT'              => 'Reiniciar la configuración de los usuarios',
 	'RT_RESET_DEFAULT_EXP'          => 'Devuelve la configuración independiente de cada usuario de “Temas Recientes” al valor por defecto.',
-	
+
 	// extensiones
 	'RT_NICKVERGESSEN_NEWSPAGE'     => 'Soporte para la extensión “NewsPage”',
 	'RT_VIEW_ON'                    => 'Ver “Temas Recientes” en:',
