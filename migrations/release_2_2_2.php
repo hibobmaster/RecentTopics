@@ -30,6 +30,8 @@ class release_2_2_2 extends \phpbb\db\migration\migration
 		return array(
 			array('config.update', array('rt_version', '2.2.2')),
 			array('config.add', array('rt_page_numbermax', 0)),
+			array('config.update', array('rt_number', '5')),
+			array('config.update', array('rt_page_numbermax', '10')),
 		);
 	}
 
