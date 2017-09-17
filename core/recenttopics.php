@@ -582,6 +582,7 @@ class recenttopics
 		$this->template->assign_vars(
 			array(
 				'RT_SORT_START_TIME'                   => $sort_topics === 'topic_time',
+				'S_RECENT_TOPICS'                      => true,
 				'S_LOCATION_TOP'                       => $location == 'RT_TOP',
 				'S_LOCATION_BOTTOM'                    => $location == 'RT_BOTTOM',
 				'S_LOCATION_SIDE'                      => $location == 'RT_SIDE',
