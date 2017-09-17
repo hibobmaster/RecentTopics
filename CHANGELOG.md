@@ -1,6 +1,9 @@
 
 ### Changelog
 
+- 2.2.3 (17/09/2017)
+  - [FIX] Add template event handler for recenttopics_mchat_side in index_body_markforums_after.html event. 
+
 - 2.2.2 (16/09/2017)
   - [FIX] Corrected confusing ACP labels regarding the number of pages.
   - [FIX] Fixed the number of pages limitation option in ACP. Now the number of recent topic pages can be limited. 

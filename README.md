@@ -5,7 +5,7 @@ Extension for phpBB 3.2 to display recent topics.
 Based on NV Recent Topics for phpBB 3.0, by Joas Schilling ([nickvergessen](https://github.com/nickvergessen))
 
 #### Version
-v2.2.2 (16/09/2017)
+v2.2.3 (17/09/2017)
 [![Build Status](https://api.travis-ci.org/Sajaki/RecentTopics.svg)](https://travis-ci.org/Sajaki/RecentTopics)
 
 #### Support
@@ -30,7 +30,10 @@ v2.2.2 (16/09/2017)
   - exclusion of topics (by ID)
   - display parent forum name in the row
 - Inherits all styling from regular "viewforum" templates
-- compatible with "Pre:fixed" Extension from imkingdavid and “Topic Prefix“ Extension from Stathis. 
+- compatible with 
+   - "Pre:fixed" Extension from imkingdavid 
+   - “Topic Prefix“ Extension from Stathis.
+   - Mchat 2.0.1 (as of 2.2.3)  
 - Tested on:
   - prosilver, we_clearblue, proflat, pbWow3
 
