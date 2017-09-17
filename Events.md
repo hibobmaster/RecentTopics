@@ -1,4 +1,4 @@
-## List of events
+## List of php events
 
  Event name :  paybas.recenttopics.sql_pull_topics_data
 
@@ -73,3 +73,17 @@
 
  - @row         array  'forum_row'
  - topic_title  string 'topic title to modify'
+
+## List of Template Events
+
+Event name : recenttopics_mchat_side
+
+Description : Injection point for Mchat under Recent topics in Side mode.
+
+Placement : paybas\recenttopics\styles\all\template\event\index_body_markforums_after.html
+
+Since 2.2.3
+
+
+
+
