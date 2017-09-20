@@ -1,6 +1,9 @@
 
 ### Changelog
 
+- 2.2.4 (18/09/2017)
+  - [FIX] Fix bug with pagination (Tatiana5)
+
 - 2.2.3 (17/09/2017)
   - [FIX] Add template event handler for recenttopics_mchat_side in index_body_markforums_after.html event. 
 
