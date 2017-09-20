@@ -247,7 +247,7 @@ class recenttopics
 			return;
 		}
 
-		$topics_count = $this->gettopiclist(max(0, min($start,$total_topics_limit)-$topics_per_page) , $topics_per_page, $total_topics_limit, $sort_topics);
+		$topics_count = $this->gettopiclist(max(0, min($start,$total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
 
 		// If topics to display
 		if (sizeof($this->topic_list))
@@ -568,7 +568,7 @@ class recenttopics
 				}
 
 				$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
-				$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min($start,$total_topics_limit)-$topics_per_page));
+				$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min($start,$total_topics_limit)));
 
 				$this->template->assign_vars(
 					array(
