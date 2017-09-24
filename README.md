@@ -9,7 +9,7 @@ v2.2.4 (20/09/2017)
 [![Build Status](https://api.travis-ci.org/Sajaki/RecentTopics.svg)](https://travis-ci.org/Sajaki/RecentTopics)
 
 #### Download 
-http://www.avathar.be/bbdkp/app.php/dl_ext/?view=detail&df_id=35,
+under development
 
 #### Support
 - [Support forum] (http://www.avathar.be/bbdkp/viewforum.php?f=65)
