@@ -39,7 +39,7 @@ $lang = array_merge(
 	$lang, array(
 	'RT_ENABLE'              => 'Display recent topics',
 	'RT_LOCATION'            => 'Select location',
-	'RT_LOCATION_EXP'        => 'Select location to display recent topics. ',
+	'RT_LOCATION_EXP'        => 'Select location to display recent topics.',
 	'RT_SORT_START_TIME'     => 'Sort recent topics by topic start time',
 	'RT_SORT_START_TIME_EXP' => 'Instead of sorting them by last post time.',
 	'RT_UNREAD_ONLY'         => 'Only display unread topics in recent topics',
