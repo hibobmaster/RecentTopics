@@ -1,6 +1,10 @@
 
 ### Changelog
 
+- 2.2.6 (28/10/2017) 
+  - [FIX] #72, #19 clickable topic icon
+  - [FIX] #75 remove quoted integer value 
+  
 - 2.2.5 (30/09/2017) 
   - [FIX] #68 fixed unescaped line in acp
   - [FIX] #67 fixed overflow links in paging for unread and alltopics mode.
