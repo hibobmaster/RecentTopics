@@ -729,7 +729,7 @@ use phpbb\template\template;
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
 				$result = $this->db->sql_query_limit($sql, $total_topics_limit);
 
-				if($result != NULL)
+				if ($result != null)
 				{
 					$start = min((int) $result->num_rows - 1 , $start);
 				}
