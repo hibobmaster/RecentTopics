@@ -254,7 +254,7 @@ use phpbb\template\template;
 				$this->unread_only = $this->user->data['user_rt_unread_only'];
 			}
 
-			$start = $this->request->variable($tpl_loopname . '_start', 0);
+			$rtstart = $this->request->variable($tpl_loopname . '_start', 0);
 
 			if (!function_exists('display_forums'))
 			{
@@ -268,7 +268,7 @@ use phpbb\template\template;
 				return;
 			}
 
-			$topics_count = $this->gettopiclist(max(0, min($start,$total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
+			$topics_count = $this->gettopiclist(max(0, min((int) $rtstart,$total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
 
 			// If topics to display
 			if (sizeof($this->topic_list))
@@ -589,7 +589,7 @@ use phpbb\template\template;
 					}
 
 					$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
-					$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min($start,$total_topics_limit)));
+					$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min((int) $rtstart,$total_topics_limit)));
 
 					$this->template->assign_vars(
 						array(
@@ -656,13 +656,13 @@ use phpbb\template\template;
 		/**
 		 * Get the topic list
 		 *
-		 * @param  $start
+		 * @param  $rtstart
 		 * @param  $topics_per_page
 		 * @param  $total_topics_limit
 		 * @param  $sort_topics
 		 * @return int
 		 */
-		private function gettopiclist($start, $topics_per_page, $total_topics_limit, $sort_topics)
+		private function gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics)
 		{
 			$this->forums = $this->topic_list = array();
 			$topics_count = 0;
@@ -677,12 +677,12 @@ use phpbb\template\template;
 				$sql_extra = ' AND ' . $this->db->sql_in_set('t.topic_id', $excluded_topics, true);
 				$sql_extra .= ' AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.');
 				$unread_topics = get_unread_topics(false, $sql_extra, '', $total_topics_limit);
-				$start = min(count($unread_topics) - 1 , $start);
+				$rtstart = min(count($unread_topics) - 1 , (int) $rtstart);
 
 				foreach ($unread_topics as $topic_id => $mark_time)
 				{
 					$topics_count++;
-					if (($topics_count > $start) && ($topics_count <= ($start + $topics_per_page)))
+					if (($topics_count > $rtstart) && ($topics_count <= ($rtstart + $topics_per_page)))
 					{
 						$this->topic_list[] = $topic_id;
 					}
@@ -731,17 +731,17 @@ use phpbb\template\template;
 
 				if ($result != null)
 				{
-					$start = min((int) $result->num_rows - 1 , $start);
+					$rtstart = min((int) $result->num_rows - 1 , $rtstart);
 				}
 				else
 				{
-					$start = 0;
+					$rtstart = 0;
 				}
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$topics_count++;
-					if (($topics_count > $start) && ($topics_count <= ($start + $topics_per_page)))
+					if (($topics_count > $rtstart) && ($topics_count <= ($rtstart + $topics_per_page)))
 					{
 						$this->topic_list[] = $row['topic_id'];
 
