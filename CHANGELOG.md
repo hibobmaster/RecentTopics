@@ -1,6 +1,12 @@
 
 ### Changelog
 
+- 2.2.7 (04/02/2018) 
+  - [FIX] fix potential nullreference error in $start
+  - [FIX] languge nl, de (missing variables)
+  - [ADD] language ar (@alhitary), ru (@SiavaRu), pt (@borgesjoaquim)
+   
+
 - 2.2.6 (28/10/2017) 
   - [NEW] #43 Supports Collapsable categories extension for prosilver.   
   - [CHG] #76 Switched to Twig syntax
