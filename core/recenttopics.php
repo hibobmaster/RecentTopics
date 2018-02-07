@@ -194,6 +194,7 @@ use phpbb\template\template;
 		 */
 		public function display_recent_topics($tpl_loopname = 'recent_topics', $spec_forum_id = 0, $include_subforums = true)
 		{
+
 			// can view rt ?
 			if ($this->auth->acl_get('u_rt_view') == '0')
 			{
@@ -206,6 +207,9 @@ use phpbb\template\template;
 				return;
 			}
 
+			//load language
+			$this->user->add_lang_ext('paybas/recenttopics', 'recenttopics');
+
 			// support for phpbb collapsable categories extension
 			if ($this->collapsable_categories !== null)
 			{
@@ -216,24 +220,7 @@ use phpbb\template\template;
 				));
 			}
 
-			$location = $this->config['rt_location'];
-			// if user can set location and it is set then use the preference
-			if ($this->auth->acl_get('u_rt_location') && isset($this->user->data['user_rt_location']))
-			{
-				$location = $this->user->data['user_rt_location'];
-			}
-
-			$sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-			// if user can set recent topic sorting order and it is set then use the preference
-			if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
-			{
-				$sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-			}
-
-			//load language
-			$this->user->add_lang_ext('paybas/recenttopics', 'recenttopics');
-
-			$topics_per_page = (int) $this->config['rt_number'];
+			//number of pages
 			$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
 			$nolimitpages = (int) $this->config['rt_page_number'];
 			if ($nolimitpages == 0)
@@ -247,6 +234,29 @@ use phpbb\template\template;
 			}
 
 			$display_parent_forums = $this->config['rt_parents'];
+
+			//load user overridable settings
+
+			//rt block location
+			$location = $this->config['rt_location'];
+			// if user can set location and it is set then use the preference
+			if ($this->auth->acl_get('u_rt_location') && isset($this->user->data['user_rt_location']))
+			{
+				$location = $this->user->data['user_rt_location'];
+			}
+
+			$topics_per_page = (int) $this->config['rt_number'];
+			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
+			{
+				$topics_per_page = (int) $this->user->data['user_rt_number'];
+			}
+
+			$sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+			// if user can set recent topic sorting order and it is set then use the preference
+			if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
+			{
+				$sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+			}
 
 			$this->unread_only = $this->config['rt_unread_only'];
 			if ($this->auth->acl_get('u_rt_unread_only') && isset($this->user->data['user_rt_unread_only']))
@@ -268,7 +278,7 @@ use phpbb\template\template;
 				return;
 			}
 
-			$topics_count = $this->gettopiclist(max(0, min((int) $rtstart,$total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
+			$topics_count = $this->gettopiclist(max(0, min((int) $rtstart, $total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
 
 			// If topics to display
 			if (sizeof($this->topic_list))
