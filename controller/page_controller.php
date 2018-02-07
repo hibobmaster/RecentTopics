@@ -71,6 +71,9 @@ class page_controller
 	 */
 	protected $root_path;
 
+	/* @var recenttopics */
+	protected $rt_functions;
+
 	/**
 	 * page constructor.
 	 *
@@ -99,7 +102,8 @@ class page_controller
 		$php_ext,
 		\phpbb\path_helper $path_helper,
 		\phpbb\extension\manager $phpbb_extension_manager,
-		$root_path
+		$root_path,
+	    \paybas\recenttopics\core\recenttopics $functions
 	)
 	{
 		$this->config       = $config;
@@ -116,6 +120,7 @@ class page_controller
 		$this->ext_path     = $this->phpbb_extension_manager->get_extension_path('paybas/recenttopics', true);
 		$this->ext_path_web = $this->path_helper->get_web_root_path($this->ext_path);
 		$this->root_path  = $root_path;
+		$this->rt_functions = $functions;
 	}
 
 	/**
@@ -127,16 +132,17 @@ class page_controller
      */
 	public function display()
 	{
+		$page = "recent_topics_page.html";
 
-		$page = "demo_body.html";
-		$this->template->assign_var('DEMO_MESSAGE', $this->user->lang['RECENT_TOPICS']);
+		if (isset($this->config['rt_index']) && $this->config['rt_index'])
+		{
+			$this->rt_functions->display_recent_topics();
+		}
 
 		// Load the requested page by route
 		try
 		{
-			$title = $this->user->lang['RECENT_TOPICS'];
-			// full rendered page source that will be output on the screen.
-			$response = $this->helper->render($page, $title);
+			$response = $this->helper->render($page, $this->user->lang['RECENT_TOPICS']);
 		}
 		catch (\phpbb\pages\exception\base $e)
 		{

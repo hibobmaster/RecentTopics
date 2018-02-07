@@ -14,6 +14,7 @@ services:
             - '@path_helper'
             - '@ext.manager'
             - '%core.root_path%'
+            - '@paybas.recenttopics.functions'
     paybas.recenttopics.functions:
         class: paybas\recenttopics\core\recenttopics
         arguments:
