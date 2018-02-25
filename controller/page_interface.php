@@ -9,7 +9,6 @@ namespace ext\paybas\recenttopics\controller;
 
 interface page_interface
 {
-	
 		/**
 		 * Display the page
 		 *

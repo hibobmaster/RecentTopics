@@ -75,6 +75,11 @@ class page_controller implements page_interface
 	protected $rt_functions;
 
 	/**
+	 * @var \Symfony\Component\HttpFoundation\Response
+	 */
+	protected $response;
+
+	/**
 	 * page constructor.
 	 *
 	 * @param \phpbb\config\config              $config
@@ -146,14 +151,14 @@ class page_controller implements page_interface
 		// Load the requested page by route
 		try
 		{
-			$response = $this->helper->render($page, $language->lang('RECENT_TOPICS'));
+			$this->response = $this->helper->render($page, $language->lang('RECENT_TOPICS'));
 		}
 		catch (\phpbb\pages\exception\base $e)
 		{
 			throw new http_exception(404, 'PAGE_NOT_AVAILABLE', array($page));
 		}
 
-		return $response;
+		return $this->response;
 
 	}
 
