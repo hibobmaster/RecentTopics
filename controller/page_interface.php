@@ -5,7 +5,7 @@
  * Date: 5/02/18
  * Time: 21:37
  */
-namespace ext\paybas\recenttopics\controller;
+namespace paybas\recenttopics\controller;
 
 interface page_interface
 {
