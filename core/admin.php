@@ -23,7 +23,12 @@ class admin
 	 */
 	public final function curl($url, $return_Server_Response_Header = false, $loud = true, $json = true)
 	{
-		global $user;
+		global $phpbb_container, $user;
+
+		$language = $phpbb_container->get('language');
+
+		//load language
+		$language->add_lang('recenttopics', 'paybas/recenttopics');
 
 		$data = array(
 			'response'            => '',
@@ -36,7 +41,7 @@ class admin
 			/* Create a CURL handle. */
 			if (($curl = curl_init($url)) === false)
 			{
-				trigger_error($user->lang['CURL_REQUIRED'], E_USER_WARNING);
+				trigger_error($language->lang('CURL_REQUIRED'), E_USER_WARNING);
 			}
 
 			// set options

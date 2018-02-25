@@ -19,6 +19,7 @@ use phpbb\event\dispatcher_interface;
 use phpbb\pagination;
 use phpbb\request\request_interface;
 use phpbb\template\template;
+use phpbb\language\language;
 
 /**
  * Class recenttopics
@@ -36,6 +37,11 @@ use phpbb\template\template;
 		* @var config
 		*/
 		protected $config;
+
+		/**
+		 * @var language
+		 */
+		protected $language;
 
 		/**
 		* @var \phpbb\cache\service
@@ -140,6 +146,7 @@ use phpbb\template\template;
 		 * @param \phpbb\auth\auth                                    $auth
 		 * @param \phpbb\cache\service                                $cache
 		 * @param \phpbb\config\config                                $config
+		 * @param \phpbb\language\language                            $language
 		 * @param \phpbb\content_visibility                           $content_visibility
 		 * @param \phpbb\db\driver\driver_interface                   $db
 		 * @param \phpbb\event\dispatcher_interface                   $dispatcher
@@ -156,6 +163,7 @@ use phpbb\template\template;
 		public function __construct(auth $auth,
 			\phpbb\cache\service $cache,
 			config $config,
+			language $language,
 			content_visibility $content_visibility,
 			driver_interface $db,
 			dispatcher_interface $dispatcher,
@@ -173,6 +181,7 @@ use phpbb\template\template;
 			$this->auth = $auth;
 			$this->cache = $cache;
 			$this->config = $config;
+			$this->language = $language;
 			$this->content_visibility = $content_visibility;
 			$this->db = $db;
 			$this->dispatcher = $dispatcher;
@@ -194,6 +203,7 @@ use phpbb\template\template;
 		 */
 		public function display_recent_topics($tpl_loopname = 'recent_topics', $spec_forum_id = 0, $include_subforums = true)
 		{
+
 			// can view rt ?
 			if ($this->auth->acl_get('u_rt_view') == '0')
 			{
@@ -206,6 +216,9 @@ use phpbb\template\template;
 				return;
 			}
 
+			//load language
+			$this->language->add_lang('recenttopics', 'paybas/recenttopics');
+
 			// support for phpbb collapsable categories extension
 			if ($this->collapsable_categories !== null)
 			{
@@ -216,24 +229,13 @@ use phpbb\template\template;
 				));
 			}
 
-			$location = $this->config['rt_location'];
-			// if user can set location and it is set then use the preference
-			if ($this->auth->acl_get('u_rt_location') && isset($this->user->data['user_rt_location']))
-			{
-				$location = $this->user->data['user_rt_location'];
-			}
-
-			$sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-			// if user can set recent topic sorting order and it is set then use the preference
-			if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
-			{
-				$sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-			}
-
-			//load language
-			$this->user->add_lang_ext('paybas/recenttopics', 'recenttopics');
-
 			$topics_per_page = (int) $this->config['rt_number'];
+			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
+			{
+				$topics_per_page = (int) $this->user->data['user_rt_number'];
+			}
+
+			//number of pages
 			$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
 			$nolimitpages = (int) $this->config['rt_page_number'];
 			if ($nolimitpages == 0)
@@ -248,13 +250,28 @@ use phpbb\template\template;
 
 			$display_parent_forums = $this->config['rt_parents'];
 
+			//rt block location
+			$location = $this->config['rt_location'];
+			// if user can set location and it is set then use the preference
+			if ($this->auth->acl_get('u_rt_location') && isset($this->user->data['user_rt_location']))
+			{
+				$location = $this->user->data['user_rt_location'];
+			}
+
+			$sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+			// if user can set recent topic sorting order and it is set then use the preference
+			if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
+			{
+				$sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+			}
+
 			$this->unread_only = $this->config['rt_unread_only'];
 			if ($this->auth->acl_get('u_rt_unread_only') && isset($this->user->data['user_rt_unread_only']))
 			{
 				$this->unread_only = $this->user->data['user_rt_unread_only'];
 			}
 
-			$start = $this->request->variable($tpl_loopname . '_start', 0);
+			$rtstart = $this->request->variable($tpl_loopname . '_start', 0);
 
 			if (!function_exists('display_forums'))
 			{
@@ -268,7 +285,7 @@ use phpbb\template\template;
 				return;
 			}
 
-			$topics_count = $this->gettopiclist(max(0, min($start,$total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
+			$topics_count = $this->gettopiclist(max(0, min((int) $rtstart, $total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
 
 			// If topics to display
 			if (sizeof($this->topic_list))
@@ -313,13 +330,9 @@ use phpbb\template\template;
 
 				// Now only pull the data of the requested topics
 				$sql_array = array(
-					'SELECT'    => 't.*, tp.topic_posted, f.forum_name',
+					'SELECT'    => 't.*, f.forum_name',
 					'FROM'      => array(TOPICS_TABLE => 't'),
 					'LEFT_JOIN' => array(
-						array(
-							'FROM' => array(TOPICS_POSTED_TABLE => 'tp'),
-							'ON'   => 't.topic_id = tp.topic_id AND tp.user_id = ' . (int) $this->user->data['user_id'],
-						),
 						array(
 							'FROM' => array(FORUMS_TABLE => 'f'),
 							'ON'   => 'f.forum_id = t.forum_id',
@@ -383,7 +396,6 @@ use phpbb\template\template;
 						$forum_id = $row['forum_id'];
 
 						$s_type_switch_test = ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0;
-						//$replies = ($this->auth->acl_get('m_approve', $forum_id)) ? $row['topic_replies_real'] : $row['topic_replies'];
 						$replies = $this->content_visibility->get_count('topic_posts', $row, $forum_id) - 1;
 
 						// Get folder img, topic status/type related information
@@ -502,19 +514,18 @@ use phpbb\template\template;
 							'TOPIC_TYPE'              => $topic_type,
 							'TOPIC_IMG_STYLE'         => $folder_img,
 							'TOPIC_FOLDER_IMG'        => $this->user->img($folder_img, $folder_alt),
-							'TOPIC_FOLDER_IMG_ALT'    => $this->user->lang[$folder_alt],
+							'TOPIC_FOLDER_IMG_ALT'    => $this->language->lang($folder_alt),
 
 							//'NEWEST_POST_IMG'		=> $this->user->img('icon_topic_newest', 'VIEW_NEWEST_POST'), // dupe?
 							'TOPIC_ICON_IMG'          => (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['img'] : '',
 							'TOPIC_ICON_IMG_WIDTH'    => (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['width'] : '',
 							'TOPIC_ICON_IMG_HEIGHT'   => (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['height'] : '',
-							'ATTACH_ICON_IMG'         => ($this->auth->acl_get('u_download') && $this->auth->acl_get('f_download', $forum_id) && $row['topic_attachment']) ? $this->user->img('icon_topic_attach', $this->user->lang['TOTAL_ATTACHMENTS']) : '',
+							'ATTACH_ICON_IMG'         => ($this->auth->acl_get('u_download') && $this->auth->acl_get('f_download', $forum_id) && $row['topic_attachment']) ? $this->user->img('icon_topic_attach', $this->language->lang('TOTAL_ATTACHMENTS')) : '',
 							'UNAPPROVED_IMG'          => ($topic_unapproved || $posts_unapproved) ? $this->user->img('icon_topic_unapproved', $topic_unapproved ? 'TOPIC_UNAPPROVED' : 'POSTS_UNAPPROVED') : '',
 							'REPORTED_IMG'            => ($row['topic_reported'] && $this->auth->acl_get('m_report', $forum_id)) ? $this->user->img('icon_topic_reported', 'TOPIC_REPORTED') : '',
 							'S_HAS_POLL'              => $row['poll_start'] ? true : false,
 
 							'S_TOPIC_TYPE'            => $row['topic_type'],
-							'S_USER_POSTED'           => isset($row['topic_posted']) && $row['topic_posted'],
 							'S_UNREAD_TOPIC'          => $unread_topic,
 							'S_TOPIC_REPORTED'        => $row['topic_reported'] && $this->auth->acl_get('m_report', $forum_id),
 							'S_TOPIC_UNAPPROVED'      => $topic_unapproved,
@@ -589,7 +600,7 @@ use phpbb\template\template;
 					}
 
 					$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
-					$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min($start,$total_topics_limit)));
+					$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min((int) $rtstart,$total_topics_limit)));
 
 					$this->template->assign_vars(
 						array(
@@ -656,13 +667,13 @@ use phpbb\template\template;
 		/**
 		 * Get the topic list
 		 *
-		 * @param  $start
+		 * @param  $rtstart
 		 * @param  $topics_per_page
 		 * @param  $total_topics_limit
 		 * @param  $sort_topics
 		 * @return int
 		 */
-		private function gettopiclist($start, $topics_per_page, $total_topics_limit, $sort_topics)
+		private function gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics)
 		{
 			$this->forums = $this->topic_list = array();
 			$topics_count = 0;
@@ -677,12 +688,12 @@ use phpbb\template\template;
 				$sql_extra = ' AND ' . $this->db->sql_in_set('t.topic_id', $excluded_topics, true);
 				$sql_extra .= ' AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.');
 				$unread_topics = get_unread_topics(false, $sql_extra, '', $total_topics_limit);
-				$start = min(count($unread_topics) - 1 , $start);
+				$rtstart = min(count($unread_topics) - 1 , (int) $rtstart);
 
 				foreach ($unread_topics as $topic_id => $mark_time)
 				{
 					$topics_count++;
-					if (($topics_count > $start) && ($topics_count <= ($start + $topics_per_page)))
+					if (($topics_count > $rtstart) && ($topics_count <= ($rtstart + $topics_per_page)))
 					{
 						$this->topic_list[] = $topic_id;
 					}
@@ -729,19 +740,19 @@ use phpbb\template\template;
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
 				$result = $this->db->sql_query_limit($sql, $total_topics_limit);
 
-				if($result != NULL)
+				if ($result != null)
 				{
-					$start = min((int) $result->num_rows - 1 , $start);
+					$rtstart = min((int) $result->num_rows - 1 , $rtstart);
 				}
 				else
 				{
-					$start = 0;
+					$rtstart = 0;
 				}
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$topics_count++;
-					if (($topics_count > $start) && ($topics_count <= ($start + $topics_per_page)))
+					if (($topics_count > $rtstart) && ($topics_count <= ($rtstart + $topics_per_page)))
 					{
 						$this->topic_list[] = $row['topic_id'];
 
