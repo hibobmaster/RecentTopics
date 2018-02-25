@@ -103,7 +103,6 @@ class recenttopics_module extends admin
 			trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 		}
 
-
 		$topic_types = array (
 			0 => $language->lang('POST') ,
 			1 => $language->lang('POST_STICKY'),
@@ -140,7 +139,6 @@ class recenttopics_module extends admin
 				)
 			);
 		}
-
 
 		$template->assign_vars(
 			array(

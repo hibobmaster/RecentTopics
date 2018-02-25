@@ -10,7 +10,6 @@
 
 namespace paybas\recenttopics\controller;
 
-use \Symfony\Component\HttpFoundation\Response;
 use phpbb\language\language;
 
 class page_controller implements page_interface
@@ -116,7 +115,7 @@ class page_controller implements page_interface
 		\phpbb\path_helper $path_helper,
 		\phpbb\extension\manager $phpbb_extension_manager,
 		$root_path,
-	    \paybas\recenttopics\core\recenttopics $functions,
+		\paybas\recenttopics\core\recenttopics $functions,
 		\phpbb\language\language $language
 	)
 	{
@@ -169,7 +168,5 @@ class page_controller implements page_interface
 		}
 
 		return $this->response;
-
 	}
-
 }

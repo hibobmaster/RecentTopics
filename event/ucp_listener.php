@@ -27,12 +27,12 @@ use phpbb\language\language;
 class ucp_listener implements EventSubscriberInterface
 {
 	/**
-    * @var \phpbb\auth\auth
+	* @var \phpbb\auth\auth
 	*/
 	protected $auth;
 
 	/**
-    * @var \phpbb\config\config
+	* @var \phpbb\config\config
 	*/
 	protected $config;
 
@@ -42,12 +42,12 @@ class ucp_listener implements EventSubscriberInterface
 	protected $request;
 
 	/**
-    * @var \phpbb\template\template
+	* @var \phpbb\template\template
 	*/
 	protected $template;
 
 	/**
-    * @var \phpbb\user
+	* @var \phpbb\user
 	*/
 	protected $user;
 
