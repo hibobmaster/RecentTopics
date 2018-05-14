@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Recent topics Extension for phpBB3.2. Adds a list with a number of recent topics to the index.php",
     "homepage": "https://github.com/sajaki/RecentTopics",
-    "version": "2.2.7",
-    "time": "2018-02-04",
+    "version": "2.2.8",
+    "time": "2018-05-15",
     "license": "GPL-2.0",
     "authors": [
         {
@@ -34,6 +34,7 @@
             "phpbb/phpbb": ">=3.2.0"
         },
         "version-check": {
+            "protocol": "https://",
             "host": "www.avathar.be",
             "directory": "/versioncheck",
             "filename": "recenttopics22.json"
