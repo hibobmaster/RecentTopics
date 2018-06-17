@@ -30,8 +30,7 @@ class release_2_2_7 extends \phpbb\db\migration\migration
 		return array(
 			array('config.update', array('rt_version', '2.2.7')),
 			array('permission.add', array('u_rt_number')),
-			array('permission.permission_set', array('ROLE_USER_FULL', 'u_rt_number')),
-			array('permission.permission_set', array('ROLE_USER_FULL', 'u_rt_view')),
+			array('permission.permission_set', array('ROLE_USER_FULL', 'u_rt_number'))
 		);
 	}
 
