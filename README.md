@@ -8,8 +8,6 @@ Based on NV Recent Topics for phpBB 3.0, by Joas Schilling ([nickvergessen](http
 v2.2.7 (25/02/2018)
 [![Build Status](https://api.travis-ci.org/Sajaki/RecentTopics.svg)](https://travis-ci.org/Sajaki/RecentTopics)
 
-- [download](https://www.avathar.be/bbdkp/app.php/dlext/?view=detail&df_id=35)
-
 #### Support
 - [Support forum](https://www.avathar.be/bbdkp/viewforum.php?f=65)
 

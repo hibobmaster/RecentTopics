@@ -29,31 +29,18 @@ class release_2_2_8 extends \phpbb\db\migration\migration
 	{
 		return array(
 			array('config.update', array('rt_version', '2.2.8')),
-
+			array('custom', array(array($this, 'fix_rt_number')))
 		);
+
 	}
 
-	public function update_schema()
+	/**
+	 * in 2.7 the column was created with a wrong default value so we need to reset it.
+	 */
+	public function fix_rt_number()
 	{
-		return array(
-			'drop_columns'    => array(
-				$this->table_prefix . 'users' => array(
-					'user_rt_number',
-				),
-			),
-
-			'add_columns'    => array(
-				$this->table_prefix . 'users' => array(
-					'user_rt_number'      => array('UINT', $this->config['rt_number']),
-				),
-			),
-
-		);
-	}
-
-	public function revert_schema()
-	{
-		//no action needed on uninstall
+		$sql = 'UPDATE ' . $this->table_prefix . 'users' . " SET user_rt_number = '" . ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 ) . "' ";
+		$this->db->sql_query($sql);
 	}
 
 }
