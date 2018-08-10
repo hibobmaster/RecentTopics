@@ -16,12 +16,13 @@ class admin
 	 * connects to remote site and gets xml or html using Curl
 	 *
 	 * @param      $url
+	 * @param      $ssl
 	 * @param bool $return_Server_Response_Header
 	 * @param bool $loud
 	 * @param bool $json
 	 * @return array
 	 */
-	public final function curl($url, $return_Server_Response_Header = false, $loud = true, $json = true)
+	public final function curl($url, $ssl = false, $pemfile, $return_Server_Response_Header = false, $loud = true, $json = true)
 	{
 		global $phpbb_container, $user;
 
@@ -47,18 +48,23 @@ class admin
 			// set options
 			curl_setopt_array(
 				$curl, array(
-					CURLOPT_RETURNTRANSFER => 1,
-					CURLOPT_URL => $url,
-					CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0', //override
-					CURLOPT_SSL_VERIFYHOST => false,
-					CURLOPT_SSL_VERIFYPEER => false,
-					CURLOPT_FOLLOWLOCATION, true,
+					CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko/20100101 Firefox/61.0', //override
 					CURLOPT_TIMEOUT => 60,
 					CURLOPT_VERBOSE => true,
+					CURLOPT_URL => $url,
 					CURLOPT_HEADER => $return_Server_Response_Header,
-					CURLOPT_HEADER => false
+					CURLOPT_FOLLOWLOCATION, true,
+					CURLOPT_RETURNTRANSFER => true, //return web page
 				)
 			);
+
+			// set ssl options
+			if($ssl)
+			{
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER,true);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+				curl_setopt($curl, CURLOPT_CAINFO, $pemfile);
+			}
 
 			$response = curl_exec($curl);
 			$headers = curl_getinfo($curl);
