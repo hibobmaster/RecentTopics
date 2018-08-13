@@ -35,7 +35,7 @@ class recenttopics_module extends admin
 		$language->add_lang('viewforum');
 
 		$this->tpl_name = 'acp_recenttopics';
-		$this->page_title = $user->lang('RECENT_TOPICS');
+		$this->page_title = $language->lang('RECENT_TOPICS');
 
 		$form_key = 'acp_recenttopics';
 		add_form_key($form_key);
@@ -51,7 +51,7 @@ class recenttopics_module extends admin
 		{
 			if (!check_form_key($form_key))
 			{
-				trigger_error($user->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+				trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			/*
@@ -99,7 +99,7 @@ class recenttopics_module extends admin
 			$rt_unread_only = $request->variable('rt_unread_only', false);
 			$config->set('rt_unread_only', $rt_unread_only);
 
-			trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
+			trigger_error($language->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 		}
 
 		$topic_types = array (
@@ -152,12 +152,12 @@ class recenttopics_module extends admin
 				'RT_UNREAD_ONLY'     => isset($config['rt_unread_only']) ? $config['rt_unread_only'] : false,
 				'RT_ON_NEWSPAGE'     => isset($config['rt_on_newspage']) ? $config['rt_on_newspage'] : false,
 				'S_RT_NEWSPAGE'      => $phpbb_extension_manager->is_enabled('nickvergessen/newspage'),
-				'S_RT_OK'           => version_compare($ext_version, $latest_version, '=='),
-				'S_RT_OLD'          => version_compare($ext_version, $latest_version, '<'),
-				'S_RT_DEV'          => version_compare($ext_version, $latest_version, '>'),
-				'EXT_VERSION'           => $ext_version,
-				'U_VERSIONCHECK_FORCE'  => append_sid($this->u_action . '&amp;versioncheck_force=1'),
-				'RT_LATESTVERSION'      => $latest_version,
+				'S_RT_OK'            => version_compare($ext_version, $latest_version, '=='),
+				'S_RT_OLD'           => version_compare($ext_version, $latest_version, '<'),
+				'S_RT_DEV'           => version_compare($ext_version, $latest_version, '>'),
+				'EXT_VERSION'          => $ext_version,
+				'U_VERSIONCHECK_FORCE' => append_sid($this->u_action . '&amp;versioncheck_force=1'),
+				'RT_LATESTVERSION'     => $latest_version,
 			)
 		);
 
