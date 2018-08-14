@@ -22,7 +22,7 @@ class admin
 	 * @param bool $json
 	 * @return array
 	 */
-	public final function curl($url, $ssl = false, $pemfile, $return_Server_Response_Header = false, $loud = true, $json = true)
+	public final function curl($url,  $pemfile, $ssl = false, $return_Server_Response_Header = false, $loud = true, $json = true)
 	{
 		global $phpbb_container, $user;
 
@@ -59,7 +59,7 @@ class admin
 			);
 
 			// set ssl options
-			if($ssl)
+			if ($ssl)
 			{
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER,true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);

@@ -197,7 +197,8 @@ class recenttopics_module extends admin
 		$versionurl = ($meta_data['extra']['version-check']['ssl'] == '1' ? 'https://': 'http://') .
 			$meta_data['extra']['version-check']['host'].$meta_data['extra']['version-check']['directory'].'/'.$meta_data['extra']['version-check']['filename'];
 		$ssl = $meta_data['extra']['version-check']['ssl'] == '1' ? true: false;
-		if ($ssl) {
+		if ($ssl)
+		{
 			//https://davidwalsh.name/php-ssl-curl-error
 			$pemfile = $phpbb_extension_manager->get_extension_path('paybas/recenttopics', true) . 'core/mozilla.pem';
 			if (!(file_exists($pemfile) && is_readable($pemfile)))
@@ -212,7 +213,7 @@ class recenttopics_module extends admin
 		//if update is forced or cache expired then make the call to refresh latest productversion
 		if ($latest_version === false || $force_update)
 		{
-			$data = parent::curl($versionurl, $ssl, $pemfile, false, false, false);
+			$data = parent::curl($versionurl, $pemfile, $ssl, false, false, false);
 			if (0 === count($data) )
 			{
 				$cache->destroy('recenttopics_versioncheck');
