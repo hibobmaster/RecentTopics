@@ -33,6 +33,7 @@ v2.2.8 (14/08/2018)
 - compatible with 
    - "Pre:fixed" Extension from imkingdavid 
    - “Topic Prefix“ Extension from Stathis.
+   - official extension "phpbb/topicprefixes"
    - Mchat 2.0.1 (as of 2.2.3)  
    - Collapsible Categories (as of 2.2.6)
 - Tested on:
