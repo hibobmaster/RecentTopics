@@ -35,7 +35,7 @@ class recenttopics_module extends admin
 		$language->add_lang('viewforum');
 
 		$this->tpl_name = 'acp_recenttopics';
-		$this->page_title = $user->lang('RECENT_TOPICS');
+		$this->page_title = $language->lang('RECENT_TOPICS');
 
 		$form_key = 'acp_recenttopics';
 		add_form_key($form_key);
@@ -45,14 +45,13 @@ class recenttopics_module extends admin
 		$ext_meta_manager = $ext_manager->create_extension_metadata_manager('paybas/recenttopics', $phpbb_container->get('template'));
 		$meta_data  = $ext_meta_manager->get_metadata();
 		$ext_version  = $meta_data['version'];
-		$versionurl = $meta_data['extra']['version-check']['host'].$meta_data['extra']['version-check']['directory'].'/'.$meta_data['extra']['version-check']['filename'];
-		$latest_version  = $this->version_check($versionurl, $request->variable('versioncheck_force', false));
+		$latest_version  = $this->version_check($meta_data, $request->variable('versioncheck_force', false));
 
 		if ($request->is_set_post('submit'))
 		{
 			if (!check_form_key($form_key))
 			{
-				trigger_error($user->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+				trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			/*
@@ -100,7 +99,7 @@ class recenttopics_module extends admin
 			$rt_unread_only = $request->variable('rt_unread_only', false);
 			$config->set('rt_unread_only', $rt_unread_only);
 
-			trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
+			trigger_error($language->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 		}
 
 		$topic_types = array (
@@ -153,12 +152,12 @@ class recenttopics_module extends admin
 				'RT_UNREAD_ONLY'     => isset($config['rt_unread_only']) ? $config['rt_unread_only'] : false,
 				'RT_ON_NEWSPAGE'     => isset($config['rt_on_newspage']) ? $config['rt_on_newspage'] : false,
 				'S_RT_NEWSPAGE'      => $phpbb_extension_manager->is_enabled('nickvergessen/newspage'),
-				'S_RT_OK'           => version_compare($ext_version, $latest_version, '=='),
-				'S_RT_OLD'          => version_compare($ext_version, $latest_version, '<'),
-				'S_RT_DEV'          => version_compare($ext_version, $latest_version, '>'),
-				'EXT_VERSION'           => $ext_version,
-				'U_VERSIONCHECK_FORCE'  => append_sid($this->u_action . '&amp;versioncheck_force=1'),
-				'RT_LATESTVERSION'      => $latest_version,
+				'S_RT_OK'            => version_compare($ext_version, $latest_version, '=='),
+				'S_RT_OLD'           => version_compare($ext_version, $latest_version, '<'),
+				'S_RT_DEV'           => version_compare($ext_version, $latest_version, '>'),
+				'EXT_VERSION'          => $ext_version,
+				'U_VERSIONCHECK_FORCE' => append_sid($this->u_action . '&amp;versioncheck_force=1'),
+				'RT_LATESTVERSION'     => $latest_version,
 			)
 		);
 
@@ -190,9 +189,23 @@ class recenttopics_module extends admin
 	 * @param  int  $ttl          Cache version information for $ttl seconds. Defaults to 86400 (24 hours).
 	 * @return bool
 	 */
-	public final function version_check($versionurl, $force_update = false, $ttl = 86400)
+	public final function version_check($meta_data, $force_update = false, $ttl = 86400)
 	{
-		global $user, $cache;
+		global $user, $cache, $phpbb_extension_manager, $path_helper;
+
+		$pemfile = '';
+		$versionurl = ($meta_data['extra']['version-check']['ssl'] == '1' ? 'https://': 'http://') .
+			$meta_data['extra']['version-check']['host'].$meta_data['extra']['version-check']['directory'].'/'.$meta_data['extra']['version-check']['filename'];
+		$ssl = $meta_data['extra']['version-check']['ssl'] == '1' ? true: false;
+		if ($ssl)
+		{
+			//https://davidwalsh.name/php-ssl-curl-error
+			$pemfile = $phpbb_extension_manager->get_extension_path('paybas/recenttopics', true) . 'core/mozilla.pem';
+			if (!(file_exists($pemfile) && is_readable($pemfile)))
+			{
+				$ssl = false;
+			}
+		}
 
 		//get latest productversion from cache
 		$latest_version = $cache->get('recenttopics_versioncheck');
@@ -200,7 +213,7 @@ class recenttopics_module extends admin
 		//if update is forced or cache expired then make the call to refresh latest productversion
 		if ($latest_version === false || $force_update)
 		{
-			$data = parent::curl($versionurl, false, false, false);
+			$data = parent::curl($versionurl, $pemfile, $ssl, false, false, false);
 			if (0 === count($data) )
 			{
 				$cache->destroy('recenttopics_versioncheck');
