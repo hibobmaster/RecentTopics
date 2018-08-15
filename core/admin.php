@@ -22,7 +22,7 @@ class admin
 	 * @param bool $json
 	 * @return array
 	 */
-	public final function curl($url,  $pemfile, $ssl = false, $return_Server_Response_Header = false, $loud = true, $json = true)
+	public final function curl($url, $pemfile, $ssl = false, $return_Server_Response_Header = false, $loud = true, $json = true)
 	{
 		global $phpbb_container, $user;
 
