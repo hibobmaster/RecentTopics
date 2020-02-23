@@ -11,7 +11,6 @@
 namespace paybas\recenttopics\controller;
 
 use phpbb\language\language;
-use phpbb\exception\http_exception;
 
 class page_controller implements page_interface
 {
@@ -152,7 +151,6 @@ class page_controller implements page_interface
 	 * Display the page app.php/rt/
 	 *
 	 * @return \Symfony\Component\HttpFoundation\Response A Symfony Response object
-	 * @throws http_exception
 	 * @access public
 	*/
 	public function display()
@@ -166,14 +164,7 @@ class page_controller implements page_interface
 		}
 
 		// Load the requested page by route
-		try
-		{
-			$this->response = $this->helper->render($page, $this->language->lang('RECENT_TOPICS'));
-		}
-		catch (\phpbb\pages\exception\base $e)
-		{
-			throw new http_exception(404, 'PAGE_NOT_AVAILABLE', array($page));
-		}
+		$this->response = $this->helper->render($page, $this->language->lang('RECENT_TOPICS'));
 
 		return $this->response;
 	}
