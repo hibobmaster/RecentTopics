@@ -84,18 +84,17 @@ class page_controller implements page_interface
 	 * @var language
 	 */
 	protected $language;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $php_ext;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $path_helper;
-	
-	
+
 	/**
 	 * page constructor.
 	 *

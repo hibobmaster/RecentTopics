@@ -215,7 +215,7 @@ class ucp_listener implements EventSubscriberInterface
 	 */
 	public function ucp_register_set_data($event)
 	{
-		
+
 		$sql_ary = array(
 			'user_rt_enable'      => (int) $this->config['rt_index'],
 			'user_rt_sort_start_time'     => (int) $this->config['rt_sort_start_time'] ,
@@ -223,12 +223,11 @@ class ucp_listener implements EventSubscriberInterface
 			'user_rt_location'      => $this->db->sql_escape($this->config['rt_location']),
 			'user_rt_number'      => ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 )
 		);
-		
+
 		$sql = 'UPDATE ' . USERS_TABLE . '
                 SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . '
                 WHERE user_id = ' . (int) $this->user->data['user_id'];
 
 		$this->db->sql_query($sql);
 	}
-
 }
