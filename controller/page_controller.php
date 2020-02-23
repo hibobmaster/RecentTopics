@@ -11,6 +11,7 @@
 namespace paybas\recenttopics\controller;
 
 use phpbb\language\language;
+use phpbb\exception\http_exception;
 
 class page_controller implements page_interface
 {
@@ -83,7 +84,18 @@ class page_controller implements page_interface
 	 * @var language
 	 */
 	protected $language;
-
+	
+	/**
+	 * @var string
+	 */
+	protected $php_ext;
+	
+	/**
+	 * @var string
+	 */
+	protected $path_helper;
+	
+	
 	/**
 	 * page constructor.
 	 *
@@ -147,9 +159,6 @@ class page_controller implements page_interface
 	public function display()
 	{
 		$page = "recent_topics_page.html";
-
-		global $phpbb_container;
-		$this->language = $phpbb_container->get('language');
 		$this->language->add_lang('info_acp_recenttopics', 'paybas/recenttopics');
 
 		if (isset($this->config['rt_index']) && $this->config['rt_index'])
