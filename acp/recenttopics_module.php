@@ -174,7 +174,7 @@ class recenttopics_module extends admin
 
 			$sql = 'UPDATE ' . USERS_TABLE . '
                 SET ' . $this->db->sql_build_array('UPDATE', $sql_ary);
-			
+
 			$this->db->sql_query($sql);
 		}
 
