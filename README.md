@@ -1,14 +1,13 @@
 Recent Topics for phpBB 3.2
-============
+==========
 
 Extension for phpBB 3.2 to display recent topics.
 Based on NV Recent Topics for phpBB 3.0, by Joas Schilling ([nickvergessen](https://github.com/nickvergessen))
 
 #### Version
-v2.2.8 (14/08/2018)
-[![Build Status](https://api.travis-ci.org/Sajaki/RecentTopics.svg)](https://travis-ci.org/Sajaki/RecentTopics)
+v2.2.9 (??/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.svg?branch=develop32)](https://travis-ci.org/Sajaki/RecentTopics)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
-
+    
 #### Support
 - [Support forum](https://www.avathar.be/bbdkp/viewforum.php?f=65)
 
@@ -36,7 +35,7 @@ v2.2.8 (14/08/2018)
    - “Topic Prefix“ Extension from Stathis.
    - official extension "phpbb/topicprefixes"
    - Mchat 2.0.1 (as of 2.2.3)  
-   - Collapsible Categories (as of 2.2.6)
+   - Collapsible Categories v2 (as of v2.2.9)
 - Tested on:
   - prosilver  
   - we_clearblue (only non-cdb verion), 
