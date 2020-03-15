@@ -3,6 +3,7 @@
 - 2.2.9 (15/03/2020)
   - [CHG] support for style we_clearblue 3.2.9
   - [CHG] support for style pbwow 3.2.9  
+  - [CHG] #115 in rightpane view, last author name is also shown 
   - [FIX] #116 topic link now refers to newest post
   - [CHG] add php 7.2 to travis tests
   - [FIX] code fixes: use sql_build_array, cast int on request_var, don't use http_exception class
