@@ -79,6 +79,7 @@
     min-height: inherit;
     width: auto;
     text-align: right;
+    font-size:12px;
 }
 
 #recent-topics dl {
