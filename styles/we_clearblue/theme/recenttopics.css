@@ -39,6 +39,10 @@
     transition: background 0.15s ease-in-out 0s;
 }
 
+#recent-topics li.row:hover  {
+    background-color: #e1ebf5 !important;
+}
+
 #recent-topics li dl.icon {
     padding-bottom: 0px;
 }
@@ -75,6 +79,7 @@
     min-height: inherit;
     width: auto;
     text-align: right;
+    font-size:12px;
 }
 
 #recent-topics dl {
