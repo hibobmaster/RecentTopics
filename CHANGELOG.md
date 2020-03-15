@@ -1,6 +1,7 @@
 ### Changelog
 
 - 2.2.9 (15/03/2020)
+  - [CHG] support for style we_clearblue 3.2.9
   - [CHG] support for style pbwow 3.2.9  
   - [FIX] #116 topic link now refers to newest post
   - [CHG] add php 7.2 to travis tests
