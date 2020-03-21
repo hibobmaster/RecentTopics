@@ -241,8 +241,8 @@ use phpbb\language\language;
 			}
 			else
 			{
-				// max 100 pages
-				$total_topics_limit = $topics_per_page * 100;
+				// max 1000 pages
+				$total_topics_limit = $topics_per_page * 1000;
 			}
 
 			$display_parent_forums = $this->config['rt_parents'];
