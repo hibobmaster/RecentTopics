@@ -5,7 +5,7 @@ Extension for phpBB 3.2 to display recent topics.
 Based on NV Recent Topics for phpBB 3.0, by Joas Schilling ([nickvergessen](https://github.com/nickvergessen))
 
 #### Version
-v2.2.9 (??/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.svg?branch=develop32)](https://travis-ci.org/Sajaki/RecentTopics)
+v2.2.10 (21/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.svg?branch=develop32)](https://travis-ci.org/Sajaki/RecentTopics)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
     
 #### Support
@@ -15,7 +15,7 @@ v2.2.9 (??/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.s
 - phpBB 3.2.0 or higher
 
 #### Features
-- Adds a list of recent (or unread) topics to the index page.
+- Adds a list of recent (or unread) topics or last reply to topics to the index page.
 - UCP permissions and settings so users can choose their own preferences to override ACP.
 - can view all recent topics on a special page /app.php/rt (as of 2.2.7)
 - ACP / UCP Options:
