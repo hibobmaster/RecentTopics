@@ -490,11 +490,11 @@ use phpbb\language\language;
 						{
 							$last_post_subject = $prefix . ' ' . preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
 						}
-						
+
 						list($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author) = $this->getusernamestrings($row);
 						//load language
 						$this->language->add_lang('recenttopics', 'paybas/recenttopics');
-						
+
 						$tpl_ary = array(
 							'FORUM_ID'                => $forum_id,
 							'TOPIC_ID'                => $topic_id,
