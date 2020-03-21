@@ -482,8 +482,7 @@ use phpbb\language\language;
 						}
 
 						$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
-						
-						if($prefix === '')
+						if ($prefix === '')
 						{
 							$last_post_subject = preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
 						}
