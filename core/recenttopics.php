@@ -216,9 +216,6 @@ use phpbb\language\language;
 				return;
 			}
 
-			//load language
-			$this->language->add_lang('recenttopics', 'paybas/recenttopics');
-
 			// support for phpbb collapsable categories extension
 			if ($this->collapsable_categories !== null)
 			{
@@ -244,8 +241,8 @@ use phpbb\language\language;
 			}
 			else
 			{
-				// max 100 pages
-				$total_topics_limit = $topics_per_page * 100;
+				// max 1000 pages
+				$total_topics_limit = $topics_per_page * 1000;
 			}
 
 			$display_parent_forums = $this->config['rt_parents'];
@@ -444,7 +441,6 @@ use phpbb\language\language;
 						topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
 
 						$topic_title = censor_text($row['topic_title']);
-
 						$prefix = '';
 						if ($this->topicprefixes !== null)
 						{
@@ -486,8 +482,18 @@ use phpbb\language\language;
 						}
 
 						$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
+						if ($prefix === '')
+						{
+							$last_post_subject = preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
+						}
+						else
+						{
+							$last_post_subject = $prefix . ' ' . preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
+						}
 
 						list($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author) = $this->getusernamestrings($row);
+						//load language
+						$this->language->add_lang('recenttopics', 'paybas/recenttopics');
 
 						$tpl_ary = array(
 							'FORUM_ID'                => $forum_id,
@@ -497,8 +503,7 @@ use phpbb\language\language;
 							'TOPIC_AUTHOR_FULL'       => $topic_author_full,
 							'U_TOPIC_AUTHOR'          => $u_topic_author,
 							'FIRST_POST_TIME'         => $this->user->format_date($row['topic_time']),
-
-							'LAST_POST_SUBJECT'       => censor_text($row['topic_last_post_subject']),
+							'LAST_POST_SUBJECT'       => $last_post_subject,
 							'LAST_POST_TIME'          => $this->user->format_date($row['topic_last_post_time']),
 							'LAST_VIEW_TIME'          => $this->user->format_date($row['topic_last_view_time']),
 							'LAST_POST_AUTHOR'        => $last_post_author,
