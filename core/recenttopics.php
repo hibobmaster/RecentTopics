@@ -753,7 +753,7 @@ use phpbb\language\language;
 
 				//load topics list
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
-				
+
 				if ($total_topics_limit > 0)
 				{
 					$result = $this->db->sql_query_limit($sql, $total_topics_limit);
