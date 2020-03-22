@@ -233,18 +233,13 @@ use phpbb\language\language;
 			}
 
 			//number of pages
-			$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
-			$nolimitpages = (int) $this->config['rt_page_number'];
-			if ($nolimitpages == 0)
+			$total_topics_limit = 0;
+			if ((int) $this->config['rt_page_number'] == 0)
 			{
-				$total_topics_limit = $topics_per_page * $rt_page_numbermax;
-			}
-			else
-			{
-				// max 1000 pages
-				$total_topics_limit = $topics_per_page * 1000;
+				$total_topics_limit = $topics_per_page * (int) $this->config['rt_page_numbermax'];
 			}
 
+			//display parent forums
 			$display_parent_forums = $this->config['rt_parents'];
 
 			//rt block location
@@ -282,7 +277,7 @@ use phpbb\language\language;
 				return;
 			}
 
-			$topics_count = $this->gettopiclist(max(0, min((int) $rtstart, $total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
+			$topics_count = $this->gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics);
 
 			// If topics to display
 			if (sizeof($this->topic_list))
@@ -452,6 +447,16 @@ use phpbb\language\language;
 						}
 
 						/**
+						 * Event to remove re
+						 *
+						 * @event paybas.recenttopics.topictitle_remove_re
+						 * @var   array    row      the forum row
+						 * @since 2.2.11
+						 */
+						$vars = array('row');
+						extract($this->dispatcher->trigger_event('paybas.recenttopics.topictitle_remove_re', compact($vars)));
+
+						/**
 						 * Event to modify the topic title
 						 *
 						 * @event paybas.recenttopics.modify_topictitle
@@ -478,17 +483,13 @@ use phpbb\language\language;
 									}
 								}
 							}
-
 						}
 
 						$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
-						if ($prefix === '')
+						$last_post_subject = censor_text($row['topic_last_post_subject']);
+						if ($prefix != '')
 						{
-							$last_post_subject = preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
-						}
-						else
-						{
-							$last_post_subject = $prefix . ' ' . preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
+							$last_post_subject = $prefix . ' ' . $last_post_subject;
 						}
 
 						list($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author) = $this->getusernamestrings($row);
@@ -631,7 +632,6 @@ use phpbb\language\language;
 			);
 		}
 
-
 		/**
 		 * Get the forums we take our topics from
 		 */
@@ -680,6 +680,13 @@ use phpbb\language\language;
 		 */
 		private function gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics)
 		{
+			$rtstart = max(0, $rtstart);
+
+			if ($total_topics_limit > 0)
+			{
+				$rtstart = min((int) $rtstart, $total_topics_limit);
+			}
+
 			$this->forums = $this->topic_list = array();
 			$topics_count = 0;
 			$this->obtain_icons = false;
@@ -753,7 +760,15 @@ use phpbb\language\language;
 
 				//load topics list
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
-				$result = $this->db->sql_query_limit($sql, $total_topics_limit);
+
+				if ($total_topics_limit > 0)
+				{
+					$result = $this->db->sql_query_limit($sql, $total_topics_limit);
+				}
+				else
+				{
+					$result = $this->db->sql_query($sql);
+				}
 
 				if ($result != null)
 				{
@@ -783,14 +798,11 @@ use phpbb\language\language;
 						{
 							$this->obtain_icons = true;
 						}
-
 					}
 				}
 				$this->db->sql_freeresult($result);
 			}
-
 			return $topics_count;
-
 		}
 
 		/**
@@ -810,7 +822,6 @@ use phpbb\language\language;
 			return array($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author);
 		}
 
-
 		/**
 		 * this helper function checks if anyone is listening to events
 		 * @param string $class
@@ -828,8 +839,6 @@ use phpbb\language\language;
 					return true;
 				}
 			}
-
 			return false;
 		}
-
 	}
