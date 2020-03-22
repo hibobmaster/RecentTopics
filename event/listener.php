@@ -41,7 +41,7 @@ class listener implements EventSubscriberInterface
 		$this->config = $config;
 		$this->request = $request;
 	}
-	
+
 	/**
 	 * Get subscribed events
 	 *
@@ -57,7 +57,7 @@ class listener implements EventSubscriberInterface
 			'core.acp_manage_forums_initialise_data' => 'acp_manage_forums_initialise_data',
 			'core.acp_manage_forums_display_form'    => 'acp_manage_forums_display_form',
 			'core.permissions'                       => 'add_permission',
-			
+
 			// Events added by this extension
 			'paybas.recenttopics.topictitle_remove_re'  => 'topictitle_remove_re',
 		);
@@ -134,7 +134,7 @@ class listener implements EventSubscriberInterface
 		$permissions['u_rt_number'] = array('lang' => 'ACL_U_RT_NUMBER', 'cat' => 'misc');
 		$event['permissions'] = $permissions;
 	}
-	
+
 	/**
 	 * @event paybas.recenttopics.topictitle_remove_re
 	 * remove "Re: " from post subject
