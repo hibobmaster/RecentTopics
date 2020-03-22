@@ -233,18 +233,13 @@ use phpbb\language\language;
 			}
 
 			//number of pages
-			$rt_page_numbermax = (int) $this->config['rt_page_numbermax'];
-			$nolimitpages = (int) $this->config['rt_page_number'];
-			if ($nolimitpages == 0)
+			$total_topics_limit = 0;
+			if ((int) $this->config['rt_page_number'] == 0)
 			{
-				$total_topics_limit = $topics_per_page * $rt_page_numbermax;
-			}
-			else
-			{
-				// max 1000 pages
-				$total_topics_limit = $topics_per_page * 1000;
+				$total_topics_limit = $topics_per_page * (int) $this->config['rt_page_numbermax'];
 			}
 
+			//display parent forums
 			$display_parent_forums = $this->config['rt_parents'];
 
 			//rt block location
@@ -282,7 +277,7 @@ use phpbb\language\language;
 				return;
 			}
 
-			$topics_count = $this->gettopiclist(max(0, min((int) $rtstart, $total_topics_limit)) , $topics_per_page, $total_topics_limit, $sort_topics);
+			$topics_count = $this->gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics);
 
 			// If topics to display
 			if (sizeof($this->topic_list))
@@ -478,7 +473,6 @@ use phpbb\language\language;
 									}
 								}
 							}
-
 						}
 
 						$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
@@ -631,7 +625,6 @@ use phpbb\language\language;
 			);
 		}
 
-
 		/**
 		 * Get the forums we take our topics from
 		 */
@@ -680,6 +673,13 @@ use phpbb\language\language;
 		 */
 		private function gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics)
 		{
+			$rtstart = max(0, $rtstart);
+
+			if ($total_topics_limit > 0)
+			{
+				$rtstart = min((int) $rtstart, $total_topics_limit);
+			}
+
 			$this->forums = $this->topic_list = array();
 			$topics_count = 0;
 			$this->obtain_icons = false;
@@ -753,7 +753,15 @@ use phpbb\language\language;
 
 				//load topics list
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
-				$result = $this->db->sql_query_limit($sql, $total_topics_limit);
+				
+				if ($total_topics_limit > 0)
+				{
+					$result = $this->db->sql_query_limit($sql, $total_topics_limit);
+				}
+				else
+				{
+					$result = $this->db->sql_query($sql);
+				}
 
 				if ($result != null)
 				{
@@ -783,14 +791,11 @@ use phpbb\language\language;
 						{
 							$this->obtain_icons = true;
 						}
-
 					}
 				}
 				$this->db->sql_freeresult($result);
 			}
-
 			return $topics_count;
-
 		}
 
 		/**
@@ -810,7 +815,6 @@ use phpbb\language\language;
 			return array($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author);
 		}
 
-
 		/**
 		 * this helper function checks if anyone is listening to events
 		 * @param string $class
@@ -828,8 +832,6 @@ use phpbb\language\language;
 					return true;
 				}
 			}
-
 			return false;
 		}
-
 	}
