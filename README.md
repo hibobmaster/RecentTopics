@@ -5,11 +5,11 @@ Extension for phpBB 3.2 to display recent topics.
 Based on NV Recent Topics for phpBB 3.0, by Joas Schilling ([nickvergessen](https://github.com/nickvergessen))
 
 #### Version
-v2.2.10 (21/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.svg?branch=develop32)](https://travis-ci.org/Sajaki/RecentTopics)
+v2.2.11 (21/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.svg?branch=develop32)](https://travis-ci.org/Sajaki/RecentTopics)
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
     
 #### Support
-- [Support forum](https://www.avathar.be/bbdkp/viewforum.php?f=65)
+- [Support forum](https://www.avathar.be/forum/viewforum.php?f=65)
 
 #### Requirements
 - phpBB 3.2.0 or higher
@@ -30,6 +30,7 @@ v2.2.10 (21/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.
   - exclusion of topics (by ID)
   - display parent forum name in the row
 - Inherits all styling from regular "viewforum" templates
+- filters "re: from replies" (as of 2.2.11)
 - compatible with 
    - "Pre:fixed" Extension from imkingdavid 
    - “Topic Prefix“ Extension from Stathis.
@@ -50,7 +51,7 @@ v2.2.10 (21/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.
 - Portuguese, Arabic, Czech (as of 2.2.7) 
   
 ### Installation
-1. [Download the latest release](https://www.avathar.be/bbdkp/app.php/dlext/?view=detail&df_id=35) and unzip it.
+1. [Download the latest release](https://www.avathar.be/forum/app.php/dlext/?view=detail&df_id=35) and unzip it.
     - cdb build = built for phpBB CDB
     - standard build = has extra features, support for styles not in Cdb.
 2. Copy the entire contents from the unzipped folder to `/ext/paybas/recenttopics/`.
@@ -67,4 +68,3 @@ v2.2.10 (21/03/2020) [![Build Status](https://travis-ci.org/Sajaki/RecentTopics.
 
 © 2015 - PayBas
 © 2017 - Sajaki
-

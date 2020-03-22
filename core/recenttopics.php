@@ -447,6 +447,16 @@ use phpbb\language\language;
 						}
 
 						/**
+						 * Event to remove re
+						 *
+						 * @event paybas.recenttopics.topictitle_remove_re
+						 * @var   array    row      the forum row
+						 * @since 2.2.11
+						 */
+						$vars = array('row');
+						extract($this->dispatcher->trigger_event('paybas.recenttopics.topictitle_remove_re', compact($vars)));
+
+						/**
 						 * Event to modify the topic title
 						 *
 						 * @event paybas.recenttopics.modify_topictitle
@@ -476,13 +486,10 @@ use phpbb\language\language;
 						}
 
 						$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
-						if ($prefix === '')
+						$last_post_subject = censor_text($row['topic_last_post_subject']);
+						if ($prefix != '')
 						{
-							$last_post_subject = preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
-						}
-						else
-						{
-							$last_post_subject = $prefix . ' ' . preg_replace('/^Re: /', '', censor_text($row['topic_last_post_subject']));
+							$last_post_subject = $prefix . ' ' . $last_post_subject;
 						}
 
 						list($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author) = $this->getusernamestrings($row);

@@ -41,24 +41,12 @@ class listener implements EventSubscriberInterface
 		$this->config = $config;
 		$this->request = $request;
 	}
-
+	
 	/**
-	 * Returns an array of event names this subscriber wants to listen to.
+	 * Get subscribed events
 	 *
-	 * The array keys are event names and the value can be:
-	 *
-	 *  * The method name to call (priority defaults to 0)
-	 *  * An array composed of the method name to call and the priority
-	 *  * An array of arrays composed of the method names to call and respective
-	 *    priorities, or 0 if unset
-	 *
-	 * For instance:
-	 *
-	 *  * array('eventName' => 'methodName')
-	 *  * array('eventName' => array('methodName', $priority))
-	 *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
-	 *
-	 * @return array The event names to listen to
+	 * @return array
+	 * @static
 	 */
 	static public function getSubscribedEvents()
 	{
@@ -69,6 +57,9 @@ class listener implements EventSubscriberInterface
 			'core.acp_manage_forums_initialise_data' => 'acp_manage_forums_initialise_data',
 			'core.acp_manage_forums_display_form'    => 'acp_manage_forums_display_form',
 			'core.permissions'                       => 'add_permission',
+			
+			// Events added by this extension
+			'paybas.recenttopics.topictitle_remove_re'  => 'topictitle_remove_re',
 		);
 	}
 
@@ -143,4 +134,25 @@ class listener implements EventSubscriberInterface
 		$permissions['u_rt_number'] = array('lang' => 'ACL_U_RT_NUMBER', 'cat' => 'misc');
 		$event['permissions'] = $permissions;
 	}
+	
+	/**
+	 * @event paybas.recenttopics.topictitle_remove_re
+	 * remove "Re: " from post subject
+	 *
+	 * @param \phpbb\event\data		$event  The event object
+	 * @return void
+	 * @access public
+	 */
+	public function topictitle_remove_re($event)
+	{
+		if (isset($event['row']['topic_last_post_subject']))
+		{
+			$array = (array) $event['row'];
+			$lastpost = $array['topic_last_post_subject'];
+			$array['topic_last_post_subject'] = preg_replace('/^Re: /', '', $lastpost);
+			$event['row'] = $array;
+		}
+		return $event;
+	}
+
 }
