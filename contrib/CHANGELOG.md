@@ -1,5 +1,9 @@
 ### Changelog
 
+- 2.2.12 (28/03/2020)
+  - [FIX] #123 Reset user settings issue
+  - [NEW] Ukrainian Language for Recent Topics, by Phobos-7
+  
 - 2.2.11 (21/03/2020)
   - [CHG] #120 don't show "Re: " in front of last reply text, new php event topictitle_remove_re
   - [CHG] #119 Fetching last page doesnt work to enable "all" pages 
