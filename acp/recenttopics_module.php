@@ -20,7 +20,6 @@ use paybas\recenttopics\core\admin;
 class recenttopics_module extends admin
 {
 	public $u_action;
-	
 	/**
 	 * @param $id
 	 * @param $mode
@@ -30,14 +29,14 @@ class recenttopics_module extends admin
 	public function main($id, $mode)
 	{
 		global $phpbb_container;
-		
+
 		$config = $phpbb_container->get('config');
 		$request = $phpbb_container->get('request');
 		$template = $phpbb_container->get('template');
 		$user = $phpbb_container->get('user');
 		$db = $phpbb_container->get('dbal.conn');
 		$ext_manager = $phpbb_container->get('ext.manager');
-		
+
 		$language = $phpbb_container->get('language');
 		$language->add_lang('acp/common');
 		$language->add_lang('ucp');
@@ -179,7 +178,7 @@ class recenttopics_module extends admin
 				'user_rt_location'      => $db->sql_escape($this->config['rt_location']),
 				'user_rt_number'      => ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 )
 			);
-			
+
 			$sql = 'UPDATE ' . USERS_TABLE . '
             SET ' . $db->sql_build_array('UPDATE', $sql_ary);
 
