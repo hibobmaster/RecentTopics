@@ -88,7 +88,7 @@ $lang = array_merge(
 	'RT_CHECK_UPDATE'				=> 'Besuche <a href="http://www.avathar.be/bbdkp/index.php">avathar.be</a> für neuere Versionen.',
 
 	//Donatiies
-	'RT_DONATE_URL'             => 'http://www.avathar.be/bbdkp/app.php/page/donate',
+	'RT_DONATE_URL'             => 'http://www.avathar.be/forum/app.php/page/donate',
 	'PAYPAL_IMAGE_URL'          => 'https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-pill-paypal-26px.png',
 	'PAYPAL_ALT'                => 'Sende eine Spende über PayPal',
 	'RT_DONATE'					=> 'Spende an RecentTopics',
