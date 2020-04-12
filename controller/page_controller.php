@@ -157,6 +157,7 @@ class page_controller implements page_interface
 	{
 		$page = "recent_topics_page.html";
 		$this->language->add_lang('info_acp_recenttopics', 'paybas/recenttopics');
+		$this->language->add_lang('recenttopics', 'paybas/recenttopics');
 
 		if (isset($this->config['rt_index']) && $this->config['rt_index'])
 		{
