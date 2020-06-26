@@ -1,5 +1,8 @@
 ### Changelog
 
+- 2.2.13 (26/06/2020)
+  - [FIX] better description for RT_PAGE_NUMBER_EXP
+
 - 2.2.12 (28/03/2020)
   - [FIX] #123 Reset user settings issue
   - [NEW] Ukrainian Language for Recent Topics, by Phobos-7

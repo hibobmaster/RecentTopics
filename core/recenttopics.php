@@ -198,10 +198,8 @@ use phpbb\language\language;
 
 		/**
 		 * @param string $tpl_loopname
-		 * @param int    $spec_forum_id
-		 * @param bool   $include_subforums
 		 */
-		public function display_recent_topics($tpl_loopname = 'recent_topics', $spec_forum_id = 0, $include_subforums = true)
+		public function display_recent_topics($tpl_loopname = 'recent_topics')
 		{
 
 			// can view rt ?
@@ -211,7 +209,7 @@ use phpbb\language\language;
 			}
 
 			// if user can enable recent topics and it is not enabled then return
-			if ($this->auth->acl_get('u_rt_enable') && isset($this->user->data['user_rt_enable']) && !$this->user->data['user_rt_enable'])
+			if ($this->auth->acl_get('u_rt_enable') && !$this->user->data['user_rt_enable'])
 			{
 				return;
 			}
@@ -522,7 +520,6 @@ use phpbb\language\language;
 							'TOPIC_FOLDER_IMG'        => $this->user->img($folder_img, $folder_alt),
 							'TOPIC_FOLDER_IMG_ALT'    => $this->language->lang($folder_alt),
 
-							//'NEWEST_POST_IMG'		=> $this->user->img('icon_topic_newest', 'VIEW_NEWEST_POST'), // dupe?
 							'TOPIC_ICON_IMG'          => (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['img'] : '',
 							'TOPIC_ICON_IMG_WIDTH'    => (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['width'] : '',
 							'TOPIC_ICON_IMG_HEIGHT'   => (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['height'] : '',
