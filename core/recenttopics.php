@@ -213,7 +213,7 @@ use phpbb\language\language;
 			{
 				return;
 			}
-
+			
 			// support for phpbb collapsable categories extension
 			if ($this->collapsable_categories !== null)
 			{
@@ -222,19 +222,6 @@ use phpbb\language\language;
 					'S_EXT_COLCAT_HIDDEN'       => $this->collapsable_categories->is_collapsed($fid),
 					'U_EXT_COLCAT_COLLAPSE_URL' => $this->collapsable_categories->get_collapsible_link($fid),
 				));
-			}
-
-			$topics_per_page = (int) $this->config['rt_number'];
-			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
-			{
-				$topics_per_page = (int) $this->user->data['user_rt_number'];
-			}
-
-			//number of pages
-			$total_topics_limit = 0;
-			if ((int) $this->config['rt_page_number'] == 0)
-			{
-				$total_topics_limit = $topics_per_page * (int) $this->config['rt_page_numbermax'];
 			}
 
 			//display parent forums
@@ -260,13 +247,23 @@ use phpbb\language\language;
 			{
 				$this->unread_only = $this->user->data['user_rt_unread_only'];
 			}
-
-			$rtstart = $this->request->variable($tpl_loopname . '_start', 0);
-
-			if (!function_exists('display_forums'))
+			
+			// set # topics shown per page
+			$topics_per_page = (int) $this->config['rt_number'];
+			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
 			{
-				include( $this->root_path . 'includes/functions_display.' . $this->phpEx);
+				$topics_per_page = (int) $this->user->data['user_rt_number'];
 			}
+			
+			//limit number of pages to be shown
+			// compute as product of topics per page and max number of pages.
+			$total_topics_limit = 0;
+			if ((int) $this->config['rt_page_number'] == 0)
+			{
+				$total_topics_limit = $topics_per_page * (int) $this->config['rt_page_numbermax'];
+			}
+			
+			$rtstart = $this->request->variable($tpl_loopname . '_start', 0);
 
 			$this->getforumlist();
 			// No forums to display

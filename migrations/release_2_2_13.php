@@ -15,7 +15,7 @@ class release_2_2_13 extends \phpbb\db\migration\migration
 
 	public function effectively_installed()
 	{
-		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.2.12', '>=');
+		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.2.13', '>=');
 	}
 
 	static public function depends_on()
@@ -29,8 +29,21 @@ class release_2_2_13 extends \phpbb\db\migration\migration
 	{
 		return array(
 			array('config.update', array('rt_version', '2.2.13')),
+			array('custom', array(array($this, 'set_unread'))),
 		);
 
 	}
+	
+	
+	/**
+	 * set user preferences to new unread default.
+	 */
+	public function set_unread()
+	{
+		$sql = 'UPDATE ' . $this->table_prefix . 'users' . ' SET user_rt_unread_only = ' . $this->config['rt_unread_only'];
+		$this->db->sql_query($sql);
+	}
+	
+	
 
 }

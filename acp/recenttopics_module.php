@@ -63,15 +63,16 @@ class recenttopics_module extends admin
 			/*
 			* acp options for everyone
 			*/
-
-			//enable-disable paging
+			
+			// Maximum number of pages
+			$rt_page_numbermax = $request->variable('rt_page_numbermax', 0);
+			$config->set('rt_page_numbermax', $rt_page_numbermax);
+			
+			//Show all recent topic pages
 			$rt_page_number = $request->variable('rt_page_number', '');
 			$config->set('rt_page_number', $rt_page_number == 'on' ? 1 : 0 );
 
-			// maximum number of pages
-			$rt_page_numbermax = $request->variable('rt_page_numbermax', 0);
-			$config->set('rt_page_numbermax', $rt_page_numbermax);
-
+			// Minimum topic type level
 			$rt_min_topic_level = $request->variable('rt_min_topic_level', 0);
 			$config->set('rt_min_topic_level', $rt_min_topic_level);
 
@@ -166,14 +167,14 @@ class recenttopics_module extends admin
 				'RT_LATESTVERSION'     => $latest_version,
 			)
 		);
-
+		
 		//reset user preferences
 		if ($request->is_set_post('rt_reset_default'))
 		{
 			$sql_ary = array(
 				'user_rt_enable'      => (int) $config['rt_index'],
 				'user_rt_sort_start_time'     => (int) $config['rt_sort_start_time'] ,
-				'user_rt_unread_only'      => (int) $config['rt_unread_only'],
+				'user_rt_unread_only'   => (int) $config['rt_unread_only'],
 				'user_rt_location'      => $config['rt_location'],
 				'user_rt_number'      => ((int) $config['rt_number'] > 0 ? (int) $config['rt_number'] : 5 )
 			);
