@@ -138,27 +138,27 @@ use phpbb\language\language;
 		 * @var Collapsable
 		 */
 		private $collapsable_categories;
-		
+
 		/**
 		 * @var int
 		 */
 		private $rtstart;
-		
+
 		/**
 		 * @var int
 		 */
 		private $topics_per_page;
-		
+
 		/**
 		 * @var int
 		 */
 		private $total_topics_limit;
-		
+
 		/**
 		 * @var int
 		 */
 		private $sort_topics;
-		
+
 		/**
 		 * recenttopics constructor.
 		 *
@@ -232,7 +232,7 @@ use phpbb\language\language;
 			{
 				return;
 			}
-			
+
 			// support for phpbb collapsable categories extension
 			if ($this->collapsable_categories !== null)
 			{
@@ -259,16 +259,16 @@ use phpbb\language\language;
 			{
 				$this->unread_only = $this->user->data['user_rt_unread_only'];
 			}
-			
+
 			$this->rtstart = $this->request->variable($tpl_loopname . '_start', 0);
-			
+
 			// set # topics shown per page
 			$this->topics_per_page = (int) $this->config['rt_number'];
 			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
 			{
 				$this->topics_per_page = (int) $this->user->data['user_rt_number'];
 			}
-			
+
 			//limit number of pages to be shown
 			// compute as product of topics per page and max number of pages.
 			$this->total_topics_limit = 0;
