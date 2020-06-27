@@ -138,8 +138,27 @@ use phpbb\language\language;
 		 * @var Collapsable
 		 */
 		private $collapsable_categories;
-
-
+		
+		/**
+		 * @var int
+		 */
+		private $rtstart;
+		
+		/**
+		 * @var int
+		 */
+		private $topics_per_page;
+		
+		/**
+		 * @var int
+		 */
+		private $total_topics_limit;
+		
+		/**
+		 * @var int
+		 */
+		private $sort_topics;
+		
 		/**
 		 * recenttopics constructor.
 		 *
@@ -235,35 +254,35 @@ use phpbb\language\language;
 				$location = $this->user->data['user_rt_location'];
 			}
 
-			$sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-			// if user can set recent topic sorting order and it is set then use the preference
-			if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
-			{
-				$sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-			}
-
 			$this->unread_only = $this->config['rt_unread_only'];
 			if ($this->auth->acl_get('u_rt_unread_only') && isset($this->user->data['user_rt_unread_only']))
 			{
 				$this->unread_only = $this->user->data['user_rt_unread_only'];
 			}
 			
+			$this->rtstart = $this->request->variable($tpl_loopname . '_start', 0);
+			
 			// set # topics shown per page
-			$topics_per_page = (int) $this->config['rt_number'];
+			$this->topics_per_page = (int) $this->config['rt_number'];
 			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
 			{
-				$topics_per_page = (int) $this->user->data['user_rt_number'];
+				$this->topics_per_page = (int) $this->user->data['user_rt_number'];
 			}
 			
 			//limit number of pages to be shown
 			// compute as product of topics per page and max number of pages.
-			$total_topics_limit = 0;
+			$this->total_topics_limit = 0;
 			if ((int) $this->config['rt_page_number'] == 0)
 			{
-				$total_topics_limit = $topics_per_page * (int) $this->config['rt_page_numbermax'];
+				$this->total_topics_limit = $this->topics_per_page * (int) $this->config['rt_page_numbermax'];
 			}
-			
-			$rtstart = $this->request->variable($tpl_loopname . '_start', 0);
+
+			$this->sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+			// if user can set recent topic sorting order and it is set then use the preference
+			if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
+			{
+				$this->sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+			}
 
 			$this->getforumlist();
 			// No forums to display
@@ -272,7 +291,7 @@ use phpbb\language\language;
 				return;
 			}
 
-			$topics_count = $this->gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics);
+			$topics_count = $this->gettopiclist();
 
 			// If topics to display
 			if (sizeof($this->topic_list))
@@ -326,7 +345,7 @@ use phpbb\language\language;
 						),
 					),
 					'WHERE'     => $this->db->sql_in_set('t.topic_id', $this->topic_list),
-					'ORDER_BY'  => 't.' . $sort_topics . ' DESC',
+					'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
 				);
 
 				if ($display_parent_forums)
@@ -349,7 +368,7 @@ use phpbb\language\language;
 				);
 
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
-				$result = $this->db->sql_query_limit($sql, $topics_per_page);
+				$result = $this->db->sql_query_limit($sql, $this->topics_per_page);
 
 				$rowset = $topic_icons = array();
 
@@ -600,7 +619,8 @@ use phpbb\language\language;
 					}
 
 					$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
-					$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $topics_count, $topics_per_page, max(0, min((int) $rtstart,$total_topics_limit)));
+					$this->pagination->generate_template_pagination($pagination_url, 'pagination',
+						$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int) $this->rtstart,$this->total_topics_limit)));
 
 					$this->template->assign_vars(
 						array(
@@ -613,7 +633,7 @@ use phpbb\language\language;
 
 			$this->template->assign_vars(
 				array(
-					'RT_SORT_START_TIME'                   => $sort_topics === 'topic_time',
+					'RT_SORT_START_TIME'                   => $this->sort_topics === 'topic_time',
 					'S_RECENT_TOPICS'                      => true,
 					'S_LOCATION_TOP'                       => $location == 'RT_TOP',
 					'S_LOCATION_BOTTOM'                    => $location == 'RT_BOTTOM',
@@ -666,19 +686,15 @@ use phpbb\language\language;
 		/**
 		 * Get the topic list
 		 *
-		 * @param  $rtstart
-		 * @param  $topics_per_page
-		 * @param  $total_topics_limit
-		 * @param  $sort_topics
 		 * @return int
 		 */
-		private function gettopiclist($rtstart, $topics_per_page, $total_topics_limit, $sort_topics)
+		private function gettopiclist()
 		{
-			$rtstart = max(0, $rtstart);
+			$this->rtstart = max(0, $this->rtstart);
 
-			if ($total_topics_limit > 0)
+			if ($this->total_topics_limit > 0)
 			{
-				$rtstart = min((int) $rtstart, $total_topics_limit);
+				$this->rtstart = min((int) $this->rtstart, $this->total_topics_limit);
 			}
 
 			$this->forums = $this->topic_list = array();
@@ -693,13 +709,13 @@ use phpbb\language\language;
 				// Get unread topics
 				$sql_extra = ' AND ' . $this->db->sql_in_set('t.topic_id', $excluded_topics, true);
 				$sql_extra .= ' AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.');
-				$unread_topics = get_unread_topics(false, $sql_extra, '', $total_topics_limit);
-				$rtstart = min(count($unread_topics) - 1 , (int) $rtstart);
+				$unread_topics = get_unread_topics(false, $sql_extra, '', $this->total_topics_limit);
+				$this->rtstart = min(count($unread_topics) - 1 , (int) $this->rtstart);
 
 				foreach ($unread_topics as $topic_id => $mark_time)
 				{
 					$topics_count++;
-					if (($topics_count > $rtstart) && ($topics_count <= ($rtstart + $topics_per_page)))
+					if (($topics_count > $this->rtstart) && ($topics_count <= ($this->rtstart + $this->topics_per_page)))
 					{
 						$this->topic_list[] = $topic_id;
 					}
@@ -709,7 +725,7 @@ use phpbb\language\language;
 			{
 				// Get the allowed topics
 				$sql_array = array(
-					'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tt.mark_time, ft.mark_time as f_mark_time, t.' . $sort_topics . ' as sortcr ',
+					'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tt.mark_time, ft.mark_time as f_mark_time, t.' . $this->sort_topics . ' as sortcr ',
 					'FROM'      => array(TOPICS_TABLE => 't'),
 					'LEFT_JOIN' => array(
 						array(
@@ -724,7 +740,7 @@ use phpbb\language\language;
 					'WHERE'     => $this->db->sql_in_set('t.topic_id', $excluded_topics, true) . '
 						AND t.topic_status <> ' . ITEM_MOVED . '
 						AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.'),
-					'ORDER_BY'  => 't.' . $sort_topics . ' DESC',
+					'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
 				);
 
 				// Check if we want all topics, or only stickies/announcements/globals
@@ -755,9 +771,9 @@ use phpbb\language\language;
 				//load topics list
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
 
-				if ($total_topics_limit > 0)
+				if ($this->total_topics_limit > 0)
 				{
-					$result = $this->db->sql_query_limit($sql, $total_topics_limit);
+					$result = $this->db->sql_query_limit($sql, $this->total_topics_limit);
 				}
 				else
 				{
@@ -766,17 +782,17 @@ use phpbb\language\language;
 
 				if ($result != null)
 				{
-					$rtstart = min($num_rows - 1 , $rtstart);
+					$this->rtstart = min($num_rows - 1 , $this->rtstart);
 				}
 				else
 				{
-					$rtstart = 0;
+					$this->rtstart = 0;
 				}
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$topics_count++;
-					if (($topics_count > $rtstart) && ($topics_count <= ($rtstart + $topics_per_page)))
+					if (($topics_count > $this->rtstart) && ($topics_count <= ($this->rtstart + $this->topics_per_page)))
 					{
 						$this->topic_list[] = $row['topic_id'];
 
