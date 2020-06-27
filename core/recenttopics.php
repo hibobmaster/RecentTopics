@@ -163,24 +163,24 @@ use phpbb\language\language;
 		 * @var int
 		 */
 		private $display_parent_forums;
-		
+
 		/**
 		 * Block location
 		 * @var string
 		 */
 		private $location;
-		
+
 		/**
 		 *
 		 * @var int
 		 */
 		private $icons;
-		
+
 		/**
 		 * @var string
 		 */
 		private $excluded_topics;
-		
+
 		/**
 		 * recenttopics constructor.
 		 *
@@ -289,10 +289,10 @@ use phpbb\language\language;
 			{
 				$this->topics_per_page = (int) $this->user->data['user_rt_number'];
 			}
-			
+
 			$this->excluded_topics = explode(',', $this->config['rt_anti_topics']);
 			$min_topic_level = $this->config['rt_min_topic_level'];
-			
+
 			//limit number of pages to be shown
 			// compute as product of topics per page and max number of pages.
 			$this->total_topics_limit = 0;
@@ -310,7 +310,7 @@ use phpbb\language\language;
 				$result = $this->db->sql_query($sql);
 				$this->total_topics_limit = (int) $this->db->sql_fetchfield('topic_count', $result);
 				$this->db->sql_freeresult($result);
-				
+
 			}
 
 			$this->sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
@@ -328,7 +328,7 @@ use phpbb\language\language;
 			}
 
 			$topics_count = $this->gettopiclist();
-			
+
 			if (sizeof($this->topic_list) == 0)
 			{
 				return;
@@ -370,7 +370,7 @@ use phpbb\language\language;
 					}
 				}
 			}
-			
+
 			$this->template->assign_vars(
 				array(
 					'RT_SORT_START_TIME'                   => $this->sort_topics === 'topic_time',
@@ -384,7 +384,7 @@ use phpbb\language\language;
 					strtoupper($tpl_loopname) . '_DISPLAY' => true,
 				)
 			);
-			
+
 			$this->fill_template($tpl_loopname, $topic_tracking_info, $topics_count);
 		}
 
@@ -442,7 +442,7 @@ use phpbb\language\language;
 			$this->forums = $this->topic_list = array();
 			$topics_count = 0;
 			$this->obtain_icons = false;
-			
+
 			$min_topic_level = $this->config['rt_min_topic_level'];
 
 			// Either use the phpBB core function to get unread topics, or the custom function for default behavior
@@ -521,7 +521,7 @@ use phpbb\language\language;
 			}
 			return $topics_count;
 		}
-		
+
 		/**
 		 * custom function to get allowed topics
 		 * used for anon access or when unread topics is not requested
@@ -550,13 +550,13 @@ use phpbb\language\language;
 						AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.'),
 				'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
 			);
-			
+
 			// Check if we want all topics, or only stickies/announcements/globals
 			if ($min_topic_level > 0)
 			{
 				$sql_array['WHERE'] .= ' AND t.topic_type >= ' . (int) $min_topic_level;
 			}
-			
+
 			/**
 			 * Event to modify the SQL query before the allowed topics list data is retrieved
 			 *
@@ -566,12 +566,10 @@ use phpbb\language\language;
 			 */
 			$vars = array('sql_array');
 			extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_list', compact($vars)));
-			
+
 			return $sql_array;
-			
+
 		}
-		
-		
 
 		/**
 		 * @param $row
@@ -609,7 +607,7 @@ use phpbb\language\language;
 			}
 			return false;
 		}
-		
+
 		/**
 		 * pull the data of the requested topics
 		 * @return array
@@ -655,7 +653,7 @@ use phpbb\language\language;
 			$this->db->sql_freeresult($result);
 			return $rowset;
 		}
-		
+
 		/**
 		 * @param       $tpl_loopname
 		 * @param       $topic_tracking_info
@@ -721,7 +719,7 @@ use phpbb\language\language;
 					$posts_unapproved = ($row['topic_visibility'] == ITEM_APPROVED && $row['topic_posts_unapproved'] && $this->auth->acl_get('m_approve', $forum_id));
 					$u_mcp_queue   = ($topic_unapproved || $posts_unapproved) ? append_sid("{$this->root_path}mcp.$this->phpEx", 'i=queue&amp;mode=' . ($topic_unapproved ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $this->user->session_id) : '';
 					$s_type_switch = ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0;
-					
+
 					if (!empty($this->icons[$row['icon_id']]))
 					{
 						$topic_icons[] = $topic_id;
@@ -737,7 +735,7 @@ use phpbb\language\language;
 							$prefix = '[' . $row['topic_prefix'] . '] ';
 						}
 					}
-					
+
 					/**
 					 * Event to remove re
 					 *
@@ -747,7 +745,7 @@ use phpbb\language\language;
 					 */
 					$vars = array('row');
 					extract($this->dispatcher->trigger_event('paybas.recenttopics.topictitle_remove_re', compact($vars)));
-					
+
 					/**
 					 * Event to modify the topic title
 					 *
@@ -756,10 +754,10 @@ use phpbb\language\language;
 					 * @var   string    prefix  the topic title prefix
 					 * @since 2.1.3
 					 */
-					
+
 					$vars = array('row', 'prefix');
 					extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topictitle', compact($vars)));
-					
+
 					//fallback if there is no listener
 					if (!$this->is_listening('imkingdavid\prefixed\event\listener', 'paybas.recenttopics.modify_topictitle'))
 					{
@@ -834,7 +832,7 @@ use phpbb\language\language;
 						'U_MCP_REPORT'  => append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;f=' . $forum_id . '&amp;t=' . $topic_id, true, $this->user->session_id),
 						'U_MCP_QUEUE'   => $u_mcp_queue,
 					);
-					
+
 					/**
 					 * Modify the topic data before it is assigned to the template
 					 *
@@ -862,7 +860,7 @@ use phpbb\language\language;
 						}
 					}
 				}// end rowsset
-				
+
 				// Get URL-parameters for pagination
 				$url_params    = explode('&', $this->user->page['query_string']);
 				$append_params = array();
@@ -888,7 +886,7 @@ use phpbb\language\language;
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination',
 					$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int)$this->rtstart, $this->total_topics_limit)));
 				$this->template->assign_vars(
-					array(
+					array (
 						'S_TOPIC_ICONS' => sizeof($topic_icons) ? true : false,
 					)
 				);
