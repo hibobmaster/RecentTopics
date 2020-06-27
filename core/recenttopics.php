@@ -177,6 +177,11 @@ use phpbb\language\language;
 		private $icons;
 		
 		/**
+		 * @var string
+		 */
+		private $excluded_topics;
+		
+		/**
 		 * recenttopics constructor.
 		 *
 		 * @param \phpbb\auth\auth                                    $auth
@@ -284,13 +289,28 @@ use phpbb\language\language;
 			{
 				$this->topics_per_page = (int) $this->user->data['user_rt_number'];
 			}
-
+			
+			$this->excluded_topics = explode(',', $this->config['rt_anti_topics']);
+			$min_topic_level = $this->config['rt_min_topic_level'];
+			
 			//limit number of pages to be shown
 			// compute as product of topics per page and max number of pages.
 			$this->total_topics_limit = 0;
 			if ((int) $this->config['rt_page_number'] == 0)
 			{
 				$this->total_topics_limit = $this->topics_per_page * (int) $this->config['rt_page_numbermax'];
+			}
+			else
+			{
+				$sql_array = $this->get_allowed_topics_sql($this->excluded_topics, $min_topic_level);
+				$count_sql_array = $sql_array;
+				$count_sql_array['SELECT'] = 'COUNT(t.topic_id) as topic_count';
+				unset($count_sql_array['ORDER_BY']);
+				$sql = $this->db->sql_build_query('SELECT', $count_sql_array);
+				$result = $this->db->sql_query($sql);
+				$this->total_topics_limit = (int) $this->db->sql_fetchfield('topic_count', $result);
+				$this->db->sql_freeresult($result);
+				
 			}
 
 			$this->sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
@@ -422,14 +442,14 @@ use phpbb\language\language;
 			$this->forums = $this->topic_list = array();
 			$topics_count = 0;
 			$this->obtain_icons = false;
-			$excluded_topics = explode(',', $this->config['rt_anti_topics']);
+			
 			$min_topic_level = $this->config['rt_min_topic_level'];
 
 			// Either use the phpBB core function to get unread topics, or the custom function for default behavior
 			if ($this->unread_only && $this->user->data['user_id'] != ANONYMOUS)
 			{
 				// Get unread topics
-				$sql_extra = ' AND ' . $this->db->sql_in_set('t.topic_id', $excluded_topics, true);
+				$sql_extra = ' AND ' . $this->db->sql_in_set('t.topic_id', $this->excluded_topics, true);
 				$sql_extra .= ' AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.');
 				$unread_topics = get_unread_topics(false, $sql_extra, '', $this->total_topics_limit);
 				$this->rtstart = min(count($unread_topics) - 1 , (int) $this->rtstart);
@@ -445,43 +465,8 @@ use phpbb\language\language;
 			}
 			else
 			{
-				// Get the allowed topics
-				$sql_array = array(
-					'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tt.mark_time, ft.mark_time as f_mark_time, t.' . $this->sort_topics . ' as sortcr ',
-					'FROM'      => array(TOPICS_TABLE => 't'),
-					'LEFT_JOIN' => array(
-						array(
-							'FROM' => array(TOPICS_TRACK_TABLE => 'tt'),
-							'ON'   => 'tt.topic_id = t.topic_id AND tt.user_id = ' . (int) $this->user->data['user_id'],
-						),
-						array(
-							'FROM' => array(FORUMS_TRACK_TABLE => 'ft'),
-							'ON'   => 'ft.forum_id = t.forum_id AND ft.user_id = ' . (int) $this->user->data['user_id'],
-						),
-					),
-					'WHERE'     => $this->db->sql_in_set('t.topic_id', $excluded_topics, true) . '
-						AND t.topic_status <> ' . ITEM_MOVED . '
-						AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.'),
-					'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
-				);
-
-				// Check if we want all topics, or only stickies/announcements/globals
-				if ($min_topic_level > 0)
-				{
-					$sql_array['WHERE'] .= ' AND t.topic_type >= ' . (int) $min_topic_level;
-				}
-
-				/**
-				 * Event to modify the SQL query before the allowed topics list data is retrieved
-				 *
-				 * @event paybas.recenttopics.sql_pull_topics_list
-				 * @var   array    sql_array        The SQL array
-				 * @since 2.0.4
-				 */
-				$vars = array('sql_array');
-				extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_list', compact($vars)));
-
-				//count topics
+				// Get allowed topics
+				$sql_array = $this->get_allowed_topics_sql($this->excluded_topics, $min_topic_level);
 				$count_sql_array = $sql_array;
 				$count_sql_array['SELECT'] = 'COUNT(t.topic_id) as topic_count';
 				unset($count_sql_array['ORDER_BY']);
@@ -536,6 +521,57 @@ use phpbb\language\language;
 			}
 			return $topics_count;
 		}
+		
+		/**
+		 * custom function to get allowed topics
+		 * used for anon access or when unread topics is not requested
+		 * @param $excluded_topics
+		 * @param $min_topic_level
+		 * @return array
+		 */
+		private function get_allowed_topics_sql($excluded_topics, $min_topic_level)
+		{
+			// Get the allowed topics
+			$sql_array = array(
+				'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tt.mark_time, ft.mark_time as f_mark_time, t.' . $this->sort_topics . ' as sortcr ',
+				'FROM'      => array(TOPICS_TABLE => 't'),
+				'LEFT_JOIN' => array(
+					array(
+						'FROM' => array(TOPICS_TRACK_TABLE => 'tt'),
+						'ON'   => 'tt.topic_id = t.topic_id AND tt.user_id = ' . (int) $this->user->data['user_id'],
+					),
+					array(
+						'FROM' => array(FORUMS_TRACK_TABLE => 'ft'),
+						'ON'   => 'ft.forum_id = t.forum_id AND ft.user_id = ' . (int) $this->user->data['user_id'],
+					),
+				),
+				'WHERE'     => $this->db->sql_in_set('t.topic_id', $excluded_topics, true) . '
+						AND t.topic_status <> ' . ITEM_MOVED . '
+						AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.'),
+				'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
+			);
+			
+			// Check if we want all topics, or only stickies/announcements/globals
+			if ($min_topic_level > 0)
+			{
+				$sql_array['WHERE'] .= ' AND t.topic_type >= ' . (int) $min_topic_level;
+			}
+			
+			/**
+			 * Event to modify the SQL query before the allowed topics list data is retrieved
+			 *
+			 * @event paybas.recenttopics.sql_pull_topics_list
+			 * @var   array    sql_array        The SQL array
+			 * @since 2.0.4
+			 */
+			$vars = array('sql_array');
+			extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_list', compact($vars)));
+			
+			return $sql_array;
+			
+		}
+		
+		
 
 		/**
 		 * @param $row
@@ -629,6 +665,7 @@ use phpbb\language\language;
 		{
 			// get topics from db
 			$rowset = $this->get_topics_sql();
+			$topic_icons = array();
 			// if topics returned by DB
 			if (sizeof($rowset))
 			{
@@ -658,19 +695,22 @@ use phpbb\language\language;
 					{
 						topic_status($row, $replies, true, $folder_img, $folder_alt, $topic_type);
 						$unread_topic = true;
-					} else
+					}
+					else
 					{
 						if (isset($topic_tracking_info[$forum_id][$row['topic_id']]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$row['topic_id']])
 						{
 							topic_status($row, $replies, true, $folder_img, $folder_alt, $topic_type);
-						} else
+						}
+						else
 						{
 							topic_status($row, $replies, false, $folder_img, $folder_alt, $topic_type);
 						}
 						if (isset($topic_tracking_info[$forum_id][$row['topic_id']]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$row['topic_id']])
 						{
 							$unread_topic = true;
-						} else
+						}
+						else
 						{
 							$unread_topic = false;
 						}
@@ -681,7 +721,7 @@ use phpbb\language\language;
 					$posts_unapproved = ($row['topic_visibility'] == ITEM_APPROVED && $row['topic_posts_unapproved'] && $this->auth->acl_get('m_approve', $forum_id));
 					$u_mcp_queue   = ($topic_unapproved || $posts_unapproved) ? append_sid("{$this->root_path}mcp.$this->phpEx", 'i=queue&amp;mode=' . ($topic_unapproved ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $this->user->session_id) : '';
 					$s_type_switch = ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0;
-					$topic_icons = array();
+					
 					if (!empty($this->icons[$row['icon_id']]))
 					{
 						$topic_icons[] = $topic_id;
@@ -697,6 +737,7 @@ use phpbb\language\language;
 							$prefix = '[' . $row['topic_prefix'] . '] ';
 						}
 					}
+					
 					/**
 					 * Event to remove re
 					 *
@@ -706,6 +747,7 @@ use phpbb\language\language;
 					 */
 					$vars = array('row');
 					extract($this->dispatcher->trigger_event('paybas.recenttopics.topictitle_remove_re', compact($vars)));
+					
 					/**
 					 * Event to modify the topic title
 					 *
@@ -714,8 +756,10 @@ use phpbb\language\language;
 					 * @var   string    prefix  the topic title prefix
 					 * @since 2.1.3
 					 */
+					
 					$vars = array('row', 'prefix');
 					extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topictitle', compact($vars)));
+					
 					//fallback if there is no listener
 					if (!$this->is_listening('imkingdavid\prefixed\event\listener', 'paybas.recenttopics.modify_topictitle'))
 					{
@@ -790,6 +834,7 @@ use phpbb\language\language;
 						'U_MCP_REPORT'  => append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;f=' . $forum_id . '&amp;t=' . $topic_id, true, $this->user->session_id),
 						'U_MCP_QUEUE'   => $u_mcp_queue,
 					);
+					
 					/**
 					 * Modify the topic data before it is assigned to the template
 					 *
@@ -817,6 +862,7 @@ use phpbb\language\language;
 						}
 					}
 				}// end rowsset
+				
 				// Get URL-parameters for pagination
 				$url_params    = explode('&', $this->user->page['query_string']);
 				$append_params = array();
