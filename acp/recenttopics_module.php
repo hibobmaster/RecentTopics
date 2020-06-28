@@ -63,11 +63,11 @@ class recenttopics_module extends admin
 			/*
 			* acp options for everyone
 			*/
-			
+
 			// Maximum number of pages
 			$rt_page_numbermax = $request->variable('rt_page_numbermax', 0);
 			$config->set('rt_page_numbermax', $rt_page_numbermax);
-			
+
 			//Show all recent topic pages
 			$rt_page_number = $request->variable('rt_page_number', '');
 			$config->set('rt_page_number', $rt_page_number == 'on' ? 1 : 0 );
@@ -167,7 +167,7 @@ class recenttopics_module extends admin
 				'RT_LATESTVERSION'     => $latest_version,
 			)
 		);
-		
+
 		//reset user preferences
 		if ($request->is_set_post('rt_reset_default'))
 		{

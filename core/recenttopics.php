@@ -727,7 +727,7 @@ use phpbb\language\language;
 					topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
 					$topic_title = censor_text($row['topic_title']);
 					$prefix      = '';
-					if ($this->topicprefixes !== NULL)
+					if ($this->topicprefixes !== null)
 					{
 						// Topic Prefix extension Stathis
 						if (!empty($row['topic_prefix']))
@@ -761,7 +761,7 @@ use phpbb\language\language;
 					//fallback if there is no listener
 					if (!$this->is_listening('imkingdavid\prefixed\event\listener', 'paybas.recenttopics.modify_topictitle'))
 					{
-						if ($this->prefixed !== NULL)
+						if ($this->prefixed !== null)
 						{
 							// pre:fixed extension
 							$prefix_instances = $this->prefixed->get_prefix_instances();
@@ -884,7 +884,7 @@ use phpbb\language\language;
 				}
 				$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination',
-					$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int)$this->rtstart, $this->total_topics_limit)));
+					$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int) $this->rtstart, $this->total_topics_limit)));
 				$this->template->assign_vars(
 					array (
 						'S_TOPIC_ICONS' => sizeof($topic_icons) ? true : false,
