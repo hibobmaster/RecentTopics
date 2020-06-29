@@ -1,4 +1,4 @@
-Recent Topics for phpBB 3.2
+Recent Topics for phpBB 3.2 / 3.3
 ==========
 
 Extension for phpBB to display recent topics.
