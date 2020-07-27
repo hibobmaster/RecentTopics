@@ -44,22 +44,25 @@ class page_controller implements page_interface
 	/**
 	 * page constructor.
 	 *
-	 * @param \phpbb\config\config              		$config
-	 * @param \phpbb\controller\helper          		$helper
-	 * @param \phpbb\language\language 					$language
-	 * @param \paybas\recenttopics\core\recenttopics	$functions
+	 * @param \phpbb\config\config              			$config
+	 * @param \phpbb\controller\helper          			$helper
+	 * @param \phpbb\language\language 						$language
+	 * @param \paybas\recenttopics\core\recenttopics		$functions
+	 * @param \Symfony\Component\HttpFoundation\Response	$response
 	 */
 	public function __construct(
 		config $config,
 		helper $helper,
 		language $language,
-		recenttopics $functions
+		recenttopics $functions,
+		Response $response,
 	)
 	{
 		$this->config       = $config;
 		$this->helper       = $helper;
 		$this->language = $language;
 		$this->rt_functions = $functions;
+		$this->response = $response;
 	}
 
 	/**
