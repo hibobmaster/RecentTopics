@@ -638,7 +638,6 @@ class recenttopics
 		{
 			$sql_array['SELECT'] .= ', f.parent_id, f.forum_parents, f.left_id, f.right_id';
 		}
-
 		/**
 		 * Event to modify the SQL query before the topics data is retrieved
 		 *
@@ -707,7 +706,6 @@ class recenttopics
 				}
 				// Get folder img, topic status/type related information
 				$folder_img = $folder_alt = $topic_type = '';
-
 				if ($this->unread_only)
 				{
 					topic_status($row, $replies, true, $folder_img, $folder_alt, $topic_type);
@@ -743,7 +741,7 @@ class recenttopics
 				{
 					$topic_icons[] = $topic_id;
 				}
-				//topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
+				topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
 				$topic_title = censor_text($row['topic_title']);
 				$prefix      = '';
 				if ($this->topicprefixes !== null)
