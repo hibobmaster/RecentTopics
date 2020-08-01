@@ -55,7 +55,7 @@ class page_controller implements page_interface
 		helper $helper,
 		language $language,
 		recenttopics $functions,
-		Response $response,
+		Response $response
 	)
 	{
 		$this->config       = $config;
