@@ -77,12 +77,12 @@ class recenttopics_module extends admin
 
 			// variable should be '' as it is a string ("1, 2, 3928") here, not an integer.
 			$rt_anti_topics = $request->variable('rt_anti_topics', '');
-            $ants = explode(",", $rt_anti_topics);
-            $checkants=true;
-            foreach($ants as $ant) {
-                if (!is_numeric($ant)) {$checkants=false; }
-            }
-            if ($checkants) {$config->set('rt_anti_topics', $rt_anti_topics);}
+			$ants = explode(",", $rt_anti_topics);
+			$checkants=true;
+			foreach($ants as $ant) {
+			    if (!is_numeric($ant)) {$checkants=false; }
+			}
+			if ($checkants) {$config->set('rt_anti_topics', $rt_anti_topics);}
 
 			$rt_parents = $request->variable('rt_parents', false);
 			$config->set('rt_parents', $rt_parents);
