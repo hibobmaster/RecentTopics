@@ -17,8 +17,7 @@ use paybas\recenttopics\core\admin;
  *
  * @package paybas\recenttopics\acp
  */
-class
-recenttopics_module extends admin
+class recenttopics_module extends admin
 {
 	public $u_action;
 	/**
