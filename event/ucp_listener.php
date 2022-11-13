@@ -11,7 +11,6 @@
 namespace paybas\recenttopics\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use phpbb\language\language;
 
 /**
  * Event listener
@@ -62,7 +61,9 @@ class ucp_listener implements EventSubscriberInterface
 	 * @param \phpbb\language\language $language
 	 * @param \phpbb\db\driver\driver_interface $db
 	 */
-	public function __construct(\phpbb\auth\auth $auth,
+	public function __construct
+	(
+		\phpbb\auth\auth $auth,
 		\phpbb\config\config $config,
 		\phpbb\request\request $request,
 		\phpbb\template\template $template,
@@ -71,24 +72,24 @@ class ucp_listener implements EventSubscriberInterface
 		\phpbb\db\driver\driver_interface $db
 	)
 	{
-		$this->auth = $auth;
-		$this->config = $config;
-		$this->request = $request;
+		$this->auth		= $auth;
+		$this->config	= $config;
+		$this->request	= $request;
 		$this->template = $template;
-		$this->user = $user;
-		$this->language = $language;
-		$this->db = $db;
+		$this->user		= $user;
+		$this->language	= $language;
+		$this->db		= $db;
 	}
 
 	/**
 	 * @return array
 	 */
-	static public function getSubscribedEvents()
+	public static function getSubscribedEvents()
 	{
 		return array(
-		'core.ucp_prefs_view_data'        => 'ucp_prefs_get_data',
-		'core.ucp_prefs_view_update_data' => 'ucp_prefs_set_data',
-		'core.ucp_register_data_after'		  => 'ucp_register_set_data'
+		'core.ucp_prefs_view_data'        	=> 'ucp_prefs_get_data',
+		'core.ucp_prefs_view_update_data' 	=> 'ucp_prefs_set_data',
+		'core.ucp_register_welcome_email_before' => 'ucp_register_set_data'
 		);
 	}
 
@@ -119,15 +120,15 @@ class ucp_listener implements EventSubscriberInterface
 			if ($this->auth->acl_get('u_rt_enable') || $this->auth->acl_get('u_rt_location') || $this->auth->acl_get('u_rt_sort_start_time') || $this->auth->acl_get('u_rt_unread_only'))
 			{
 				$template_vars += array(
-				'S_RT_SHOW' => true,
+					'S_RT_SHOW' => true,
 				);
 			}
 
 			if ($this->auth->acl_get('u_rt_enable'))
 			{
 				$template_vars += array(
-				'A_RT_ENABLE' => true,
-				'S_RT_ENABLE' => $event['data']['rt_enable'],
+					'A_RT_ENABLE' => true,
+					'S_RT_ENABLE' => $event['data']['rt_enable'],
 				);
 			}
 
@@ -139,9 +140,9 @@ class ucp_listener implements EventSubscriberInterface
 				);
 
 				$display_types = array (
-					'RT_TOP'    => $this->language->lang('RT_TOP'),
-					'RT_BOTTOM' => $this->language->lang('RT_BOTTOM'),
-					'RT_SIDE'   => $this->language->lang('RT_SIDE'),
+					'RT_TOP'	=> $this->language->lang('RT_TOP'),
+					'RT_BOTTOM'	=> $this->language->lang('RT_BOTTOM'),
+					'RT_SIDE'	=> $this->language->lang('RT_SIDE'),
 				);
 
 				foreach ($display_types as $key => $display_type)
@@ -149,7 +150,7 @@ class ucp_listener implements EventSubscriberInterface
 					$this->template->assign_block_vars(
 						'location_row',
 						array(
-							'VALUE'    => $key,
+							'VALUE'	   => $key,
 							'SELECTED' => ($event['data']['rt_location'] == $key) ? ' selected="selected"' : '',
 							'OPTION'   => $display_type,
 						)
@@ -161,7 +162,7 @@ class ucp_listener implements EventSubscriberInterface
 			{
 				$template_vars += array(
 					'A_RT_NUMBER' => true,
-					'RT_NUMBER' => $event['data']['rt_number'],
+					'RT_NUMBER'	  => $event['data']['rt_number'],
 				);
 			}
 
@@ -192,11 +193,11 @@ class ucp_listener implements EventSubscriberInterface
 	{
 		$event['sql_ary'] = array_merge(
 			$event['sql_ary'], array(
-			'user_rt_enable'          => $event['data']['rt_enable'],
-			'user_rt_location'        => $event['data']['rt_location'],
-			'user_rt_number'          => $event['data']['rt_number'],
-			'user_rt_sort_start_time' => $event['data']['rt_sort_start_time'],
-			'user_rt_unread_only'     => $event['data']['rt_unread_only'],
+				'user_rt_enable'		  => $event['data']['rt_enable'],
+				'user_rt_location'		  => $event['data']['rt_location'],
+				'user_rt_number'		  => $event['data']['rt_number'],
+				'user_rt_sort_start_time' => $event['data']['rt_sort_start_time'],
+				'user_rt_unread_only'	  => $event['data']['rt_unread_only'],
 			)
 		);
 	}
@@ -209,16 +210,16 @@ class ucp_listener implements EventSubscriberInterface
 	{
 
 		$sql_ary = array(
-			'user_rt_enable'      => (int) $this->config['rt_index'],
-			'user_rt_sort_start_time'     => (int) $this->config['rt_sort_start_time'] ,
-			'user_rt_unread_only'      => (int) $this->config['rt_unread_only'],
-			'user_rt_location'      => $this->config['rt_location'],
-			'user_rt_number'      => ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 )
+			'user_rt_enable'		  => (int) $this->config['rt_index'],
+			'user_rt_sort_start_time' => (int) $this->config['rt_sort_start_time'] ,
+			'user_rt_unread_only'	  => (int) $this->config['rt_unread_only'],
+			'user_rt_location'		  => $this->config['rt_location'],
+			'user_rt_number'		  => ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 )
 		);
 
 		$sql = 'UPDATE ' . USERS_TABLE . '
                 SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . '
-                WHERE user_id = ' . (int) $this->user->data['user_id'];
+                WHERE user_id = ' . $event['user_id'];
 
 		$this->db->sql_query($sql);
 	}
