@@ -18,41 +18,41 @@ class release_2_1_0 extends \phpbb\db\migration\migration
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.1.0', '>=');
 	}
 
-	static public function depends_on()
+	public function depends_on()
 	{
 		return [
 			'\paybas\recenttopics\migrations\release_2_0_6',
-        ];
+		];
 	}
 
 	public function update_schema()
 	{
 		return [
-			'drop_columns'    => [
+			'drop_columns'	  => [
 				$this->table_prefix . 'users' => [
 					'user_rt_alt_location',
-                ],
-            ],
+				],
+			],
 
-			'add_columns'    => [
+			'add_columns'	 => [
 				$this->table_prefix . 'users' => [
-					'user_rt_location'    => ['VCHAR:10', 'RT_TOP'],
-                ],
-            ],
-        ];
+					'user_rt_location' => ['VCHAR:10', 'RT_TOP'],
+				],
+			],
+		];
 	}
 
 	public function revert_schema()
 	{
 		return [
 			'drop_columns'		=> [
-				$this->table_prefix . 'users'		=> [
+				$this->table_prefix . 'users' => [
 					'user_rt_location',
 					'user_rt_alt_location',
-                ],
-            ],
+				],
+			],
 
-        ];
+		];
 	}
 
 	public function update_data()
@@ -60,14 +60,14 @@ class release_2_1_0 extends \phpbb\db\migration\migration
 		return [
 			['config.update', ['rt_version', '2.1.0']],
 			['config.remove', ['rt_alt_location']],
-			['config.add',    ['rt_location', 'RT_TOP']],
+			['config.add',	  ['rt_location', 'RT_TOP']],
 
 			['permission.remove', ['u_rt_alt_location']],
 			['permission.add', ['u_rt_location']],
 
 			['permission.permission_set', ['ROLE_USER_FULL', 'u_rt_location']],
 
-        ];
+		];
 	}
 
 	public function revert_data()
@@ -76,6 +76,6 @@ class release_2_1_0 extends \phpbb\db\migration\migration
 			['config.remove', ['rt_location']],
 			['permission.remove', ['u_rt_location']],
 
-        ];
+		];
 	}
 }

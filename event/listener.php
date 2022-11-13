@@ -11,7 +11,6 @@
 
 namespace paybas\recenttopics\event;
 
-use paybas\recenttopics\core\recenttopics;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -35,7 +34,12 @@ class listener implements EventSubscriberInterface
 	 * @param \phpbb\config\config                   $config
 	 * @param \phpbb\request\request                 $request
 	 */
-	public function __construct(recenttopics $functions, \phpbb\config\config $config, \phpbb\request\request $request)
+	public function __construct
+	(
+		\paybas\recenttopics\core\recenttopics $functions,
+		\phpbb\config\config $config,
+		\phpbb\request\request $request
+	)
 	{
 		$this->rt_functions = $functions;
 		$this->config = $config;
@@ -48,7 +52,7 @@ class listener implements EventSubscriberInterface
 	 * @return array
 	 * @static
 	 */
-	static public function getSubscribedEvents()
+	public static function getSubscribedEvents()
 	{
 		return array(
 			'core.index_modify_page_title'           => 'display_rt',

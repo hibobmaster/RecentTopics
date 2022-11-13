@@ -12,17 +12,16 @@ namespace paybas\recenttopics\migrations;
 
 class release_2_2_8 extends \phpbb\db\migration\migration
 {
-
 	public function effectively_installed()
 	{
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.2.8', '>=');
 	}
 
-	static public function depends_on()
+	public function depends_on()
 	{
 		return [
 			'\paybas\recenttopics\migrations\release_2_2_7',
-        ];
+		];
 	}
 
 	public function update_data()
@@ -31,8 +30,7 @@ class release_2_2_8 extends \phpbb\db\migration\migration
 			['config.update', ['rt_version', '2.2.8']],
 			['custom', [[$this, 'fix_rt_number']]],
 			['permission.permission_set', ['ROLE_USER_FULL', 'u_rt_view']],
-        ];
-
+		];
 	}
 
 	/**
@@ -43,5 +41,4 @@ class release_2_2_8 extends \phpbb\db\migration\migration
 		$sql = 'UPDATE ' . $this->table_prefix . 'users' . " SET user_rt_number = " . ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 );
 		$this->db->sql_query($sql);
 	}
-
 }

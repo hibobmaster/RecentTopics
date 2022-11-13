@@ -64,6 +64,13 @@ $lang = array_merge(
 	'RT_NICKVERGESSEN_NEWSPAGE'     => 'Сумісність з розширенням NewsPage (сторінка новин)',
 	'RT_VIEW_ON'                    => 'Відображати останні повідомлення на:',
 
+	//Versie controle
+	'RT_VERSION_CHECK'				=> 'Контроль версій',
+	'RT_LATEST_VERSION'				=> 'Остання версія',
+	'RT_EXT_VERSION'				=> 'Версія розширення',
+	'RT_VERSION_ERROR'				=> 'Не вдається отримати останню версію!',
+	'RT_CHECK_UPDATE'				=> 'Візити <a href="http://www.avathar.be/bbdkp/index.php">avathar.be</a> für neuere Versionen.',
+
 	//Donation
 	'RT_DONATE_URL'             => 'http://www.avathar.be/bbdkp/app.php/page/donate',
 	'PAYPAL_IMAGE_URL'          => 'https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-pill-paypal-26px.png',

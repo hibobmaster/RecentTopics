@@ -18,11 +18,11 @@ class release_2_2_13 extends \phpbb\db\migration\migration
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.2.13', '>=');
 	}
 
-	static public function depends_on()
+	public function depends_on()
 	{
 		return [
 			'\paybas\recenttopics\migrations\release_2_2_12',
-        ];
+		];
 	}
 
 	public function update_data()
@@ -30,6 +30,6 @@ class release_2_2_13 extends \phpbb\db\migration\migration
 		return [
 			['config.update', ['rt_version', '2.2.13']],
 			//the default should be unread only
-        ];
+		];
 	}
 }

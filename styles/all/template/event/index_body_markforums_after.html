@@ -1,29 +1,24 @@
 {% if RECENT_TOPICS_DISPLAY and recent_topics_included neq true %}
-<!-- DEFINE recent_topics_included = true -->
+	<!-- DEFINE recent_topics_included = true -->
+	{% if S_LOCATION_TOP %}
 
-{% if S_LOCATION_TOP %}
+		<div id="recenttopicstop">
+		{% INCLUDE '@paybas_recenttopics/recent_topics_body_topbottom.html' %}
+		</div>
+	{% elseif S_LOCATION_SIDE %}
+		<div id="phpbbsection">
+		<div class="index-right">
+		{% INCLUDE '@paybas_recenttopics/recent_topics_body_side.html' %}
 
-<div id="recenttopicstop">
-{% INCLUDE '@paybas_recenttopics/recent_topics_body_topbottom.html' %}
-</div>
+		{% EVENT recenttopics_mchat_side %}
 
-{% elseif S_LOCATION_SIDE %}
+		{% if ADS_INDEX_CODE and not S_IS_BOT and definition.ADSIDE eq false %}
+		{% DEFINE ADSIDE = 1 %}
+		<div class="misc-block advertisement">{{ ADS_INDEX_CODE }}</div>
+		{{ definition.ADS }}
+		{% endif %}
 
-<div id="phpbbsection">
-<div class="index-right">
-{% INCLUDE '@paybas_recenttopics/recent_topics_body_side.html' %}
-
-{% EVENT recenttopics_mchat_side %}
-
-{% if ADS_INDEX_CODE and not S_IS_BOT and definition.ADSIDE eq false %}
-{% DEFINE ADSIDE = 1 %}
-<div class="misc-block advertisement">{{ ADS_INDEX_CODE }}</div>
-{{ definition.ADS }}
-{% endif %}
-
-</div>
-<div class="index-left">
-{% endif %}
-
-
+		</div>
+		<div class="index-left">
+	{% endif %}
 {% endif %}

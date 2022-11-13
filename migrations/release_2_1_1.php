@@ -18,11 +18,11 @@ class release_2_1_1 extends \phpbb\db\migration\migration
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.1.1', '>=');
 	}
 
-	static public function depends_on()
+	public function depends_on()
 	{
 		return [
 			'\paybas\recenttopics\migrations\release_2_1_0',
-        ];
+		];
 	}
 
 	public function update_data()
@@ -31,7 +31,7 @@ class release_2_1_1 extends \phpbb\db\migration\migration
 			['config.update', ['rt_version', '2.1.1']],
 			['config.update', ['rt_location', 'RT_SIDE']],
 			['custom', [[$this, 'update_default_loc']]],
-        ];
+		];
 
 	}
 

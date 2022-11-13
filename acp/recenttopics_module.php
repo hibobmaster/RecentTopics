@@ -79,14 +79,19 @@ class recenttopics_module extends admin
 			$rt_anti_topics = $request->variable('rt_anti_topics', '');
 			$ants = explode(",", $rt_anti_topics);
 			$checkants=true;
-			foreach($ants as $ant) {
-			    if (!is_numeric($ant)) {$checkants=false; }
+
+			foreach ($ants as $ant)
+			{
+				if (!is_numeric($ant))
+				{
+					$checkants=false;
+				}
 			}
 
 			if ($checkants)
-            {
-                $config->set('rt_anti_topics', $rt_anti_topics);
-            }
+			{
+				$config->set('rt_anti_topics', $rt_anti_topics);
+			}
 
 			$rt_parents = $request->variable('rt_parents', false);
 			$config->set('rt_parents', $rt_parents);
@@ -97,7 +102,7 @@ class recenttopics_module extends admin
 
 			/*
 			 *  default positions, modifiable by ucp
-	         */
+			 */
 			//number of most recent topics shown per page
 			$rt_number = $request->variable('rt_number', 5);
 			$config->set('rt_number', $rt_number);
@@ -129,9 +134,9 @@ class recenttopics_module extends admin
 			$template->assign_block_vars(
 				'topiclevel_row',
 				array(
-					'VALUE'    => $key,
-					'SELECTED' => ($config['rt_min_topic_level'] == $key) ? ' selected="selected"' : '',
-					'OPTION'   => $topic_type,
+					'VALUE'		=> $key,
+					'SELECTED'	=> ($config['rt_min_topic_level'] == $key) ? ' selected="selected"' : '',
+					'OPTION'	=> $topic_type,
 				)
 			);
 		}
@@ -156,23 +161,23 @@ class recenttopics_module extends admin
 
 		$template->assign_vars(
 			array(
-				'U_ACTION'           => $this->u_action,
-				'RT_INDEX'           => (int) $config['rt_index'],
-				'RT_PAGE_NUMBER'     => ($config['rt_page_number'] == '1') ? 'checked="checked"' : '',
-				'RT_PAGE_NUMBERMAX'  => (int) $config['rt_page_numbermax'],
-				'RT_ANTI_TOPICS'     => $config['rt_anti_topics'],
-				'RT_PARENTS'         => $config['rt_parents'],
-				'RT_NUMBER'          => (int) $config['rt_number'],
+				'U_ACTION'			=> $this->u_action,
+				'RT_INDEX'			=> (int) $config['rt_index'],
+				'RT_PAGE_NUMBER'	=> ($config['rt_page_number'] == '1') ? 'checked="checked"' : '',
+				'RT_PAGE_NUMBERMAX'	=> (int) $config['rt_page_numbermax'],
+				'RT_ANTI_TOPICS'	=> $config['rt_anti_topics'],
+				'RT_PARENTS'		=> $config['rt_parents'],
+				'RT_NUMBER'			=> (int) $config['rt_number'],
 				'RT_SORT_START_TIME' => (int) $config['rt_sort_start_time'],
-				'RT_UNREAD_ONLY'     => (int) $config['rt_unread_only'],
-				'RT_ON_NEWSPAGE'     => $config['rt_on_newspage'],
-				'S_RT_NEWSPAGE'      => $ext_manager->is_enabled('nickvergessen/newspage'),
-				'S_RT_OK'            => version_compare($ext_version, $latest_version, '=='),
-				'S_RT_OLD'           => version_compare($ext_version, $latest_version, '<'),
-				'S_RT_DEV'           => version_compare($ext_version, $latest_version, '>'),
-				'EXT_VERSION'          => $ext_version,
-				'U_VERSIONCHECK_FORCE' => append_sid($this->u_action . '&amp;versioncheck_force=1'),
-				'RT_LATESTVERSION'     => $latest_version,
+				'RT_UNREAD_ONLY'	=> (int) $config['rt_unread_only'],
+				'RT_ON_NEWSPAGE'	=> $config['rt_on_newspage'],
+				'S_RT_NEWSPAGE'		=> $ext_manager->is_enabled('nickvergessen/newspage'),
+				'S_RT_OK'			=> version_compare($ext_version, $latest_version, '=='),
+				'S_RT_OLD'			=> version_compare($ext_version, $latest_version, '<'),
+				'S_RT_DEV'			=> version_compare($ext_version, $latest_version, '>'),
+				'EXT_VERSION'		=> $ext_version,
+				'U_VERSIONCHECK_FORCE'	=> append_sid($this->u_action . '&amp;versioncheck_force=1'),
+				'RT_LATESTVERSION'		=> $latest_version,
 			)
 		);
 
@@ -180,19 +185,18 @@ class recenttopics_module extends admin
 		if ($request->is_set_post('rt_reset_default'))
 		{
 			$sql_ary = array(
-				'user_rt_enable'      => (int) $config['rt_index'],
-				'user_rt_sort_start_time'     => (int) $config['rt_sort_start_time'] ,
-				'user_rt_unread_only'   => (int) $config['rt_unread_only'],
-				'user_rt_location'      => $config['rt_location'],
-				'user_rt_number'      => ((int) $config['rt_number'] > 0 ? (int) $config['rt_number'] : 5 )
+				'user_rt_enable'		  => (int) $config['rt_index'],
+				'user_rt_sort_start_time' => (int) $config['rt_sort_start_time'] ,
+				'user_rt_unread_only'	  => (int) $config['rt_unread_only'],
+				'user_rt_location'		  => $config['rt_location'],
+				'user_rt_number'		  => ((int) $config['rt_number'] > 0 ? (int) $config['rt_number'] : 5 )
 			);
 
 			$sql = 'UPDATE ' . USERS_TABLE . '
-            SET ' . $db->sql_build_array('UPDATE', $sql_ary);
+			SET ' . $db->sql_build_array('UPDATE', $sql_ary);
 
 			$db->sql_query($sql);
 		}
-
 	}
 
 	/**
@@ -212,6 +216,7 @@ class recenttopics_module extends admin
 		$versionurl = ($meta_data['extra']['version-check']['ssl'] == '1' ? 'https://': 'http://') .
 			$meta_data['extra']['version-check']['host'].$meta_data['extra']['version-check']['directory'].'/'.$meta_data['extra']['version-check']['filename'];
 		$ssl = $meta_data['extra']['version-check']['ssl'] == '1' ? true: false;
+
 		if ($ssl)
 		{
 			//https://davidwalsh.name/php-ssl-curl-error
@@ -241,7 +246,6 @@ class recenttopics_module extends admin
 
 			//put this info in the cache
 			$cache->put('recenttopics_versioncheck', $latest_version, $ttl);
-
 		}
 
 		return $latest_version;

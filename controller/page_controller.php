@@ -10,12 +10,6 @@
 
 namespace paybas\recenttopics\controller;
 
-use phpbb\config\config;
-use phpbb\controller\helper;
-use phpbb\language\language;
-use paybas\recenttopics\core\recenttopics;
-use Symfony\Component\HttpFoundation\Response;
-
 class page_controller implements page_interface
 {
 	/**
@@ -50,19 +44,20 @@ class page_controller implements page_interface
 	 * @param \paybas\recenttopics\core\recenttopics		$functions
 	 * @param \Symfony\Component\HttpFoundation\Response	$response
 	 */
-	public function __construct(
-		config $config,
-		helper $helper,
-		language $language,
-		recenttopics $functions,
-		Response $response
+	public function __construct
+	(
+		\phpbb\config\config $config,
+		\phpbb\controller\helper $helper,
+		\phpbb\language\language $language,
+		\paybas\recenttopics\core\recenttopics $functions,
+		\Symfony\Component\HttpFoundation\Response $response
 	)
 	{
-		$this->config       = $config;
-		$this->helper       = $helper;
-		$this->language = $language;
-		$this->rt_functions = $functions;
-		$this->response = $response;
+		$this->config		= $config;
+		$this->helper		= $helper;
+		$this->language		= $language;
+		$this->rt_functions	= $functions;
+		$this->response		= $response;
 	}
 
 	/**
@@ -70,11 +65,11 @@ class page_controller implements page_interface
 	 *
 	 * @return \Symfony\Component\HttpFoundation\Response A Symfony Response object
 	 * @access public
-	*/
+	 */
 	public function display()
 	{
 		$page = "@paybas_recenttopics/recent_topics_page.html";
-		$this->language->add_lang(['info_acp_recenttopics', 'recenttopics'], 'paybas/recenttopics');
+		$this->language->add_lang(['info_acp_recenttopics', 'recenttopics', ], 'paybas/recenttopics');
 
 		if (isset($this->config['rt_index']) && $this->config['rt_index'])
 		{

@@ -24,7 +24,7 @@ class admin
 	 */
 	public final function curl($url, $pemfile, $ssl = false, $return_Server_Response_Header = false, $loud = true, $json = true)
 	{
-		global $phpbb_container, $user;
+		global $phpbb_container;
 
 		$language = $phpbb_container->get('language');
 
@@ -32,9 +32,9 @@ class admin
 		$language->add_lang('recenttopics', 'paybas/recenttopics');
 
 		$data = array(
-			'response'            => '',
-			'response_headers'    => '',
-			'error'               => '',
+			'response'			=> '',
+			'response_headers'	=> '',
+			'error'				=> '',
 		);
 
 		if (function_exists('curl_init'))
@@ -45,13 +45,13 @@ class admin
 				trigger_error($language->lang('CURL_REQUIRED'), E_USER_WARNING);
 			}
 
-            // set URL and other appropriate options
-            $options = array(
-                CURLOPT_URL => $url,
-                CURLOPT_HEADER => $return_Server_Response_Header,
-                CURLOPT_TIMEOUT => 60,
-                CURLOPT_RETURNTRANSFER => true, //return web page
-            );
+			// set URL and other appropriate options
+			$options = array(
+				CURLOPT_URL => $url,
+				CURLOPT_HEADER => $return_Server_Response_Header,
+				CURLOPT_TIMEOUT => 60,
+				CURLOPT_RETURNTRANSFER => true, //return web page
+			);
 
 			// set options
 			curl_setopt_array($curl, $options);
@@ -70,9 +70,9 @@ class admin
 			if ($response !== false && $response !== '')
 			{
 				$data = array(
-					'response'            => $json && $this->isJSON($response) ? json_decode($response, true) : $response,
-					'response_headers'  => (array) $headers,
-					'error'                => '',
+					'response'			=> $json && $this->isJSON($response) ? json_decode($response, true) : $response,
+					'response_headers'	=> (array) $headers,
+					'error'				=> '',
 				);
 			}
 

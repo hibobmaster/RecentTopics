@@ -9,12 +9,12 @@ namespace paybas\recenttopics\controller;
 
 interface page_interface
 {
-		/**
-		 * Display the page
-		 *
-		 * @param string $route The route name for a page
-		 * @return \Symfony\Component\HttpFoundation\Response A Symfony Response object
-		 * @access public
-		 */
-		public function display();
+	/**
+	 * Display the page
+	 *
+	 * @param string $route The route name for a page
+	 * @return \Symfony\Component\HttpFoundation\Response A Symfony Response object
+	 * @access public
+	 */
+	public function display();
 }
