@@ -10,17 +10,6 @@
 
 namespace paybas\recenttopics\core;
 
-use part3\topicprefixes\core\topicprefixes;
-use phpbb\auth\auth;
-use phpbb\config\config;
-use phpbb\content_visibility;
-use phpbb\db\driver\driver_interface;
-use phpbb\event\dispatcher_interface;
-use phpbb\pagination;
-use phpbb\request\request_interface;
-use phpbb\template\template;
-use phpbb\language\language;
-
 /**
  * Class recenttopics
  *
@@ -201,20 +190,21 @@ class recenttopics
 	 * @param \imkingdavid\prefixed\core\manager|NULL             $prefixed
 	 * @param \phpbb\collapsiblecategories\operator\operator|NULL $collapsable_categories
 	 */
-	public function __construct(auth $auth,
+	public function __construct
+	(	\phpbb\auth\auth $auth,
 		\phpbb\cache\service $cache,
-		config $config,
-		language $language,
-		content_visibility $content_visibility,
-		driver_interface $db,
-		dispatcher_interface $dispatcher,
-		pagination $pagination,
-		request_interface $request,
-		template $template,
+		\phpbb\config\config $config,
+		\phpbb\language\language $language,
+		\phpbb\content_visibility $content_visibility,
+		\phpbb\db\driver\driver_interface $db,
+		\phpbb\event\dispatcher_interface $dispatcher,
+		\phpbb\pagination $pagination,
+		\phpbb\request\request_interface $request,
+		\phpbb\template\template $template,
 		\phpbb\user $user,
 		$root_path,
 		$phpEx,
-		topicprefixes $topicprefixes = null,
+		\part3\topicprefixes\core\topicprefixes $topicprefixes = null,
 		\imkingdavid\prefixed\core\manager $prefixed = null,
 		\phpbb\collapsiblecategories\operator\operator $collapsable_categories = null
 	)
@@ -269,6 +259,7 @@ class recenttopics
 
 		//rt block location
 		$this->location = $this->config['rt_location'];
+
 		// if user can set location and it is set then use the preference
 		if ($this->auth->acl_get('u_rt_location') && isset($this->user->data['user_rt_location']))
 		{
@@ -293,7 +284,7 @@ class recenttopics
 		$this->excluded_topics = explode(',', $this->config['rt_anti_topics']);
 		$min_topic_level = $this->config['rt_min_topic_level'];
 
-		//limit number of pages to be shown
+		// limit number of pages to be shown
 		// compute as product of topics per page and max number of pages.
 		$this->total_topics_limit = 0;
 		if ((int) $this->config['rt_page_number'] == 0)
@@ -306,14 +297,17 @@ class recenttopics
 			$count_sql_array = $sql_array;
 			$count_sql_array['SELECT'] = 'COUNT(t.topic_id) as topic_count';
 			unset($count_sql_array['ORDER_BY']);
+			unset($count_sql_array['WHERE']);
 			$sql = $this->db->sql_build_query('SELECT', $count_sql_array);
+
 			$result = $this->db->sql_query($sql);
-			$this->total_topics_limit = (int) $this->db->sql_fetchfield('topic_count', $result);
+			$this->total_topics_limit = (int) $this->db->sql_fetchfield('topic_count');
 			$this->db->sql_freeresult($result);
 
 		}
 
 		$this->sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
+
 		// if user can set recent topic sorting order and it is set then use the preference
 		if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
 		{
@@ -321,6 +315,7 @@ class recenttopics
 		}
 
 		$this->getforumlist();
+
 		// No forums to display
 		if (sizeof($this->forum_ids) == 0)
 		{
@@ -371,16 +366,15 @@ class recenttopics
 			}
 		}
 
-		$this->template->assign_vars(
-			array(
-				'RT_SORT_START_TIME'                   => $this->sort_topics === 'topic_time',
-				'S_RECENT_TOPICS'                      => true,
-				'S_LOCATION_TOP'                       => $this->location == 'RT_TOP',
-				'S_LOCATION_BOTTOM'                    => $this->location == 'RT_BOTTOM',
-				'S_LOCATION_SIDE'                      => $this->location == 'RT_SIDE',
-				'NEWEST_POST_IMG'                      => $this->user->img('icon_topic_newest', 'VIEW_NEWEST_POST'),
-				'LAST_POST_IMG'                        => $this->user->img('icon_topic_latest', 'VIEW_LATEST_POST'),
-				'POLL_IMG'                             => $this->user->img('icon_topic_poll', 'TOPIC_POLL'),
+		$this->template->assign_vars(array(
+				'RT_SORT_START_TIME'			=> $this->sort_topics === 'topic_time',
+				'S_RECENT_TOPICS'				=> true,
+				'S_LOCATION_TOP'				=> $this->location == 'RT_TOP',
+				'S_LOCATION_BOTTOM'				=> $this->location == 'RT_BOTTOM',
+				'S_LOCATION_SIDE'				=> $this->location == 'RT_SIDE',
+				'NEWEST_POST_IMG'				=> $this->user->img('icon_topic_newest', 'VIEW_NEWEST_POST'),
+				'LAST_POST_IMG'					=> $this->user->img('icon_topic_latest', 'VIEW_LATEST_POST'),
+				'POLL_IMG'						=> $this->user->img('icon_topic_poll', 'TOPIC_POLL'),
 				strtoupper($tpl_loopname) . '_DISPLAY' => true,
 			)
 		);
@@ -396,6 +390,7 @@ class recenttopics
 		// Get the allowed forums
 		$forum_ary = array();
 		$forum_read_ary = $this->auth->acl_getf('f_read');
+
 		foreach ($forum_read_ary as $forum_id => $allowed)
 		{
 			if ($allowed['f_read'])
@@ -403,6 +398,7 @@ class recenttopics
 				$forum_ary[] = (int) $forum_id;
 			}
 		}
+
 		$this->forum_ids = array_unique($forum_ary);
 
 		if (sizeof($this->forum_ids) > 1)
@@ -415,10 +411,12 @@ class recenttopics
 			$result = $this->db->sql_query($sql);
 
 			$this->forum_ids = array();
+
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				$this->forum_ids[] = $row['forum_id'];
 			}
+
 			$this->db->sql_freeresult($result);
 			$this->forum_ids = array_unique($this->forum_ids);
 
@@ -457,6 +455,7 @@ class recenttopics
 			foreach ($unread_topics as $topic_id => $mark_time)
 			{
 				$topics_count++;
+
 				if (($topics_count > $this->rtstart) && ($topics_count <= ($this->rtstart + $this->topics_per_page)))
 				{
 					$this->topic_list[] = $topic_id;
@@ -470,9 +469,8 @@ class recenttopics
 			$count_sql_array = $sql_array;
 			$count_sql_array['SELECT'] = 'COUNT(t.topic_id) as topic_count';
 			unset($count_sql_array['ORDER_BY']);
-
-
 			$sql = $this->db->sql_build_query('SELECT', $count_sql_array);
+
 			$result = $this->db->sql_query($sql);
 			$num_rows = (int) $this->db->sql_fetchfield('topic_count');
 			$this->db->sql_freeresult($result);
@@ -501,11 +499,15 @@ class recenttopics
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				$topics_count++;
+
 				if (($topics_count > $this->rtstart) && ($topics_count <= ($this->rtstart + $this->topics_per_page)))
 				{
+					$rowset = [];
+
 					$this->topic_list[] = $row['topic_id'];
 
 					$rowset[$row['topic_id']] = $row;
+
 					if (!isset($this->forums[$row['forum_id']]) && $this->user->data['is_registered'] && $this->config['load_db_lastread'])
 					{
 						$this->forums[$row['forum_id']]['mark_time'] = $row['f_mark_time'];
@@ -656,10 +658,12 @@ class recenttopics
 		$sql    = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query_limit($sql, $this->topics_per_page);
 		$rowset = array();
+
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$rowset[] = $row;
 		}
+
 		$this->db->sql_freeresult($result);
 		return $rowset;
 	}
@@ -674,6 +678,7 @@ class recenttopics
 		// get topics from db
 		$rowset = $this->get_topics_sql();
 		$topic_icons = array();
+
 		// if topics returned by DB
 		if (sizeof($rowset))
 		{
@@ -697,6 +702,7 @@ class recenttopics
 				$forum_id = $row['forum_id'];
 				$s_type_switch_test = ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0;
 				$replies            = $this->content_visibility->get_count('topic_posts', $row, $forum_id) - 1;
+
 				if ($row['topic_status'] == ITEM_MOVED)
 				{
 					$topic_id = $row['topic_moved_id'];
@@ -706,8 +712,10 @@ class recenttopics
 				{
 					$unread_topic = (isset($topic_tracking_info[$forum_id][$row['topic_id']]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$row['topic_id']]) ? true : false;
 				}
+
 				// Get folder img, topic status/type related information
 				$folder_img = $folder_alt = $topic_type = '';
+
 				if ($this->unread_only)
 				{
 					topic_status($row, $replies, true, $folder_img, $folder_alt, $topic_type);
@@ -723,6 +731,7 @@ class recenttopics
 					{
 						topic_status($row, $replies, false, $folder_img, $folder_alt, $topic_type);
 					}
+
 					if (isset($topic_tracking_info[$forum_id][$row['topic_id']]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$row['topic_id']])
 					{
 						$unread_topic = true;
@@ -743,9 +752,11 @@ class recenttopics
 				{
 					$topic_icons[] = $topic_id;
 				}
+
 				topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
 				$topic_title = censor_text($row['topic_title']);
-				$prefix      = '';
+				$prefix		 = '';
+
 				if ($this->topicprefixes !== null)
 				{
 					// Topic Prefix extension Stathis
@@ -797,60 +808,63 @@ class recenttopics
 
 				$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
 				$last_post_subject = censor_text($row['topic_last_post_subject']);
+
 				if ($prefix != '')
 				{
 					$last_post_subject = $prefix . ' ' . $last_post_subject;
 				}
+
 				list($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author) = $this->getusernamestrings($row);
+
 				//load language
 				$this->language->add_lang('recenttopics', 'paybas/recenttopics');
 				$tpl_ary = array(
-					'FORUM_ID'                => $forum_id,
-					'TOPIC_ID'                => $topic_id,
-					'TOPIC_AUTHOR'            => $topic_author,
-					'TOPIC_AUTHOR_COLOUR'     => $topic_author_color,
-					'TOPIC_AUTHOR_FULL'       => $topic_author_full,
-					'U_TOPIC_AUTHOR'          => $u_topic_author,
-					'FIRST_POST_TIME'         => $this->user->format_date($row['topic_time']),
-					'LAST_POST_SUBJECT'       => $last_post_subject,
-					'LAST_POST_TIME'          => $this->user->format_date($row['topic_last_post_time']),
-					'LAST_VIEW_TIME'          => $this->user->format_date($row['topic_last_view_time']),
-					'LAST_POST_AUTHOR'        => $last_post_author,
+					'FORUM_ID'				=> $forum_id,
+					'TOPIC_ID'				=> $topic_id,
+					'TOPIC_AUTHOR'			=> $topic_author,
+					'TOPIC_AUTHOR_COLOUR'	=> $topic_author_color,
+					'TOPIC_AUTHOR_FULL'		=> $topic_author_full,
+					'U_TOPIC_AUTHOR'		=> $u_topic_author,
+					'FIRST_POST_TIME'		=> $this->user->format_date($row['topic_time']),
+					'LAST_POST_SUBJECT'		=> $last_post_subject,
+					'LAST_POST_TIME'		=> $this->user->format_date($row['topic_last_post_time']),
+					'LAST_VIEW_TIME'		=> $this->user->format_date($row['topic_last_view_time']),
+					'LAST_POST_AUTHOR'		=> $last_post_author,
 					'LAST_POST_AUTHOR_COLOUR' => $last_post_author_colour,
-					'LAST_POST_AUTHOR_FULL'   => $last_post_author_full,
-					'U_LAST_POST_AUTHOR'      => $u_last_post_author,
-					'REPLIES'     => $replies,
-					'VIEWS'       => $row['topic_views'],
-					'TOPIC_TITLE' => $topic_title,
-					'FORUM_NAME'  => $row['forum_name'],
-					'TOPIC_TYPE'           => $topic_type,
-					'TOPIC_IMG_STYLE'      => $folder_img,
-					'TOPIC_FOLDER_IMG'     => $this->user->img($folder_img, $folder_alt),
-					'TOPIC_FOLDER_IMG_ALT' => $this->language->lang($folder_alt),
-					'TOPIC_ICON_IMG'        => (!empty($this->icons[$row['icon_id']])) ? $this->icons[$row['icon_id']]['img'] : '',
-					'TOPIC_ICON_IMG_WIDTH'  => (!empty($this->icons[$row['icon_id']])) ? $this->icons[$row['icon_id']]['width'] : '',
-					'TOPIC_ICON_IMG_HEIGHT' => (!empty($this->icons[$row['icon_id']])) ? $this->icons[$row['icon_id']]['height'] : '',
-					'ATTACH_ICON_IMG'       => ($this->auth->acl_get('u_download') && $this->auth->acl_get('f_download', $forum_id) && $row['topic_attachment']) ? $this->user->img('icon_topic_attach', $this->language->lang('TOTAL_ATTACHMENTS')) : '',
-					'UNAPPROVED_IMG'        => ($topic_unapproved || $posts_unapproved) ? $this->user->img('icon_topic_unapproved', $topic_unapproved ? 'TOPIC_UNAPPROVED' : 'POSTS_UNAPPROVED') : '',
-					'REPORTED_IMG'          => ($row['topic_reported'] && $this->auth->acl_get('m_report', $forum_id)) ? $this->user->img('icon_topic_reported', 'TOPIC_REPORTED') : '',
-					'S_HAS_POLL'            => $row['poll_start'] ? true : false,
-					'S_TOPIC_TYPE'        => $row['topic_type'],
-					'S_UNREAD_TOPIC'      => $unread_topic,
-					'S_TOPIC_REPORTED'    => $row['topic_reported'] && $this->auth->acl_get('m_report', $forum_id),
-					'S_TOPIC_UNAPPROVED'  => $topic_unapproved,
-					'S_POSTS_UNAPPROVED'  => $posts_unapproved,
-					'S_POST_ANNOUNCE'     => $row['topic_type'] == POST_ANNOUNCE,
-					'S_POST_GLOBAL'       => $row['topic_type'] == POST_GLOBAL,
-					'S_POST_STICKY'       => $row['topic_type'] == POST_STICKY,
-					'S_TOPIC_LOCKED'      => $row['topic_status'] == ITEM_LOCKED,
-					'S_TOPIC_MOVED'       => $row['topic_status'] == ITEM_MOVED,
+					'LAST_POST_AUTHOR_FULL'	  => $last_post_author_full,
+					'U_LAST_POST_AUTHOR'	  => $u_last_post_author,
+					'REPLIES'		=> $replies,
+					'VIEWS'			=> $row['topic_views'],
+					'TOPIC_TITLE'	=> $topic_title,
+					'FORUM_NAME'	=> $row['forum_name'],
+					'TOPIC_TYPE'	=> $topic_type,
+					'TOPIC_IMG_STYLE'		=> $folder_img,
+					'TOPIC_FOLDER_IMG'		=> $this->user->img($folder_img, $folder_alt),
+					'TOPIC_FOLDER_IMG_ALT'	=> $this->language->lang($folder_alt),
+					'TOPIC_ICON_IMG'		=> (!empty($this->icons[$row['icon_id']])) ? $this->icons[$row['icon_id']]['img'] : '',
+					'TOPIC_ICON_IMG_WIDTH'	=> (!empty($this->icons[$row['icon_id']])) ? $this->icons[$row['icon_id']]['width'] : '',
+					'TOPIC_ICON_IMG_HEIGHT'	=> (!empty($this->icons[$row['icon_id']])) ? $this->icons[$row['icon_id']]['height'] : '',
+					'ATTACH_ICON_IMG'	=> ($this->auth->acl_get('u_download') && $this->auth->acl_get('f_download', $forum_id) && $row['topic_attachment']) ? $this->user->img('icon_topic_attach', $this->language->lang('TOTAL_ATTACHMENTS')) : '',
+					'UNAPPROVED_IMG'	=> ($topic_unapproved || $posts_unapproved) ? $this->user->img('icon_topic_unapproved', $topic_unapproved ? 'TOPIC_UNAPPROVED' : 'POSTS_UNAPPROVED') : '',
+					'REPORTED_IMG'		=> ($row['topic_reported'] && $this->auth->acl_get('m_report', $forum_id)) ? $this->user->img('icon_topic_reported', 'TOPIC_REPORTED') : '',
+					'S_HAS_POLL'		=> $row['poll_start'] ? true : false,
+					'S_TOPIC_TYPE'		=> $row['topic_type'],
+					'S_UNREAD_TOPIC'	=> $unread_topic,
+					'S_TOPIC_REPORTED'	=> $row['topic_reported'] && $this->auth->acl_get('m_report', $forum_id),
+					'S_TOPIC_UNAPPROVED' => $topic_unapproved,
+					'S_POSTS_UNAPPROVED' => $posts_unapproved,
+					'S_POST_ANNOUNCE'	=> $row['topic_type'] == POST_ANNOUNCE,
+					'S_POST_GLOBAL'		=> $row['topic_type'] == POST_GLOBAL,
+					'S_POST_STICKY'		=> $row['topic_type'] == POST_STICKY,
+					'S_TOPIC_LOCKED'	=> $row['topic_status'] == ITEM_LOCKED,
+					'S_TOPIC_MOVED'		=> $row['topic_status'] == ITEM_MOVED,
 					'S_TOPIC_TYPE_SWITCH' => ($s_type_switch == $s_type_switch_test) ? -1 : $s_type_switch_test,
-					'U_NEWEST_POST' => $view_topic_url . '&amp;view=unread#unread',
-					'U_LAST_POST'   => $view_topic_url . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id'],
-					'U_VIEW_TOPIC'  => $view_topic_url,
-					'U_VIEW_FORUM'  => $view_forum_url,
-					'U_MCP_REPORT'  => append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;f=' . $forum_id . '&amp;t=' . $topic_id, true, $this->user->session_id),
-					'U_MCP_QUEUE'   => $u_mcp_queue,
+					'U_NEWEST_POST'	=> $view_topic_url . '&amp;view=unread#unread',
+					'U_LAST_POST'	=> $view_topic_url . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id'],
+					'U_VIEW_TOPIC'	=> $view_topic_url,
+					'U_VIEW_FORUM'	=> $view_forum_url,
+					'U_MCP_REPORT'	=> append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;f=' . $forum_id . '&amp;t=' . $topic_id, true, $this->user->session_id),
+					'U_MCP_QUEUE'	=> $u_mcp_queue,
 				);
 
 				/**
@@ -872,9 +886,9 @@ class recenttopics
 					{
 						$this->template->assign_block_vars(
 							$tpl_loopname . '.parent_forums', array(
-								'FORUM_ID'     => $parent_id,
-								'FORUM_NAME'   => $data[0],
-								'U_VIEW_FORUM' => append_sid("{$this->root_path}viewforum.$this->phpEx", 'f=' . $parent_id),
+								'FORUM_ID'		=> $parent_id,
+								'FORUM_NAME'	=> $data[0],
+								'U_VIEW_FORUM'	=> append_sid("{$this->root_path}viewforum.$this->phpEx", 'f=' . $parent_id),
 							)
 						);
 					}
@@ -882,26 +896,31 @@ class recenttopics
 			}// end rowsset
 
 			// Get URL-parameters for pagination
-			$url_params    = explode('&', $this->user->page['query_string']);
-			$append_params = array();
+			$url_params		= explode('&', $this->user->page['query_string']);
+			$append_params	= array();
+
 			foreach ($url_params as $param)
 			{
 				if (!$param)
 				{
 					continue;
 				}
+
 				if (strpos($param, '=') === false)
 				{
 					// Fix MSSTI Advanced BBCode MOD
 					$append_params[$param] = '1';
 					continue;
 				}
+
 				list($name, $value) = explode('=', $param);
+
 				if ($name != $tpl_loopname . '_start')
 				{
 					$append_params[$name] = $value;
 				}
 			}
+
 			$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
 			$this->pagination->generate_template_pagination($pagination_url, 'pagination',
 				$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int) $this->rtstart, $this->total_topics_limit)));
