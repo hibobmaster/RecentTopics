@@ -101,11 +101,11 @@ class ucp_listener implements EventSubscriberInterface
 		// Request the user option vars and add them to the data array
 		$event['data'] = array_merge(
 			$event['data'], array(
-			'rt_enable'          => $this->request->variable('rt_enable', (int) $this->user->data['user_rt_enable']),
-			'rt_location'        => $this->request->variable('rt_location', $this->user->data['user_rt_location']),
-			'rt_number'          => $this->request->variable('rt_number', (int) $this->user->data['user_rt_number']),
-			'rt_sort_start_time' => $this->request->variable('rt_sort_start_time', (int) $this->user->data['user_rt_sort_start_time']),
-			'rt_unread_only'     => $this->request->variable('rt_unread_only', (int) $this->user->data['user_rt_unread_only']),
+				'rt_enable'          => $this->request->variable('rt_enable', (int) $this->user->data['user_rt_enable']),
+				'rt_location'        => $this->request->variable('rt_location', $this->user->data['user_rt_location']),
+				'rt_number'          => $this->request->variable('rt_number', (int) $this->user->data['user_rt_number']),
+				'rt_sort_start_time' => $this->request->variable('rt_sort_start_time', (int) $this->user->data['user_rt_sort_start_time']),
+				'rt_unread_only'     => $this->request->variable('rt_unread_only', (int) $this->user->data['user_rt_unread_only']),
 			)
 		);
 
