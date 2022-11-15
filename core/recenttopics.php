@@ -297,13 +297,11 @@ class recenttopics
 			$count_sql_array = $sql_array;
 			$count_sql_array['SELECT'] = 'COUNT(t.topic_id) as topic_count';
 			unset($count_sql_array['ORDER_BY']);
-			unset($count_sql_array['WHERE']);
 			$sql = $this->db->sql_build_query('SELECT', $count_sql_array);
 
 			$result = $this->db->sql_query($sql);
 			$this->total_topics_limit = (int) $this->db->sql_fetchfield('topic_count');
 			$this->db->sql_freeresult($result);
-
 		}
 
 		$this->sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
