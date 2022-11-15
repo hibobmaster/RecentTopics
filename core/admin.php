@@ -78,7 +78,6 @@ class admin
 
 			curl_close($curl);
 			return $data;
-
 		}
 
 		//report errors?
@@ -87,7 +86,6 @@ class admin
 			trigger_error($data['error'], E_USER_WARNING);
 		}
 		return $data['response'];
-
 	}
 
 	/**
@@ -98,5 +96,4 @@ class admin
 	{
 		return is_string($string) && is_object(json_decode($string)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
 	}
-
 }
