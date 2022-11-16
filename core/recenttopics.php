@@ -284,6 +284,8 @@ class recenttopics
 		$this->excluded_topics = explode(',', $this->config['rt_anti_topics']);
 		$min_topic_level = $this->config['rt_min_topic_level'];
 
+		$this->getforumlist();
+
 		// limit number of pages to be shown
 		// compute as product of topics per page and max number of pages.
 		$this->total_topics_limit = 0;
@@ -311,8 +313,6 @@ class recenttopics
 		{
 			$this->sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
 		}
-
-		$this->getforumlist();
 
 		// No forums to display
 		if (sizeof($this->forum_ids) == 0)
