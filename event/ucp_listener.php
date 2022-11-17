@@ -219,7 +219,7 @@ class ucp_listener implements EventSubscriberInterface
 
 		$sql = 'UPDATE ' . USERS_TABLE . '
                 SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . '
-                WHERE user_id = ' . $event['user_id'];
+                WHERE user_id = ' . (int) $event['user_id'];
 
 		$this->db->sql_query($sql);
 	}
