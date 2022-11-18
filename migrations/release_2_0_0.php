@@ -17,7 +17,7 @@ class release_2_0_0 extends \phpbb\db\migration\migration
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.0.0', '>=');
 	}
 
-	public function depends_on()
+	public static function depends_on()
 	{
 		return ['\phpbb\db\migration\data\v320\v320'];
 	}
