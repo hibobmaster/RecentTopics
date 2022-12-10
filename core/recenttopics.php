@@ -286,6 +286,12 @@ class recenttopics
 
 		$this->getforumlist();
 
+		// No forums to display
+		if (sizeof($this->forum_ids) == 0)
+		{
+			return;
+		}
+
 		// limit number of pages to be shown
 		// compute as product of topics per page and max number of pages.
 		$this->total_topics_limit = 0;
@@ -312,12 +318,6 @@ class recenttopics
 		if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
 		{
 			$this->sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
-		}
-
-		// No forums to display
-		if (sizeof($this->forum_ids) == 0)
-		{
-			return;
 		}
 
 		$topics_count = $this->gettopiclist();
