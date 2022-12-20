@@ -1,13 +1,13 @@
 {% if RECENT_TOPICS_DISPLAY and recent_topics_included neq true %}
-	<!-- DEFINE recent_topics_included = true -->
+	{% set recent_topics_included = true %}
 	{% if S_LOCATION_TOP %}
 		<div id="recenttopicstop">
-		{% INCLUDE '@paybas_recenttopics/recent_topics_body_topbottom.html' %}
+		{% include '@paybas_recenttopics/recent_topics_body_topbottom.html' %}
 		</div>
 	{% elseif S_LOCATION_SIDE %}
 		<div id="phpbbsection">
 		<div class="index-right">
-		{% INCLUDE '@paybas_recenttopics/recent_topics_body.html' %}
+		{% include '@paybas_recenttopics/recent_topics_body.html' %}
 		</div>
 		<div class="index-left">
 	{% endif %}
