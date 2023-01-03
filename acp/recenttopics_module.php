@@ -50,7 +50,7 @@ class recenttopics_module extends admin
 		$ext_meta_manager = $ext_manager->create_extension_metadata_manager('paybas/recenttopics', $phpbb_container->get('template'));
 		$meta_data  = $ext_meta_manager->get_metadata();
 		$ext_version  = $meta_data['version'];
-		$latest_version  = $this->version_check($meta_data, $request->variable('versioncheck_force', false));
+		$latest_version  = '';
 
 		if ($request->is_set_post('submit'))
 		{
