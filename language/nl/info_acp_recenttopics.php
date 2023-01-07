@@ -44,7 +44,7 @@ $lang = array_merge(
 		//acp title
 		'RECENT_TOPICS'                 => 'Recente Onderwerpen',
 		'RT_CONFIG'                     => 'Instellingen',
-		'RECENT_TOPICS_EXPLAIN'         => 'Hier kan je de instellingen aanpassen van de Recente Onderwerpen Extensie.<br /><br />forumactivering kan ingesteld worden in het Forum beheerderspaneel voor dat forum.<br />Ga ook uw gebruikerspaneel na dat voorrang heeft op beheerderspaneelinstellingen.',
+		'RECENT_TOPICS_EXPLAIN'         => 'Hier kan je de instellingen aanpassen van de Recente Onderwerpen Extensie.<br><br>forumactivering kan ingesteld worden in het Forum beheerderspaneel voor dat forum.<br>Ga ook uw gebruikerspaneel na dat voorrang heeft op beheerderspaneelinstellingen.',
 
 		//algemene instellingen
 		'RT_GLOBAL_SETTINGS'            => 'Algemene instellingen',

@@ -28,7 +28,7 @@ $lang = array_merge(
 	//PCA título
 	'RECENT_TOPICS'                 => 'Tópicos recentes',
 	'RT_CONFIG'                     => 'Configuração',
-	'RECENT_TOPICS_EXPLAIN'         => 'Nesta página você pode alterar as configurações específicas para a extensão Recent Topics. <br /> <br /> Fóruns específicos podem ser incluídos ou excluídos editando os respectivos fóruns em seu ACP. Certifique-se de verificar as permissões de usuário, que permitem aos usuários alterar algumas das configurações encontradas abaixo para si.',
+	'RECENT_TOPICS_EXPLAIN'         => 'Nesta página você pode alterar as configurações específicas para a extensão Recent Topics. <br><br> Fóruns específicos podem ser incluídos ou excluídos editando os respectivos fóruns em seu ACP. Certifique-se de verificar as permissões de usuário, que permitem aos usuários alterar algumas das configurações encontradas abaixo para si.',
 
 	//configurações globais
 	'RT_GLOBAL_SETTINGS'            => 'Configurações globais',
@@ -42,7 +42,7 @@ $lang = array_merge(
 	'RT_MIN_TOPIC_LEVEL'            => 'Nível mínimo do tipo de tópico',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Determina o nível mínimo do tipo de tópico a ser exibido. Ele só exibirá tópicos do nível definido e mais alto.',
 	'RT_ANTI_TOPICS'                => 'ID de tópico excluído',
-	'RT_ANTI_TOPICS_EXP'            => 'Os IDs de tópicos a excluir, separados por "," (Exemplo: 7,9) <br />O valor 0 desabilita esse comportamento.',
+	'RT_ANTI_TOPICS_EXP'            => 'Os IDs de tópicos a excluir, separados por "," (Exemplo: 7,9) <br>O valor 0 desabilita esse comportamento.',
 	'RT_PARENTS'                    => 'Mostrar Fórum Pai',
 	'RT_PARENTS_EXP'                => 'Exibir fóruns pai dentro da linha tópico de tópicos recentes.',
 

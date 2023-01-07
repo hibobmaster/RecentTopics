@@ -25,7 +25,7 @@ $lang = array_merge(
 	//acp title
 	'RECENT_TOPICS'                 => 'Nedávná témata',
 	'RT_CONFIG'                     => 'Nastavení',
-	'RECENT_TOPICS_EXPLAIN'         => 'Na této stránce můžete měnit nastavení rozšíření „Recent Topics“.<br /><br />Konkrétní fóra lze zahrnout či vyloučit změnou nastavení jednotlivých fór.<br />Ujistěte se také, že mají uživatelé správně nastavena uživatelská oprávnění dle vašich potřeb. Na základě oprávnění si mohou uživatelé některá níže uvedená nastavení měnit dle svých potřeb ve svém uživatelském panelu.',
+	'RECENT_TOPICS_EXPLAIN'         => 'Na této stránce můžete měnit nastavení rozšíření „Recent Topics“.<br><br>Konkrétní fóra lze zahrnout či vyloučit změnou nastavení jednotlivých fór.<br>Ujistěte se také, že mají uživatelé správně nastavena uživatelská oprávnění dle vašich potřeb. Na základě oprávnění si mohou uživatelé některá níže uvedená nastavení měnit dle svých potřeb ve svém uživatelském panelu.',
 	//global settings
 	'RT_GLOBAL_SETTINGS'            => 'Globální nastavení',
 	'RT_DISPLAY_INDEX'              => 'Zobrazovat na úvodní stránce?',
@@ -38,7 +38,7 @@ $lang = array_merge(
 	'RT_MIN_TOPIC_LEVEL'            => 'Minimální úroveň tématu',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Určuje minimální úrověň typu tématu pro zobrazení. Zobrazena budou pouze témata zvolené úrovně a vyšší.',
 	'RT_ANTI_TOPICS'                => 'Vyloučená témata',
-	'RT_ANTI_TOPICS_EXP'            => 'Identifikátory témat k vyloučení, oddělené čárkou „,“ (příklad: 7,9)<br />',
+	'RT_ANTI_TOPICS_EXP'            => 'Identifikátory témat k vyloučení, oddělené čárkou „,“ (příklad: 7,9)<br>',
 	'RT_PARENTS'                    => 'Zobrazit nadřazená fóra',
 	'RT_PARENTS_EXP'                => 'Zobrazit nadřazená fóra v řádku podrobností pod názvem nedávného tématu.',
 	//User Overridable settings. these apply for anon users and can be overridden by UCP

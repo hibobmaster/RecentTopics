@@ -28,7 +28,7 @@ $lang = array_merge(
 	//acp title
 	'RECENT_TOPICS'                 => 'Recent Topics',
 	'RT_CONFIG'                     => 'Configuration',
-	'RECENT_TOPICS_EXPLAIN'         => 'On this page you can change the settings specific for the Recent Topics extension.<br /><br />Specific forums can be included or excluded by editing the respective forums in your ACP.<br />Also be sure to check your user permissions, which allow users to change some of the settings found below for themselves.',
+	'RECENT_TOPICS_EXPLAIN'         => 'On this page you can change the settings specific for the Recent Topics extension.<br><br>Specific forums can be included or excluded by editing the respective forums in your ACP.<br>Also be sure to check your user permissions, which allow users to change some of the settings found below for themselves.',
 
 	//global settings
 	'RT_GLOBAL_SETTINGS'            => 'Global Settings',
@@ -42,7 +42,7 @@ $lang = array_merge(
 	'RT_MIN_TOPIC_LEVEL'            => 'Minimum topic type level',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Determines the minimum level of the topic-type to display. It will only display topics of the set level, and higher.',
 	'RT_ANTI_TOPICS'                => 'Excluded topic ID’s',
-	'RT_ANTI_TOPICS_EXP'            => 'The IDs of topics to exclude, separated by “,” (Example: 7,9)<br />The value 0 disables this behaviour.',
+	'RT_ANTI_TOPICS_EXP'            => 'The IDs of topics to exclude, separated by “,” (Example: 7,9)<br>The value 0 disables this behaviour.',
 	'RT_PARENTS'                    => 'Display parent forums',
 	'RT_PARENTS_EXP'                => 'Display parent forums inside the topic row of recent topics.',
 
