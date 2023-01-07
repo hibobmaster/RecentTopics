@@ -28,7 +28,7 @@ $lang = array_merge(
 	//PCA título
 	'RECENT_TOPICS'                 => 'Temas Recientes',
 	'RT_CONFIG'                     => 'Configuración',
-	'RECENT_TOPICS_EXPLAIN'         => 'En esta página puede cambiar las opciones especificas para la extensión “Temas Recientes”.<br /><br />Foros específicos pueden ser incluídos o excluídos editando los respectivos foros en el PCA.<br />Asegúrese también de comprobar los permisos de sus usuarios, los cuales permiten a los usuarios cambiar individualmente algunas de las opciones encontradas abajo.',
+	'RECENT_TOPICS_EXPLAIN'         => 'En esta página puede cambiar las opciones especificas para la extensión “Temas Recientes”.<br><br>Foros específicos pueden ser incluídos o excluídos editando los respectivos foros en el PCA.<br>Asegúrese también de comprobar los permisos de sus usuarios, los cuales permiten a los usuarios cambiar individualmente algunas de las opciones encontradas abajo.',
 
 	//ajustes globales
 	'RT_GLOBAL_SETTINGS'            => 'Opciones globales',
@@ -42,7 +42,7 @@ $lang = array_merge(
 	'RT_MIN_TOPIC_LEVEL'            => 'Nivel de tema mínimo',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Determina el nivel de tema mínimo para poder se mostrado. Solo mostrará temas del nivel especificado y superior.',
 	'RT_ANTI_TOPICS'                => 'Temas excluidos',
-	'RT_ANTI_TOPICS_EXP'            => 'Las IDs de los temas a excluír, separados por "," (Por ejemplo: 7,9)<br />Si no quiere excluir un tema, simplemente introduzca 0.',
+	'RT_ANTI_TOPICS_EXP'            => 'Las IDs de los temas a excluír, separados por "," (Por ejemplo: 7,9)<br>Si no quiere excluir un tema, simplemente introduzca 0.',
 	'RT_PARENTS'                    => 'Mostrar foros padre',
 	'RT_PARENTS_EXP'                => 'Mostrar foros padre dentro de la fila del tema de “Temas Recientes”.',
 

@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Recent topics Extension for phpBB3.2. Adds a list with a number of recent topics to the index.php",
     "homepage": "https://github.com/sajaki/RecentTopics",
-    "version": "2.2.15-pl1",
-    "time": "2023-01-04",
+    "version": "2.2.15-pl2",
+    "time": "2023-01-07",
     "license": "GPL-2.0-only",
     "authors": [
         {
@@ -19,14 +19,24 @@
             "name": "Andreas Vandenberghe",
             "homepage": "https://www.avathar.be",
             "role": "Developer"
-        }
+        },
+		{
+			"name": "Thorsten Ahlers",
+			"homepage": "https://github.com/IMC-GER",
+			"role": "Fork developer"
+		},
+		{
+			"name": "LukeWCS",
+			"homepage": "https://github.com/LukeWCS",
+			"role": "Fork developer"
+		}
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.1.0,<8.2.0@dev",
         "composer/installers": "~1.0"
     },
     "extra": {
-        "display-name": "Recent Topics",
+        "display-name": "Recent Topics (fork by IMC & LukeWCS)",
         "soft-require": {
             "phpbb/phpbb": ">=3.2.6,<3.4.0@dev"
         },

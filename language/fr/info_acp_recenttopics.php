@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 	//acp title
 	'RECENT_TOPICS'                 => 'Sujets récents',
 	'RT_CONFIG'                     => 'Configuration',
-	'RECENT_TOPICS_EXPLAIN'         => 'Sur cette page il est possible de modifier les paramètres spécifiques de l’extension « Sujets récents ».<br /><br />Les forums peuvent être inclus ou exclus de la liste des sujets récents en modifiant leurs paramètres respectifs depuis le « Panneau d’administration », onglet « FORUMS ».<br />Il est recommandé de vérifier les autorisations des utilisateurs leur permettant de modifier par eux-mêmes certains paramètres présents ci-dessous.',
+	'RECENT_TOPICS_EXPLAIN'         => 'Sur cette page il est possible de modifier les paramètres spécifiques de l’extension « Sujets récents ».<br><br>Les forums peuvent être inclus ou exclus de la liste des sujets récents en modifiant leurs paramètres respectifs depuis le « Panneau d’administration », onglet « FORUMS ».<br>Il est recommandé de vérifier les autorisations des utilisateurs leur permettant de modifier par eux-mêmes certains paramètres présents ci-dessous.',
 
 	//global settings
 	'RT_GLOBAL_SETTINGS'            => 'Paramètres généraux',
@@ -56,13 +56,13 @@ $lang = array_merge($lang, array(
 	'RT_NUMBER'                     => 'Nombre de sujets récents affichés',
 	'RT_NUMBER_EXP'                 => 'Permet de saisir le nombre maximum de sujets récents à afficher par page.',
 	'RT_PAGE_NUMBER'                => 'Afficher toutes les pages des sujets récents',
-	'RT_PAGE_NUMBER_EXP'            => 'Permet de passer outre le « Nombre maximal de pages » à afficher dans la pagination. Si activé, tous les sujets du forum seront paginés et autant de pages que nécessaire seront affichées (non recommandé).<br />Si désactivé (décochée), merci de saisir le nombre de page à afficher dans l’option « Nombre maximal de pages ».',
+	'RT_PAGE_NUMBER_EXP'            => 'Permet de passer outre le « Nombre maximal de pages » à afficher dans la pagination. Si activé, tous les sujets du forum seront paginés et autant de pages que nécessaire seront affichées (non recommandé).<br>Si désactivé (décochée), merci de saisir le nombre de page à afficher dans l’option « Nombre maximal de pages ».',
 	'RT_PAGE_NUMBERMAX'             => 'Nombre maximal de pages',
 	'RT_PAGE_NUMBERMAX_EXP'         => 'Permet de saisir le nombre maximal de pages à afficher dans la pagination des sujets récents lorsque l’option « Afficher toutes les pages des sujets récents » est désactivée (décochée).',
 	'RT_MIN_TOPIC_LEVEL'            => 'Niveau minimum du type de sujets affichés',
 	'RT_MIN_TOPIC_LEVEL_EXP'        => 'Permet de sélectionner le niveau minimum du type de sujets à afficher dans la liste des sujets récents. Les sujets correspondants au niveau paramétré et aux niveaux supérieurs seront affichés.',
 	'RT_ANTI_TOPICS'                => 'Exclure des sujets de l’affichage',
-	'RT_ANTI_TOPICS_EXP'            => 'Permet de saisir les ID, séparés par une virgule (exemple : 7,9), des sujets à exclure de l’affichage des sujets récents.<br />Pour afficher tous les sujets saisir la valeur 0.',
+	'RT_ANTI_TOPICS_EXP'            => 'Permet de saisir les ID, séparés par une virgule (exemple : 7,9), des sujets à exclure de l’affichage des sujets récents.<br>Pour afficher tous les sujets saisir la valeur 0.',
 	'RT_PARENTS'                    => 'Afficher les forums parents',
 	'RT_PARENTS_EXP'                => 'Permet d’afficher les forums parents dans l’arborescence des forums de l’affichage des sujets récents.',
 

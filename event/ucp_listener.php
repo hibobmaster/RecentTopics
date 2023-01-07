@@ -151,7 +151,7 @@ class ucp_listener implements EventSubscriberInterface
 						'location_row',
 						array(
 							'VALUE'	   => $key,
-							'SELECTED' => ($event['data']['rt_location'] == $key) ? ' selected="selected"' : '',
+							'SELECTED' => ($event['data']['rt_location'] == $key) ? ' selected' : '',
 							'OPTION'   => $display_type,
 						)
 					);

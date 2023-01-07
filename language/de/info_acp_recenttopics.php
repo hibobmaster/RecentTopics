@@ -44,7 +44,7 @@ $lang = array_merge(
 	//acp title
 	'RECENT_TOPICS'                 => 'Aktuelle Themen',
 	'RT_CONFIG'                     => 'Einstellungen',
-	'RECENT_TOPICS_EXPLAIN'         => 'Auf dieser Seite kannst du die Einstellungen der Erweiterung „Aktuelle Themen“ anpassen.<br /><br />Spezifische Foren können eingeschlossen oder ausgeschlossen werden.<br />Überprüfe auch die Benutzerberechtigungen, welche Benutzern erlauben, einige der Parameter für sich selbst zu verändern. Diese haben dann Vorrang vor den Einstellungen des Admin-Panels.',
+	'RECENT_TOPICS_EXPLAIN'         => 'Auf dieser Seite kannst du die Einstellungen der Erweiterung „Aktuelle Themen“ anpassen.<br><br>Spezifische Foren können eingeschlossen oder ausgeschlossen werden.<br>Überprüfe auch die Benutzerberechtigungen, welche Benutzern erlauben, einige der Parameter für sich selbst zu verändern. Diese haben dann Vorrang vor den Einstellungen des Admin-Panels.',
 
 	//allgemeine Einstellungen
 	'RT_GLOBAL_SETTINGS'            => 'Globale Einstellungen',
