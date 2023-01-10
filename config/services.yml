@@ -1,4 +1,14 @@
 services:
+    paybas.recenttopics.admin.controller:
+        class: paybas\recenttopics\controller\admin_controller
+        arguments:
+            - '@config'
+            - '@template'
+            - '@language'
+            - '@request'
+            - '@dbal.conn'
+            - '@ext.manager'
+
     paybas.recenttopics.controller.page_controller:
         class: paybas\recenttopics\controller\page_controller
         arguments:
