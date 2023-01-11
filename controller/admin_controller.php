@@ -73,8 +73,7 @@ class admin_controller
 	{
 		// Add ACP lang file
 		$this->language->add_lang('info_acp_recenttopics', 'paybas/recenttopics');
-		$this->language->add_lang('viewforum');
-		$this->language->add_lang('ucp');
+		$this->language->add_lang(['viewforum', 'ucp', ]);
 
 		add_form_key('paybas/recenttopics');
 
@@ -83,7 +82,7 @@ class admin_controller
 		{
 			if (!check_form_key('paybas/recenttopics'))
 			{
-				trigger_error('FORM_INVALID' . adm_back_link($this->u_action), E_USER_WARNING);
+				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			// Store the variable to the db
