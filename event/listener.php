@@ -1,12 +1,14 @@
 <?php
 /**
  *
- * @package Recent Topics Extension
- * @copyright (c) 2015 PayBas
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * Recent Topics. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
- *
  */
 
 namespace paybas\recenttopics\event;
@@ -54,7 +56,7 @@ class listener implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return array(
+		return [
 			'core.index_modify_page_title'           => 'display_rt',
 			'nickvergessen.newspage.newspage'        => 'display_rt_newspage',
 			'core.acp_manage_forums_request_data'    => 'acp_manage_forums_request_data',
@@ -64,7 +66,7 @@ class listener implements EventSubscriberInterface
 
 			// Events added by this extension
 			'paybas.recenttopics.topictitle_remove_re'  => 'topictitle_remove_re',
-		);
+		];
 	}
 
 	// The main magic
@@ -130,12 +132,12 @@ class listener implements EventSubscriberInterface
 	public function add_permission($event)
 	{
 		$permissions = $event['permissions'];
-		$permissions['u_rt_view'] = array('lang' => 'ACL_U_RT_VIEW', 'cat' => 'misc');
-		$permissions['u_rt_enable'] = array('lang' => 'ACL_U_RT_ENABLE', 'cat' => 'misc');
-		$permissions['u_rt_location'] = array('lang' => 'ACL_U_RT_LOCATION', 'cat' => 'misc');
-		$permissions['u_rt_sort_start_time'] = array('lang' => 'ACL_U_RT_SORT_START_TIME', 'cat' => 'misc');
-		$permissions['u_rt_unread_only'] = array('lang' => 'ACL_U_RT_UNREAD_ONLY', 'cat' => 'misc');
-		$permissions['u_rt_number'] = array('lang' => 'ACL_U_RT_NUMBER', 'cat' => 'misc');
+		$permissions['u_rt_view']				= ['lang' => 'ACL_U_RT_VIEW', 'cat' => 'misc'];
+		$permissions['u_rt_enable']				= ['lang' => 'ACL_U_RT_ENABLE', 'cat' => 'misc'];
+		$permissions['u_rt_location']			= ['lang' => 'ACL_U_RT_LOCATION', 'cat' => 'misc'];
+		$permissions['u_rt_sort_start_time']	= ['lang' => 'ACL_U_RT_SORT_START_TIME', 'cat' => 'misc'];
+		$permissions['u_rt_unread_only']		= ['lang' => 'ACL_U_RT_UNREAD_ONLY', 'cat' => 'misc'];
+		$permissions['u_rt_number']				= ['lang' => 'ACL_U_RT_NUMBER', 'cat' => 'misc'];
 		$event['permissions'] = $permissions;
 	}
 
@@ -157,5 +159,4 @@ class listener implements EventSubscriberInterface
 			$event['row'] = $array;
 		}
 	}
-
 }

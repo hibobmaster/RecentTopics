@@ -1,10 +1,12 @@
 <?php
 /**
  *
- * @package Recent Topics Extension
+ * Recent Topics. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2015 PayBas
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  */
@@ -16,10 +18,9 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
-
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -35,16 +36,13 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ‚ ‘ ’ « » “ ” … „ “
 //
-
-$lang = array_merge(
-	$lang, array(
-		'ACL_U_RT_VIEW'            => 'Aktuelle Themen: Kann die Aktuelle Themen sehen.',
-		'ACL_U_RT_ENABLE'          => 'Aktuelle Themen: Kann Anzeige der Aktuelle Themen aktivieren / deaktivieren.',
-		'ACL_U_RT_LOCATION'        => 'Aktuelle Themen: Kann das Anzeigeort des Blocks «Aktuelle Themen» ändern .',
-		'ACL_U_RT_SORT_START_TIME' => 'Aktuelle Themen: Kann sortierung des Blocks ändern.',
-		'ACL_U_RT_UNREAD_ONLY'     => 'Aktuelle Themen: Kann wahl zur ungelesenen Aktuelle Themen ändern.',
-		'ACL_U_RT_NUMBER'          => 'Aktuelle Themen: Kann Anzahl der Aktuelle Themen pro Seite ändern',
-	)
-);
+$lang = array_merge($lang, [
+	'ACL_U_RT_VIEW'            => 'Aktuelle Themen: Kann „Aktuelle Themen“ sehen.',
+	'ACL_U_RT_ENABLE'          => 'Aktuelle Themen: Kann „Aktuelle Themen“ aktivieren / deaktivieren.',
+	'ACL_U_RT_LOCATION'        => 'Aktuelle Themen: Kann den Anzeigeort des Blocks „Aktuelle Themen“ ändern.',
+	'ACL_U_RT_SORT_START_TIME' => 'Aktuelle Themen: Kann Sortierung des Blocks „Aktuelle Themen“ ändern.',
+	'ACL_U_RT_UNREAD_ONLY'     => 'Aktuelle Themen: Kann „Aktuelle Themen“-Modus auf „nur ungelesene“ ändern.',
+	'ACL_U_RT_NUMBER'          => 'Aktuelle Themen: Kann Anzahl der aktuellen Themen pro Seite ändern.',
+]);

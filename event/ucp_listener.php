@@ -1,9 +1,12 @@
 <?php
 /**
  *
- * @package Recent Topics Extension
- * @copyright (c) 2015 PayBas
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * Recent Topics. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  */
@@ -86,11 +89,11 @@ class ucp_listener implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return array(
+		return [
 		'core.ucp_prefs_view_data'        	=> 'ucp_prefs_get_data',
 		'core.ucp_prefs_view_update_data' 	=> 'ucp_prefs_set_data',
 		'core.ucp_register_welcome_email_before' => 'ucp_register_set_data'
-		);
+		];
 	}
 
 	/**
@@ -100,13 +103,13 @@ class ucp_listener implements EventSubscriberInterface
 	{
 		// Request the user option vars and add them to the data array
 		$event['data'] = array_merge(
-			$event['data'], array(
+			$event['data'], [
 				'rt_enable'          => $this->request->variable('rt_enable', (int) $this->user->data['user_rt_enable']),
 				'rt_location'        => $this->request->variable('rt_location', $this->user->data['user_rt_location']),
 				'rt_number'          => $this->request->variable('rt_number', (int) $this->user->data['user_rt_number']),
 				'rt_sort_start_time' => $this->request->variable('rt_sort_start_time', (int) $this->user->data['user_rt_sort_start_time']),
 				'rt_unread_only'     => $this->request->variable('rt_unread_only', (int) $this->user->data['user_rt_unread_only']),
-			)
+			]
 		);
 
 		// Output the data vars to the template (except on form submit)
@@ -114,72 +117,72 @@ class ucp_listener implements EventSubscriberInterface
 		{
 			$this->language->add_lang('recenttopics_ucp', 'paybas/recenttopics');
 
-			$template_vars = array();
+			$template_vars = [];
 
 			// if authorised for one of these then set ucp master template variable to true
 			if ($this->auth->acl_get('u_rt_enable') || $this->auth->acl_get('u_rt_location') || $this->auth->acl_get('u_rt_sort_start_time') || $this->auth->acl_get('u_rt_unread_only'))
 			{
-				$template_vars += array(
+				$template_vars += [
 					'S_RT_SHOW' => true,
-				);
+				];
 			}
 
 			if ($this->auth->acl_get('u_rt_enable'))
 			{
-				$template_vars += array(
+				$template_vars += [
 					'A_RT_ENABLE' => true,
 					'S_RT_ENABLE' => $event['data']['rt_enable'],
-				);
+				];
 			}
 
 			if ($this->auth->acl_get('u_rt_location'))
 			{
 
-				$template_vars += array(
+				$template_vars += [
 					'A_RT_LOCATION' => true,
-				);
+				];
 
-				$display_types = array (
+				$display_types = [
 					'RT_TOP'	=> $this->language->lang('RT_TOP'),
 					'RT_BOTTOM'	=> $this->language->lang('RT_BOTTOM'),
 					'RT_SIDE'	=> $this->language->lang('RT_SIDE'),
-				);
+				];
 
 				foreach ($display_types as $key => $display_type)
 				{
 					$this->template->assign_block_vars(
 						'location_row',
-						array(
+						[
 							'VALUE'	   => $key,
 							'SELECTED' => ($event['data']['rt_location'] == $key) ? ' selected' : '',
 							'OPTION'   => $display_type,
-						)
+						]
 					);
 				}
 			}
 
 			if ($this->auth->acl_get('u_rt_number'))
 			{
-				$template_vars += array(
+				$template_vars += [
 					'A_RT_NUMBER' => true,
 					'RT_NUMBER'	  => $event['data']['rt_number'],
-				);
+				];
 			}
 
 			if ($this->auth->acl_get('u_rt_sort_start_time'))
 			{
-				$template_vars += array(
+				$template_vars += [
 				'A_RT_SORT_START_TIME' => true,
 				'S_RT_SORT_START_TIME' => $event['data']['rt_sort_start_time'],
-				);
+				];
 			}
 
 			if ($this->auth->acl_get('u_rt_unread_only'))
 			{
-				$template_vars += array(
+				$template_vars += [
 				'A_RT_UNREAD_ONLY' => true,
 				'S_RT_UNREAD_ONLY' => $event['data']['rt_unread_only'],
-				);
+				];
 			}
 
 			$this->template->assign_vars($template_vars);
@@ -192,13 +195,13 @@ class ucp_listener implements EventSubscriberInterface
 	public function ucp_prefs_set_data($event)
 	{
 		$event['sql_ary'] = array_merge(
-			$event['sql_ary'], array(
+			$event['sql_ary'], [
 				'user_rt_enable'		  => $event['data']['rt_enable'],
 				'user_rt_location'		  => $event['data']['rt_location'],
 				'user_rt_number'		  => $event['data']['rt_number'],
 				'user_rt_sort_start_time' => $event['data']['rt_sort_start_time'],
 				'user_rt_unread_only'	  => $event['data']['rt_unread_only'],
-			)
+			]
 		);
 	}
 
@@ -209,13 +212,13 @@ class ucp_listener implements EventSubscriberInterface
 	public function ucp_register_set_data($event)
 	{
 
-		$sql_ary = array(
+		$sql_ary = [
 			'user_rt_enable'		  => (int) $this->config['rt_index'],
 			'user_rt_sort_start_time' => (int) $this->config['rt_sort_start_time'] ,
 			'user_rt_unread_only'	  => (int) $this->config['rt_unread_only'],
 			'user_rt_location'		  => $this->config['rt_location'],
 			'user_rt_number'		  => ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 )
-		);
+		];
 
 		$sql = 'UPDATE ' . USERS_TABLE . '
                 SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . '

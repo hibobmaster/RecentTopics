@@ -1,61 +1,79 @@
+{#
+ *
+ * Recent Topics. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
+ #}
+
 {% if S_RT_SHOW %}
 	<hr>
 	{% if A_RT_ENABLE %}
-	<dl>
-		<dt>
-			<label for="rt_enable1">{{ lang('RT_ENABLE') ~ lang('COLON') }}</label>
-		</dt>
-		<dd>
-			<label for="rt_enable1"><input type="radio" name="rt_enable" value="1"{{ S_RT_ENABLE == 1 ? ' checked' }}> {{ lang('YES') }}</label>
-			<label for="rt_enable0"><input type="radio" name="rt_enable" value="0"{{ S_RT_ENABLE == 0 ? ' checked' }}> {{ lang('NO') }}</label>
-		</dd>
-	</dl>
+		<dl>
+			<dt>
+				<label>{{ lang('RT_ENABLE') ~ lang('COLON') }}</label>
+			</dt>
+			<dd>
+				{{ _self.switch('rt_enable', S_RT_ENABLE) }}
+			</dd>
+		</dl>
 	{% endif %}
 	{% if A_RT_LOCATION %}
-	<dl>
-		<dt>
-			<label for="rt_location">{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br><span>{{ lang('RT_LOCATION_EXP') }}</span>
-		</dt>
-		<dd>
-			<select name="rt_location" class="input">
-				{% for location_row in loops.location_row %}
-					<option value="{{ location_row.VALUE }}"{{ location_row.SELECTED }}>{{ location_row.OPTION }}</option>
-				{% endfor %}
-			</select>
-		</dd>
-	</dl>
+		<dl>
+			<dt>
+				<label>{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br><span>{{ lang('RT_LOCATION_EXP') }}</span>
+			</dt>
+			<dd>
+				{{ _self.select('rt_location', loops.location_row) }}
+			</dd>
+		</dl>
 	{% endif %}
 	{% if A_RT_NUMBER %}
-	<dl>
-		<dt>
-			<label for="rt_number">{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_NUMBER_EXP') }}</span>
-		</dt>
-		<dd>
-			<input type="number" name="rt_number" size="3" min="0" max="999" value="{{ RT_NUMBER }}">
-		</dd>
-	</dl>
+		<dl>
+			<dt>
+				<label>{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_NUMBER_EXP') }}</span>
+			</dt>
+			<dd>
+				<input type="number" name="rt_number" size="3" min="0" max="999" value="{{ RT_NUMBER }}">
+			</dd>
+		</dl>
 	{% endif %}
 
 	{% if A_RT_SORT_START_TIME %}
-	<dl>
-		<dt>
-			<label for="rt_sort_start_time0">{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br><span>{{ lang('RT_SORT_START_TIME_EXP') }}
-		</dt>
-		<dd>
-			<label for="rt_sort_start_time1"><input type="radio" name="rt_sort_start_time" value="1"{{ S_RT_SORT_START_TIME == 1 ? ' checked' }}> {{ lang('YES') }}</label>
-			<label for="rt_sort_start_time0"><input type="radio" name="rt_sort_start_time" value="0"{{ S_RT_SORT_START_TIME == 0 ? ' checked' }}> {{ lang('NO') }}</label>
-		</dd>
-	</dl>
+		<dl>
+			<dt>
+				<label>{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br><span>{{ lang('RT_SORT_START_TIME_EXP') }}
+			</dt>
+			<dd>
+				{{ _self.switch('rt_sort_start_time', S_RT_SORT_START_TIME) }}
+			</dd>
+		</dl>
 	{% endif %}
 	{% if A_RT_UNREAD_ONLY %}
-	<dl>
-		<dt>
-			<label for="rt_unread_only0">{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label>
-		</dt>
-		<dd>
-			<label for="rt_unread_only1"><input type="radio" name="rt_unread_only" value="1"{{ S_RT_UNREAD_ONLY == 1 ? ' checked' }}> {{ lang('YES') }}</label>
-			<label for="rt_unread_only0"><input type="radio" name="rt_unread_only" value="0"{{ S_RT_UNREAD_ONLY == 0 ? ' checked' }}> {{ lang('NO') }}</label>
-		</dd>
-	</dl>
+		<dl>
+			<dt>
+				<label>{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label>
+			</dt>
+			<dd>
+				{{ _self.switch('rt_unread_only', S_RT_UNREAD_ONLY) }}
+			</dd>
+		</dl>
 	{% endif %}
 {% endif %}
+
+{% macro switch(name, checked = false) %}
+	<label><input type="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
+	<label><input type="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
+{% endmacro %}
+
+{% macro select(name, array) %}
+	<select class="input" name="{{ name }}">
+		{% for array_row in array %}
+			<option value="{{ array_row.VALUE }}"{{ array_row.SELECTED }}>{{ array_row.OPTION }}</option>
+		{% endfor %}
+	</select>
+{% endmacro %}

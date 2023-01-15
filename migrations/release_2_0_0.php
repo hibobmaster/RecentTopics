@@ -118,7 +118,6 @@ class release_2_0_0 extends \phpbb\db\migration\migration
 					'modes'	   => ['recenttopics_config'],
 				],
 			]],
-
 		];
 	}
 
@@ -146,7 +145,6 @@ class release_2_0_0 extends \phpbb\db\migration\migration
 				'ACP_CAT_DOT_MODS',
 				'RECENT_TOPICS'
 			]],
-
 		];
 	}
 }

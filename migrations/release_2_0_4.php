@@ -20,7 +20,7 @@ class release_2_0_4 extends \phpbb\db\migration\migration
 	public static function depends_on()
 	{
 		return [
-		'\paybas\recenttopics\migrations\release_2_0_0',
+			'\paybas\recenttopics\migrations\release_2_0_0',
 		];
 	}
 

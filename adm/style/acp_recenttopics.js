@@ -1,29 +1,40 @@
 /**
  *
- * Recent Topics
- * An extension for the phpBB Forum Software package.
- * JavaScript for ACP
+ * Recent Topics. An extension for the phpBB Forum Software package.
  *
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  */
 
-abortWrite();
+var RecentTopics = {};
 
-function askForWrite() {
-	if (document.getElementById('rt_reset_default').checked == true) {
-		document.getElementById('ask_before_submit').style.display = 'block';
-		document.getElementById('acp_board').style.display = 'none';
+RecentTopics.askForWrite = function () {
+	'use strict';
+
+	if ($('input[name="rt_reset_default"]').prop('checked')){
+		window.scrollTo(0, 0);
+		$('#ask_before_submit').css('display', '');
+		$('#acp_board').css('display', 'none');
 	}
 	else {
-		document.getElementById('submit').click();
+		$('#submit').click();
 	}
 }
 
-function abortWrite() {
-	document.getElementById('ask_before_submit').style.display = 'none';
-	document.getElementById('reset').click();
-	document.getElementById('acp_board').style.display = 'block';
+RecentTopics.abortWrite = function () {
+	'use strict';
+
+	$('input[name="rt_reset_default"]').prop('checked', false);
+	$('#ask_before_submit').css('display', 'none');
+	$('#acp_board').css('display', '');
 }
 
-function writeData() {
-	document.getElementById('submit').click();
+RecentTopics.writeData = function () {
+	'use strict';
+
+	$('#submit').click();
 }

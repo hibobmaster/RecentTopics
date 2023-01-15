@@ -1,9 +1,12 @@
 <?php
 /**
  *
- * @package Recent Topics Extension
- * @copyright (c) 2015 PayBas
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * Recent Topics. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  */
@@ -191,7 +194,8 @@ class recenttopics
 	 * @param \phpbb\collapsiblecategories\operator\operator|NULL $collapsable_categories
 	 */
 	public function __construct
-	(	\phpbb\auth\auth $auth,
+	(
+		\phpbb\auth\auth $auth,
 		\phpbb\cache\service $cache,
 		\phpbb\config\config $config,
 		\phpbb\language\language $language,
@@ -230,7 +234,7 @@ class recenttopics
 	/**
 	 * @param string $tpl_loopname
 	 */
-	public function display_recent_topics($tpl_loopname = 'recent_topics')
+	public function display_recent_topics($tpl_loopname = 'recent_topics'): void
 	{
 		// can view rt ?
 		if ($this->auth->acl_get('u_rt_view') == '0')
@@ -248,10 +252,10 @@ class recenttopics
 		if ($this->collapsable_categories !== null)
 		{
 			$fid = 'fid_rt'; // can be any unique string to identify your extension's collapsible element
-			$this->template->assign_vars(array(
+			$this->template->assign_vars([
 				'S_EXT_COLCAT_HIDDEN'       => $this->collapsable_categories->is_collapsed($fid),
 				'U_EXT_COLCAT_COLLAPSE_URL' => $this->collapsable_categories->get_collapsible_link($fid),
-			));
+			]);
 		}
 
 		//display parent forums
@@ -287,7 +291,7 @@ class recenttopics
 		$this->getforumlist();
 
 		// No forums to display
-		if (sizeof($this->forum_ids) == 0)
+		if (count($this->forum_ids) == 0)
 		{
 			return;
 		}
@@ -322,31 +326,31 @@ class recenttopics
 
 		$topics_count = $this->gettopiclist();
 
-		if (sizeof($this->topic_list) == 0)
+		if (count($this->topic_list) == 0)
 		{
 			return;
 		}
 		// If topics to display
 
 		// Grab icons
-		$this->icons = array();
+		$this->icons = [];
 		if ($this->obtain_icons)
 		{
 			$this->icons = $this->cache->obtain_icons();
 		}
 
 		// Borrowed from search.php
-		$topic_tracking_info = array();
+		$topic_tracking_info = [];
 		foreach ($this->forums as $forum_id => $forum)
 		{
 			if ($this->user->data['is_registered'] && $this->config['load_db_lastread'])
 			{
-				$topic_tracking_info[$forum_id] = get_topic_tracking($forum_id, $forum['topic_list'], $forum['rowset'], array($forum_id => $forum['mark_time']), $forum_id ? false : $forum['topic_list']);
+				$topic_tracking_info[$forum_id] = get_topic_tracking($forum_id, $forum['topic_list'], $forum['rowset'], [$forum_id => $forum['mark_time']], $forum_id ? false : $forum['topic_list']);
 			}
 			else if ($this->config['load_anon_lastread'] || $this->user->data['is_registered'])
 			{
 				$tracking_topics = $this->request->variable($this->config['cookie_name'] . '_track', '', true, request_interface::COOKIE);
-				$tracking_topics = $tracking_topics ? tracking_unserialize($tracking_topics) : array();
+				$tracking_topics = $tracking_topics ? tracking_unserialize($tracking_topics) : [];
 
 				$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $forum['topic_list'], $forum_id ? false : $forum['topic_list']);
 
@@ -364,17 +368,17 @@ class recenttopics
 			}
 		}
 
-		$this->template->assign_vars(array(
-				'RT_SORT_START_TIME'			=> $this->sort_topics === 'topic_time',
-				'S_RECENT_TOPICS'				=> true,
-				'S_LOCATION_TOP'				=> $this->location == 'RT_TOP',
-				'S_LOCATION_BOTTOM'				=> $this->location == 'RT_BOTTOM',
-				'S_LOCATION_SIDE'				=> $this->location == 'RT_SIDE',
-				'NEWEST_POST_IMG'				=> $this->user->img('icon_topic_newest', 'VIEW_NEWEST_POST'),
-				'LAST_POST_IMG'					=> $this->user->img('icon_topic_latest', 'VIEW_LATEST_POST'),
-				'POLL_IMG'						=> $this->user->img('icon_topic_poll', 'TOPIC_POLL'),
+		$this->template->assign_vars([
+				'RT_SORT_START_TIME'	=> $this->sort_topics === 'topic_time',
+				'S_RECENT_TOPICS'		=> true,
+				'S_LOCATION_TOP'		=> $this->location == 'RT_TOP',
+				'S_LOCATION_BOTTOM'		=> $this->location == 'RT_BOTTOM',
+				'S_LOCATION_SIDE'		=> $this->location == 'RT_SIDE',
+				'NEWEST_POST_IMG'		=> $this->user->img('icon_topic_newest', 'VIEW_NEWEST_POST'),
+				'LAST_POST_IMG'			=> $this->user->img('icon_topic_latest', 'VIEW_LATEST_POST'),
+				'POLL_IMG'				=> $this->user->img('icon_topic_poll', 'TOPIC_POLL'),
 				strtoupper($tpl_loopname) . '_DISPLAY' => true,
-			)
+			]
 		);
 
 		$this->fill_template($tpl_loopname, $topic_tracking_info, $topics_count);
@@ -383,10 +387,10 @@ class recenttopics
 	/**
 	 * Get the forums we take our topics from
 	 */
-	private function getforumlist()
+	private function getforumlist(): void
 	{
 		// Get the allowed forums
-		$forum_ary = array();
+		$forum_ary = [];
 		$forum_read_ary = $this->auth->acl_getf('f_read');
 
 		foreach ($forum_read_ary as $forum_id => $allowed)
@@ -399,7 +403,7 @@ class recenttopics
 
 		$this->forum_ids = array_unique($forum_ary);
 
-		if (sizeof($this->forum_ids) > 1)
+		if (count($this->forum_ids) > 1)
 		{
 			$sql = 'SELECT forum_id
 					FROM ' . FORUMS_TABLE . '
@@ -408,7 +412,7 @@ class recenttopics
 
 			$result = $this->db->sql_query($sql);
 
-			$this->forum_ids = array();
+			$this->forum_ids = [];
 
 			while ($row = $this->db->sql_fetchrow($result))
 			{
@@ -426,7 +430,7 @@ class recenttopics
 	 *
 	 * @return int
 	 */
-	private function gettopiclist()
+	private function gettopiclist(): int
 	{
 		$this->rtstart = max(0, $this->rtstart);
 
@@ -435,7 +439,7 @@ class recenttopics
 			$this->rtstart = min((int) $this->rtstart, $this->total_topics_limit);
 		}
 
-		$this->forums = $this->topic_list = array();
+		$this->forums = $this->topic_list = [];
 		$topics_count = 0;
 		$this->obtain_icons = false;
 
@@ -531,31 +535,31 @@ class recenttopics
 	 * @param $min_topic_level
 	 * @return array
 	 */
-	private function get_allowed_topics_sql($excluded_topics, $min_topic_level)
+	private function get_allowed_topics_sql($excluded_topics, $min_topic_level): array
 	{
 		// Get the allowed topics
-		$sql_array = array(
+		$sql_array = [
 			'SELECT'    => 't.forum_id, t.topic_id, t.topic_type, t.icon_id, tp.topic_posted, tt.mark_time, ft.mark_time as f_mark_time, t.' . $this->sort_topics . ' as sortcr ',
-			'FROM'      => array(TOPICS_TABLE => 't'),
-			'LEFT_JOIN' => array(
-				array(
-					'FROM' => array(TOPICS_TRACK_TABLE => 'tt'),
+			'FROM'      => [TOPICS_TABLE => 't'],
+			'LEFT_JOIN' => [
+				[
+					'FROM' => [TOPICS_TRACK_TABLE => 'tt'],
 					'ON'   => 'tt.topic_id = t.topic_id AND tt.user_id = ' . (int) $this->user->data['user_id'],
-				),
-				array(
-					'FROM' => array(FORUMS_TRACK_TABLE => 'ft'),
+				],
+				[
+					'FROM' => [FORUMS_TRACK_TABLE => 'ft'],
 					'ON'   => 'ft.forum_id = t.forum_id AND ft.user_id = ' . (int) $this->user->data['user_id'],
-				),
-				array(
-					'FROM' => array(TOPICS_POSTED_TABLE => 'tp'),
+				],
+				[
+					'FROM' => [TOPICS_POSTED_TABLE => 'tp'],
 					'ON' => 'tp.topic_id = t.topic_id AND tp.user_id = ' . (int) $this->user->data['user_id'],
-				),
-			),
+				],
+			],
 			'WHERE'     => $this->db->sql_in_set('t.topic_id', $excluded_topics, true) . '
 					AND t.topic_status <> ' . ITEM_MOVED . '
 					AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.'),
 			'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
-		);
+		];
 
 		// Check if we want all topics, or only stickies/announcements/globals
 		if ($min_topic_level > 0)
@@ -570,7 +574,7 @@ class recenttopics
 		 * @var   array    sql_array        The SQL array
 		 * @since 2.0.4
 		 */
-		$vars = array('sql_array');
+		$vars = ['sql_array'];
 		extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_list', compact($vars)));
 
 		return $sql_array;
@@ -581,17 +585,17 @@ class recenttopics
 	 * @param $row
 	 * @return array
 	 */
-	private function getusernamestrings($row)
+	private function getusernamestrings($row): array
 	{
-		$topic_author       = get_username_string('username', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
-		$topic_author_color = get_username_string('colour', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
-		$topic_author_full  = get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
-		$u_topic_author     = get_username_string('profile', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
-		$last_post_author        = get_username_string('username', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
-		$last_post_author_colour = get_username_string('colour', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
-		$last_post_author_full   = get_username_string('full', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
-		$u_last_post_author      = get_username_string('profile', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
-		return array($topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author);
+		$topic_author				= get_username_string('username', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
+		$topic_author_color			= get_username_string('colour', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
+		$topic_author_full			= get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
+		$u_topic_author				= get_username_string('profile', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']);
+		$last_post_author			= get_username_string('username', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
+		$last_post_author_colour	= get_username_string('colour', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
+		$last_post_author_full		= get_username_string('full', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
+		$u_last_post_author			= get_username_string('profile', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']);
+		return [$topic_author, $topic_author_color, $topic_author_full, $u_topic_author, $last_post_author, $last_post_author_colour, $last_post_author_full, $u_last_post_author];
 	}
 
 	/**
@@ -600,7 +604,7 @@ class recenttopics
 	 * @param string $event
 	 * @return bool
 	 */
-	public function is_listening($class, $event)
+	public function is_listening($class, $event): bool
 	{
 		$listeners = $this->dispatcher->getListeners($event);
 
@@ -618,24 +622,24 @@ class recenttopics
 	 * pull the data of the requested topics
 	 * @return array
 	 */
-	private function get_topics_sql ()
+	private function get_topics_sql (): array
 	{
-		$sql_array = array(
+		$sql_array = [
 			'SELECT'    => 't.*, f.forum_name, tp.topic_posted',
-			'FROM'      => array(TOPICS_TABLE => 't'),
-			'LEFT_JOIN' => array(
-				array(
-					'FROM' => array(FORUMS_TABLE => 'f'),
+			'FROM'      => [TOPICS_TABLE => 't'],
+			'LEFT_JOIN' => [
+				[
+					'FROM' => [FORUMS_TABLE => 'f'],
 					'ON'   => 'f.forum_id = t.forum_id',
-				),
-				array(
-					'FROM' => array(TOPICS_POSTED_TABLE => 'tp'),
+				],
+				[
+					'FROM' => [TOPICS_POSTED_TABLE => 'tp'],
 					'ON' => 'tp.topic_id = t.topic_id AND tp.user_id = ' . (int) $this->user->data['user_id'],
-				),
-			),
+				],
+			],
 			'WHERE'     => $this->db->sql_in_set('t.topic_id', $this->topic_list),
 			'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
-		);
+		];
 		if ($this->display_parent_forums)
 		{
 			$sql_array['SELECT'] .= ', f.parent_id, f.forum_parents, f.left_id, f.right_id';
@@ -650,12 +654,12 @@ class recenttopics
 		extract(
 			$this->dispatcher->trigger_event(
 				'paybas.recenttopics.sql_pull_topics_data',
-				array('sql_array' => $sql_array)
+				['sql_array' => $sql_array]
 			)
 		);
 		$sql    = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query_limit($sql, $this->topics_per_page);
-		$rowset = array();
+		$rowset = [];
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -675,10 +679,10 @@ class recenttopics
 	{
 		// get topics from db
 		$rowset = $this->get_topics_sql();
-		$topic_icons = array();
+		$topic_icons = [];
 
 		// if topics returned by DB
-		if (sizeof($rowset))
+		if (count($rowset))
 		{
 			/**
 			 * Event to modify the topics list data before we start the display loop
@@ -691,7 +695,7 @@ class recenttopics
 			extract(
 				$this->dispatcher->trigger_event(
 					'paybas.recenttopics.modify_topics_list',
-					array('topic_list' => $this->topic_list, 'rowset' => $rowset)
+					['topic_list' => $this->topic_list, 'rowset' => $rowset]
 				)
 			);
 			foreach ($rowset as $row)
@@ -771,7 +775,7 @@ class recenttopics
 				 * @var   array    row      the forum row
 				 * @since 2.2.11
 				 */
-				$vars = array('row');
+				$vars = ['row'];
 				extract($this->dispatcher->trigger_event('paybas.recenttopics.topictitle_remove_re', compact($vars)));
 
 				/**
@@ -783,7 +787,7 @@ class recenttopics
 				 * @since 2.1.3
 				 */
 
-				$vars = array('row', 'prefix');
+				$vars = ['row', 'prefix'];
 				extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topictitle', compact($vars)));
 
 				//fallback if there is no listener
@@ -816,7 +820,7 @@ class recenttopics
 
 				//load language
 				$this->language->add_lang('recenttopics', 'paybas/recenttopics');
-				$tpl_ary = array(
+				$tpl_ary = [
 					'FORUM_ID'				=> $forum_id,
 					'TOPIC_ID'				=> $topic_id,
 					'TOPIC_AUTHOR'			=> $topic_author,
@@ -863,7 +867,7 @@ class recenttopics
 					'U_VIEW_FORUM'	=> $view_forum_url,
 					'U_MCP_REPORT'	=> append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;f=' . $forum_id . '&amp;t=' . $topic_id, true, $this->user->session_id),
 					'U_MCP_QUEUE'	=> $u_mcp_queue,
-				);
+				];
 
 				/**
 				 * Modify the topic data before it is assigned to the template
@@ -873,7 +877,7 @@ class recenttopics
 				 * @var   array    tpl_ary        Template block array with topic data
 				 * @since 2.0.0
 				 */
-				$vars = array('row', 'tpl_ary');
+				$vars = ['row', 'tpl_ary'];
 				extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_tpl_ary', compact($vars)));
 				$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
 				$this->pagination->generate_template_pagination($view_topic_url, $tpl_loopname . '.pagination', 'start', $replies + 1, $this->config['posts_per_page'], 1, true, true);
@@ -883,11 +887,11 @@ class recenttopics
 					foreach ($forum_parents as $parent_id => $data)
 					{
 						$this->template->assign_block_vars(
-							$tpl_loopname . '.parent_forums', array(
+							$tpl_loopname . '.parent_forums', [
 								'FORUM_ID'		=> $parent_id,
 								'FORUM_NAME'	=> $data[0],
 								'U_VIEW_FORUM'	=> append_sid("{$this->root_path}viewforum.$this->phpEx", 'f=' . $parent_id),
-							)
+							]
 						);
 					}
 				}
@@ -895,7 +899,7 @@ class recenttopics
 
 			// Get URL-parameters for pagination
 			$url_params		= explode('&', $this->user->page['query_string']);
-			$append_params	= array();
+			$append_params	= [];
 
 			foreach ($url_params as $param)
 			{
@@ -923,9 +927,9 @@ class recenttopics
 			$this->pagination->generate_template_pagination($pagination_url, 'pagination',
 				$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int) $this->rtstart, $this->total_topics_limit)));
 			$this->template->assign_vars(
-				array (
-					'S_TOPIC_ICONS' => sizeof($topic_icons) ? true : false,
-				)
+				[
+					'S_TOPIC_ICONS' => count($topic_icons) ? true : false,
+				]
 			);
 		}// topics found
 	}

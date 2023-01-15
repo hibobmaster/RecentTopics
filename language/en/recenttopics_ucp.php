@@ -1,22 +1,26 @@
 <?php
 /**
  *
- * @package Recent Topics Extension
- * English translation by PayBas
+ * Recent Topics. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2015 PayBas
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  */
 
+/**
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -32,11 +36,9 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ‚ ‘ ’ « » “ ” … „ “
 //
-
-$lang = array_merge(
-	$lang, array(
+$lang = array_merge($lang, [
 	'RT_ENABLE'              => 'Display recent topics',
 	'RT_BOTTOM'              => 'Show on bottom',
 	'RT_SIDE'                => 'Show on side',
@@ -48,5 +50,4 @@ $lang = array_merge(
 	'RT_SORT_START_TIME'     => 'Sort recent topics by topic start time',
 	'RT_SORT_START_TIME_EXP' => 'Instead of sorting them by last post time.',
 	'RT_UNREAD_ONLY'         => 'Only display unread topics in recent topics',
-	)
-);
+]);

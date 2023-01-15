@@ -12,7 +12,6 @@ namespace paybas\recenttopics\migrations;
 
 class release_2_2_12 extends \phpbb\db\migration\migration
 {
-
 	public function effectively_installed()
 	{
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.2.12', '>=');
@@ -30,7 +29,5 @@ class release_2_2_12 extends \phpbb\db\migration\migration
 		return [
 			['config.update', ['rt_version', '2.2.12']],
 		];
-
 	}
-
 }
