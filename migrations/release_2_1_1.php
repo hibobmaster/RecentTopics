@@ -12,7 +12,6 @@ namespace paybas\recenttopics\migrations;
 
 class release_2_1_1 extends \phpbb\db\migration\migration
 {
-
 	public function effectively_installed()
 	{
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.1.1', '>=');
@@ -40,5 +39,4 @@ class release_2_1_1 extends \phpbb\db\migration\migration
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_rt_location = \'RT_SIDE\' ';
 		$this->db->sql_query($sql);
 	}
-
 }

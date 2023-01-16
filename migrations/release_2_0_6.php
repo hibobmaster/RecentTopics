@@ -12,7 +12,6 @@ namespace paybas\recenttopics\migrations;
 
 class release_2_0_6 extends \phpbb\db\migration\migration
 {
-
 	public function effectively_installed()
 	{
 		return isset($this->config['rt_version']) && version_compare($this->config['rt_version'], '2.0.6', '>=');
@@ -85,7 +84,6 @@ class release_2_0_6 extends \phpbb\db\migration\migration
 			['permission.remove', ['u_rt_alt_location']],
 			['permission.remove', ['u_rt_sort_start_time']],
 			['permission.remove', ['u_rt_unread_only']],
-
 		];
 	}
 }

@@ -1,3 +1,15 @@
+{#
+ *
+ * Recent Topics. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2022, IMC, https://github.com/IMC-GER / LukeWCS, https://github.com/LukeWCS
+ * @copyright (c) 2017, Sajaki, https://www.avathar.be
+ * @copyright (c) 2015, PayBas
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
+ #}
+
 {% include 'overall_header.html' %}
 
 <h1>{{ lang('RECENT_TOPICS') }}</h1>
@@ -10,7 +22,7 @@
 		
 		<dl>
 			<dt>
-				<label for="rt_enable">{{ lang('INDEX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_DISPLAY_INDEX') }}</span>
+				<label>{{ lang('INDEX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_DISPLAY_INDEX') }}</span>
 			</dt>
 			<dd>
 				{{ _self.switch('rt_enable', RT_INDEX) }}
@@ -19,7 +31,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_page_numbermax">{{ lang('RT_PAGE_NUMBERMAX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PAGE_NUMBERMAX_EXP') }}</span>
+				<label>{{ lang('RT_PAGE_NUMBERMAX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PAGE_NUMBERMAX_EXP') }}</span>
 			</dt>
 			<dd>
 				<input type="number" name="rt_page_numbermax" size="3" min="1" max="999" value="{{ RT_PAGE_NUMBERMAX }}">
@@ -37,7 +49,7 @@
 		
 		<dl>
 			<dt>
-				<label for="rt_min_topic_level">{{ lang('RT_MIN_TOPIC_LEVEL') ~ lang('COLON') }}</label><br><span>{{ lang('RT_MIN_TOPIC_LEVEL_EXP') }}</span>
+				<label>{{ lang('RT_MIN_TOPIC_LEVEL') ~ lang('COLON') }}</label><br><span>{{ lang('RT_MIN_TOPIC_LEVEL_EXP') }}</span>
 			</dt>
 			<dd>
 				{{ _self.select('rt_min_topic_level', loops.topiclevel_row) }}
@@ -46,7 +58,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_anti_topics">{{ lang('RT_ANTI_TOPICS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_ANTI_TOPICS_EXP') }}</span>
+				<label>{{ lang('RT_ANTI_TOPICS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_ANTI_TOPICS_EXP') }}</span>
 			</dt>
 			<dd>
 				<input type="text" name="rt_anti_topics" size="30" value="{{ RT_ANTI_TOPICS }}">
@@ -55,7 +67,7 @@
 		
 		<dl>
 			<dt>
-				<label for="rt_parents">{{ lang('RT_PARENTS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PARENTS_EXP') }}</span>
+				<label>{{ lang('RT_PARENTS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PARENTS_EXP') }}</span>
 			</dt>
 			<dd>
 				{{ _self.switch('rt_parents', RT_PARENTS) }}
@@ -68,7 +80,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_location">{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br><span>{{ lang('RT_LOCATION_EXP') }}</span>
+				<label>{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br><span>{{ lang('RT_LOCATION_EXP') }}</span>
 			</dt>
 			<dd>
 				{{ _self.select('rt_location', loops.location_row) }}
@@ -77,7 +89,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_number">{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_NUMBER_EXP') }}</span>
+				<label>{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_NUMBER_EXP') }}</span>
 			</dt>
 			<dd>
 				<input type="number" name="rt_number" size="3" min="0" max="999" value="{{ RT_NUMBER }}">
@@ -86,7 +98,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_sort_start_time">{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br><span>{{ lang('RT_SORT_START_TIME_EXP') }}</span>
+				<label>{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br><span>{{ lang('RT_SORT_START_TIME_EXP') }}</span>
 			</dt>
 			<dd>
 				{{ _self.switch('rt_sort_start_time', RT_SORT_START_TIME) }}
@@ -95,7 +107,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_unread_only">{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label><br><span>{{ lang('RT_UNREAD_ONLY_EXP') }}</span>
+				<label>{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label><br><span>{{ lang('RT_UNREAD_ONLY_EXP') }}</span>
 			</dt>
 			<dd>
 				{{ _self.switch('rt_unread_only', RT_UNREAD_ONLY) }}
@@ -121,7 +133,7 @@
 
 		<dl>
 			<dt>
-				<label for="rt_on_newspage">{{ lang('RT_NICKVERGESSEN_NEWSPAGE') ~ lang('COLON') }}</label>
+				<label>{{ lang('RT_NICKVERGESSEN_NEWSPAGE') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
 				{{ _self.switch('rt_on_newspage', RT_ON_NEWSPAGE) }}
@@ -135,7 +147,7 @@
 
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden>
-			<input class="button1" type="button" id="ask_for_write" onclick="askForWrite()" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input class="button1" type="button" id="ask_for_write" onclick="RecentTopics.askForWrite()" value="{{ lang('SUBMIT') }}">&nbsp;
 			<input class="button2" type="reset"  id="reset" name="reset" value="{{ lang('RESET') }}">
 		</p>
 	</fieldset>
@@ -148,7 +160,7 @@
 				<label>{{ lang('RT_DONATE_SHORT') ~ lang('COLON') }}</label><br><span>{{ lang('RT_DONATE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				<a href="{{ lang('RT_DONATE_URL') }}" target="_blank"><img src="{{ lang('PAYPAL_IMAGE_URL') }}" border="0" alt="{{ lang('PAYPAL_ALT') }}" style="cursor:pointer"></a>
+				<a href="{{ lang('RT_DONATE_URL') }}" target="_blank"><img src="{{ lang('RT_PAYPAL_IMAGE_URL') }}" border="0" alt="{{ lang('RT_PAYPAL_ALT') }}" style="cursor:pointer"></a>
 			</dd>
 		</dl>
 	</fieldset>
@@ -158,17 +170,14 @@
 
 <div id="ask_before_submit" style="display: none;">
 	<div class="errorbox">
-		<p>{{ lang('RT_RESET_SAVE_ERROR') }}<br><br>{{ lang('RT_RESET_SAVE_ERROR_EXP') }}</p>
+		<p>{{ lang('RT_RESET_ASK_BEFORE') }}<br><br>{{ lang('RT_RESET_ASK_BEFORE_EXP') }}</p>
 	</div>
 
-	<form  id="acp_extensions">
-		<fieldset class="submit-buttons">
-			<input class="button1" type="button" name="write_data" onclick="writeData()" value="{{ lang('EXPORT_STORE') }}">&nbsp;
-			<input class="button2" type="button" name="cancel" onclick="abortWrite()" value="{{ lang('CANCEL') }}">
-		</fieldset>
-	</form>
+	<p class="submit-buttons">
+		<input class="button1" type="button" name="write_data" onclick="RecentTopics.writeData()" value="{{ lang('EXPORT_STORE') }}">&nbsp;
+		<input class="button2" type="button" name="cancel" onclick="RecentTopics.abortWrite()" value="{{ lang('CANCEL') }}">
+	</p>
 </div>
-
 
 {% include 'overall_footer.html' %}
 
@@ -177,7 +186,7 @@
 
 {% macro switch(name, checked = false) %}
 {% spaceless %}
-	<input type="checkbox" class="toggle" id="{{ name }}" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
+	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
 {% endspaceless %}
 {% endmacro %}
 
