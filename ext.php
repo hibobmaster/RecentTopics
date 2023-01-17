@@ -28,8 +28,8 @@ class ext extends \phpbb\extension\base
 	 */
 	public function is_enableable()
 	{
-		$valid_phpbb = phpbb_version_compare(PHPBB_VERSION, '3.2.6', '>=') && phpbb_version_compare(PHPBB_VERSION, '3.4.0', '<');
-		$valid_php = phpbb_version_compare(PHP_VERSION, '7.1.0', '>=') && phpbb_version_compare(PHP_VERSION, '8.2.0', '<');
+		$valid_phpbb = phpbb_version_compare(PHPBB_VERSION, '3.3.5', '>=') && phpbb_version_compare(PHPBB_VERSION, '3.4.0', '<');
+		$valid_php = phpbb_version_compare(PHP_VERSION, '7.1.3', '>=') && phpbb_version_compare(PHP_VERSION, '8.2.0', '<');
 
 		return ($valid_phpbb && $valid_php);
 	}

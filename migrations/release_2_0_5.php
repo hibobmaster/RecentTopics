@@ -27,9 +27,9 @@ class release_2_0_5 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-		['config.update', ['rt_version', '2.0.5']],
-		['config.add', ['rt_on_newspage', 0]],
-		['config.add', ['rt_sort_start_time', 0]],
+			['config.update', ['rt_version', '2.0.5']],
+			['config.add', ['rt_on_newspage', 0]],
+			['config.add', ['rt_sort_start_time', 0]],
 		];
 	}
 }
