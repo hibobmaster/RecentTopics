@@ -27,8 +27,8 @@ class release_2_0_4 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-		['config.update', ['rt_version', '2.0.4']],
-		['config.add', ['rt_min_topic_level', 0]],
+			['config.update', ['rt_version', '2.0.4']],
+			['config.add', ['rt_min_topic_level', 0]],
 		];
 	}
 }
