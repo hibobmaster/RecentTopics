@@ -15,12 +15,11 @@ var RecentTopics = {};
 RecentTopics.askForWrite = function () {
 	'use strict';
 
-	if ($('input[name="rt_reset_default"]').prop('checked')){
+	if ($('input[name="rt_reset_default"]').prop('checked')) {
 		window.scrollTo(0, 0);
 		$('#ask_before_submit').css('display', '');
 		$('#acp_board').css('display', 'none');
-	}
-	else {
+	} else {
 		$('#submit').click();
 	}
 }
