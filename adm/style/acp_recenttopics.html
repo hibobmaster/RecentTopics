@@ -184,16 +184,14 @@
 {% INCLUDECSS '@paybas_recenttopics/acp_toggle.css' %}
 {% INCLUDEJS '@paybas_recenttopics/acp_recenttopics.js' %}
 
-{% macro switch(name, checked = false) %}
-{% spaceless %}
+{% macro switch(name, checked = false) -%}
 	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
-{% endspaceless %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro select(name, array) %}
+{% macro select(name, array) -%}
 	<select class="input" name="{{ name }}">
 		{% for array_row in array %}
 			<option value="{{ array_row.VALUE }}"{{ array_row.SELECTED }}>{{ array_row.OPTION }}</option>
 		{% endfor %}
 	</select>
-{% endmacro %}
+{%- endmacro %}

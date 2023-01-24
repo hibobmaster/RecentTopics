@@ -76,7 +76,7 @@ $lang = array_merge($lang, [
 	'RT_UNREAD_ONLY'				=> 'Only display unread topics',
 	'RT_UNREAD_ONLY_EXP'			=> 'Enable to only display unread topics (whether they are “recent” or not). This function uses the same settings (excluding forums/topics etc.) as normal mode. Note: this only works for logged-in users; guests will get the normal list.',
 	'RT_RESET_DEFAULT'				=> 'Overwrite user settings',
-	'RT_RESET_DEFAULT_EXP'			=> 'When this option is enabled, the settings of all users are overwritten. Without the activation only default values for new users are set.',
+	'RT_RESET_DEFAULT_EXP'			=> 'When this option is enabled, the settings of all users are overwritten. Without the activation only default values for new users and guests are set.',
 	'RT_RESET_ASK_BEFORE'			=> 'Are you sure you want to overwrite the user settings?',
 	'RT_RESET_ASK_BEFORE_EXP'		=> 'This will overwrite all user settings with your defaults. <strong>This process cannot be reversed!</strong>',
 
