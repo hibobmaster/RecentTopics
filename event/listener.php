@@ -20,7 +20,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class listener implements EventSubscriberInterface
 {
-	/* @var recenttopics */
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var recenttopics */
 	protected $rt_functions;
 
 	/** @var \phpbb\config\config */
@@ -29,23 +32,50 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\request\request */
 	protected $request;
 
+	/** @var template */
+	protected $template;
+
+	/** @var \phpbb\controller\helper */
+	protected $helper;
+
+	/** @var \phpbb\language\language */
+	protected $language;
+
+	/** @var auth */
+	protected $auth;
+
 	/**
 	 * listener constructor.
 	 *
+	 * @param \phpbb\user							 $user
 	 * @param \paybas\recenttopics\core\recenttopics $functions
-	 * @param \phpbb\config\config                   $config
-	 * @param \phpbb\request\request                 $request
+	 * @param \phpbb\config\config					 $config
+	 * @param \phpbb\request\request				 $request
+	 * @param \phpbb\template\template				 $template
+	 * @param \phpbb\controller\helper				 $helper
+	 * @param \phpbb\language\language 				 $language
+	 * @param \phpbb\auth\auth						 $auth
 	 */
 	public function __construct
 	(
+		\phpbb\user $user,
 		\paybas\recenttopics\core\recenttopics $functions,
 		\phpbb\config\config $config,
-		\phpbb\request\request $request
+		\phpbb\request\request $request,
+		\phpbb\template\template $template,
+		\phpbb\controller\helper $helper,
+		\phpbb\language\language $language,
+		\phpbb\auth\auth $auth
 	)
 	{
-		$this->rt_functions = $functions;
-		$this->config = $config;
-		$this->request = $request;
+		$this->user			= $user;
+		$this->rt_functions	= $functions;
+		$this->config		= $config;
+		$this->request		= $request;
+		$this->template		= $template;
+		$this->helper		= $helper;
+		$this->language		= $language;
+		$this->auth			= $auth;
 	}
 
 	/**
@@ -57,6 +87,7 @@ class listener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return [
+			'core.page_header'						 => 'set_template_vars',
 			'core.index_modify_page_title'           => 'display_rt',
 			'nickvergessen.newspage.newspage'        => 'display_rt_newspage',
 			'core.acp_manage_forums_request_data'    => 'acp_manage_forums_request_data',
@@ -69,7 +100,28 @@ class listener implements EventSubscriberInterface
 		];
 	}
 
-	// The main magic
+	/**
+	 * Set template vars and load language
+	 *
+	 * @return null
+	 * @access public
+	 */
+	public function set_template_vars()
+	{
+		$this->template->assign_vars([
+			'U_RT_PAGE_SEPARATE' => $this->helper->route('paybas_recenttopics_page_controller', ['page' => 'separate']),
+			'S_RT_VIEW'			 => $this->auth->acl_get('u_rt_view') && $this->config['rt_index'] && $this->user->data['user_rt_enable'],
+		]);
+
+		$this->language->add_lang('recenttopics', 'paybas/recenttopics');
+	}
+
+	/**
+	 * The main magic
+	 *
+	 * @return null
+	 * @access public
+	 */
 	public function display_rt()
 	{
 		if (isset($this->config['rt_index']) && $this->config['rt_index'])
@@ -78,7 +130,12 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	// nickvergessen's newspage ext
+	/**
+	 * nickvergessen's newspage ext
+	 *
+	 * @return null
+	 * @access public
+	 */
 	public function display_rt_newspage()
 	{
 		if (isset($this->config['rt_on_newspage']) && $this->config['rt_on_newspage'])
@@ -87,9 +144,12 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	// Submit form (add/update)
 	/**
-	 * @param $event
+	 * Submit form (add/update)
+	 *
+	 * @param \phpbb\event\data $event The event object
+	 * @return null
+	 * @access public
 	 */
 	public function acp_manage_forums_request_data($event)
 	{
@@ -98,9 +158,12 @@ class listener implements EventSubscriberInterface
 		$event['forum_data'] = $array;
 	}
 
-	// Default settings for new forums
 	/**
-	 * @param $event
+	 * Default settings for new forums
+	 *
+	 * @param \phpbb\event\data $event The event object
+	 * @return null
+	 * @access public
 	 */
 	public function acp_manage_forums_initialise_data($event)
 	{
@@ -112,9 +175,12 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	// ACP forums template output
 	/**
-	 * @param $event
+	 * ACP forums template output
+	 *
+	 * @param \phpbb\event\data $event The event object
+	 * @return null
+	 * @access public
 	 */
 	public function acp_manage_forums_display_form($event)
 	{
@@ -125,7 +191,8 @@ class listener implements EventSubscriberInterface
 
 	/**
 	 * Add permissions
-	 * @param array $event
+	 *
+	 * @param \phpbb\event\data $event The event object
 	 * @return null
 	 * @access public
 	 */
@@ -146,7 +213,7 @@ class listener implements EventSubscriberInterface
 	 * remove "Re: " from post subject
 	 *
 	 * @param \phpbb\event\data		$event  The event object
-	 * @return void
+	 * @return null
 	 * @access public
 	 */
 	public function topictitle_remove_re($event)

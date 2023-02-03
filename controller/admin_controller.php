@@ -117,9 +117,10 @@ class admin_controller
 		}
 
 		$display_types = [
-			'RT_TOP'    => $this->language->lang('RT_TOP'),
-			'RT_BOTTOM' => $this->language->lang('RT_BOTTOM'),
-			'RT_SIDE'   => $this->language->lang('RT_SIDE'),
+			'RT_TOP'	 => $this->language->lang('RT_TOP'),
+			'RT_BOTTOM'	 => $this->language->lang('RT_BOTTOM'),
+			'RT_SIDE'	 => $this->language->lang('RT_SIDE'),
+			'RT_SEPARAT' => $this->language->lang('RT_SEPARAT'),
 		];
 
 		foreach ($display_types as $key => $display_type)

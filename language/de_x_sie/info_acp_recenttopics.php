@@ -71,6 +71,7 @@ $lang = array_merge($lang, [
 	'RT_TOP'						=> 'Ansicht oben',
 	'RT_BOTTOM'						=> 'Ansicht unten',
 	'RT_SIDE'						=> 'Ansicht auf die Seite',
+	'RT_SEPARAT'					=> 'Nur separate Seite',
 	'RT_SORT_START_TIME'			=> 'Nach Themen Startzeit sortieren',
 	'RT_SORT_START_TIME_EXP'		=> 'Wenn diese Option aktiviert ist, werden die Themen nach dem Datum des ersten Beitrags anstelle des letzten Beitrags sortiert.',
 	'RT_UNREAD_ONLY'				=> 'Nur ungelesene Themen anzeigen',

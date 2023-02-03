@@ -1,4 +1,15 @@
 services:
+    paybas.recenttopics.controller.page_controller:
+        class: paybas\recenttopics\controller\page_controller
+        arguments:
+            - '@template'
+            - '@config'
+            - '@controller.helper'
+            - '@language'
+            - '@paybas.recenttopics.functions'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+
     paybas.recenttopics.admin.controller:
         class: paybas\recenttopics\controller\admin_controller
         arguments:
@@ -32,9 +43,14 @@ services:
     paybas.recenttopics.listener:
         class: paybas\recenttopics\event\listener
         arguments:
+            - '@user'
             - '@paybas.recenttopics.functions'
             - '@config'
             - '@request'
+            - '@template'
+            - '@controller.helper'
+            - '@language'
+            - '@auth'
         tags:
             - { name: event.listener }
 

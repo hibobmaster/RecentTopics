@@ -71,6 +71,7 @@ $lang = array_merge($lang, [
 	'RT_TOP'						=> 'Show on top',
 	'RT_BOTTOM'						=> 'Show on bottom',
 	'RT_SIDE'						=> 'Show on side',
+	'RT_SEPARAT'					=> 'Only separate page',
 	'RT_SORT_START_TIME'			=> 'Sort by topic start time',
 	'RT_SORT_START_TIME_EXP'		=> 'Enable to sort recent topics by the starting time of the topic, instead of the last post time.',
 	'RT_UNREAD_ONLY'				=> 'Only display unread topics',

@@ -1,0 +1,10 @@
+{% INCLUDECSS '@paybas_recenttopics/recenttopics.css' %}
+{% include 'simple_header.html' %}
+{% set S_LOCATION_TOP = true %}
+{% set S_LOCATION_BOTTOM = true %}
+
+<div id="recenttopics-separate">
+{% include '@paybas_recenttopics/recenttopics_body_topbottom.html' %}
+</div>
+
+{% include 'simple_footer.html' %}

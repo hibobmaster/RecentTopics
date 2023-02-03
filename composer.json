@@ -1,10 +1,10 @@
 {
     "name": "paybas/recenttopics",
     "type": "phpbb-extension",
-    "description": "Recent topics Extension for phpBB 3.2. Adds a list with a number of recent topics to the board index.",
+    "description": "Recent topics Extension for phpBB 3.3. Adds a list with a number of recent topics to the board index.",
     "homepage": "https://github.com/sajaki/RecentTopics",
-    "version": "2.2.15-pl6",
-    "time": "2023-01-24",
+    "version": "2.2.15-pl7",
+    "time": "2023-02-03",
     "license": "GPL-2.0-only",
     "authors": [
 		{

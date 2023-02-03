@@ -21,13 +21,13 @@ namespace paybas\recenttopics\core;
 class recenttopics
 {
 	/**
-	* @var auth
-	*/
+	 * @var auth
+	 */
 	protected $auth;
 
 	/**
-	* @var config
-	*/
+	 * @var config
+	 */
 	protected $config;
 
 	/**
@@ -36,58 +36,58 @@ class recenttopics
 	protected $language;
 
 	/**
-	* @var \phpbb\cache\service
-	*/
+	 * @var \phpbb\cache\service
+	 */
 	protected $cache;
 
 	/**
-	* @var content_visibility
-	*/
+	 * @var content_visibility
+	 */
 	protected $content_visibility;
 
 	/**
-	* @var driver_interface
-	*/
+	 * @var driver_interface
+	 */
 	protected $db;
 
 	/**
-	* @var dispatcher_interface
-	*/
+	 * @var dispatcher_interface
+	 */
 	protected $dispatcher;
 
 	/**
-	* @var pagination
-	*/
+	 * @var pagination
+	 */
 	protected $pagination;
 
 	/**
-	* @var request_interface
-	*/
+	 * @var request_interface
+	 */
 	protected $request;
 
 	/**
-	* @var template
-	*/
+	 * @var template
+	 */
 	protected $template;
 
 	/**
-	* @var \phpbb\user
-	*/
+	 * @var \phpbb\user
+	 */
 	protected $user;
 
 	/**
-	* @var string phpBB root path
-	*/
+	 * @var string phpBB root path
+	 */
 	protected $root_path;
 
 	/**
-	* @var string PHP extension
-	*/
+	 * @var string PHP extension
+	 */
 	protected $phpEx;
 
 	/**
-	* @var topicprefixes
-	*/
+	 * @var topicprefixes
+	 */
 	private $topicprefixes;
 
 	/**
@@ -96,37 +96,39 @@ class recenttopics
 	private $prefixed;
 
 	/**
-	* array of allowable forum id's
-	*
-	* @var array
-	*/
+	 * array of allowable forum id's
+	 *
+	 * @var array
+	 */
 	private $forum_ids;
 
 	/**
-	* array of topics to show
-	*
-	* @var array
-	*/
+	 * array of topics to show
+	 *
+	 * @var array
+	 */
 	private $topic_list;
 
+	/**
+	 * @var int
+	 */
 	private $unread_only;
 
 	/**
-	* show a forum icon ?
-	*
-	* @var boolean
-	*/
+	 * show a forum icon ?
+	 *
+	 * @var boolean
+	 */
 	private $obtain_icons;
 
 	/**
-	* forum objects we need
-	*
-	* @var array
-	*/
+	 * forum objects we need
+	 *
+	 * @var array
+	 */
 	private $forums;
 
 	/**
-	 *
 	 * @var Collapsable
 	 */
 	private $collapsable_categories;
@@ -158,12 +160,12 @@ class recenttopics
 
 	/**
 	 * Block location
+	 *
 	 * @var string
 	 */
 	private $location;
 
 	/**
-	 *
 	 * @var int
 	 */
 	private $icons;
@@ -213,21 +215,21 @@ class recenttopics
 		\phpbb\collapsiblecategories\operator\operator $collapsable_categories = null
 	)
 	{
-		$this->auth = $auth;
-		$this->cache = $cache;
-		$this->config = $config;
-		$this->language = $language;
-		$this->content_visibility = $content_visibility;
-		$this->db = $db;
-		$this->dispatcher = $dispatcher;
-		$this->pagination = $pagination;
-		$this->request = $request;
-		$this->template = $template;
-		$this->user = $user;
-		$this->root_path = $root_path;
-		$this->phpEx = $phpEx;
-		$this->topicprefixes = $topicprefixes;
-		$this->prefixed = $prefixed;
+		$this->auth					= $auth;
+		$this->cache				= $cache;
+		$this->config				= $config;
+		$this->language				= $language;
+		$this->content_visibility	= $content_visibility;
+		$this->db					= $db;
+		$this->dispatcher			= $dispatcher;
+		$this->pagination			= $pagination;
+		$this->request				= $request;
+		$this->template				= $template;
+		$this->user					= $user;
+		$this->root_path			= $root_path;
+		$this->phpEx				= $phpEx;
+		$this->topicprefixes		= $topicprefixes;
+		$this->prefixed				= $prefixed;
 		$this->collapsable_categories = $collapsable_categories;
 	}
 
@@ -246,6 +248,11 @@ class recenttopics
 		if ($this->auth->acl_get('u_rt_enable') && !$this->user->data['user_rt_enable'])
 		{
 			return;
+		}
+
+		if (!function_exists('topic_status'))
+		{
+			include($this->root_path . 'includes/functions_display.' . $this->phpEx);
 		}
 
 		// support for phpbb collapsable categories extension
@@ -368,7 +375,10 @@ class recenttopics
 			}
 		}
 
+		//load language
+		$this->language->add_lang('recenttopics', 'paybas/recenttopics');
 		$this->template->assign_vars([
+				'RT_TOPICS_COUNT'		=> $this->language->lang('RT_TOPICS_COUNT', (int) $topics_count),
 				'RT_SORT_START_TIME'	=> $this->sort_topics === 'topic_time',
 				'S_RECENT_TOPICS'		=> true,
 				'S_LOCATION_TOP'		=> $this->location == 'RT_TOP',
@@ -449,8 +459,8 @@ class recenttopics
 		if ($this->unread_only && $this->user->data['user_id'] != ANONYMOUS)
 		{
 			// Get unread topics
-			$sql_extra = ' AND ' . $this->db->sql_in_set('t.topic_id', $this->excluded_topics, true);
-			$sql_extra .= ' AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.');
+			$sql_extra	   = ' AND ' . $this->db->sql_in_set('t.topic_id', $this->excluded_topics, true);
+			$sql_extra	  .= ' AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $this->forum_ids, $table_alias = 't.');
 			$unread_topics = get_unread_topics(false, $sql_extra, '', $this->total_topics_limit);
 			$this->rtstart = min(count($unread_topics) - 1 , (int) $this->rtstart);
 
@@ -746,11 +756,11 @@ class recenttopics
 				$view_topic_url		= append_sid("{$this->root_path}viewtopic.$this->phpEx", 't=' . $topic_id);
 				$view_last_post_url	= append_sid("{$this->root_path}viewtopic.$this->phpEx", 'p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
 				$view_report_url	= append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;t=' . $topic_id, true, $this->user->session_id);
-				$view_forum_url = append_sid("{$this->root_path}viewforum.$this->phpEx", 'f=' . $forum_id);
-				$topic_unapproved = ($row['topic_visibility'] == ITEM_UNAPPROVED && $this->auth->acl_get('m_approve', $forum_id));
-				$posts_unapproved = ($row['topic_visibility'] == ITEM_APPROVED && $row['topic_posts_unapproved'] && $this->auth->acl_get('m_approve', $forum_id));
-				$u_mcp_queue   = ($topic_unapproved || $posts_unapproved) ? append_sid("{$this->root_path}mcp.$this->phpEx", 'i=queue&amp;mode=' . ($topic_unapproved ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $this->user->session_id) : '';
-				$s_type_switch = ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0;
+				$view_forum_url		= append_sid("{$this->root_path}viewforum.$this->phpEx", 'f=' . $forum_id);
+				$topic_unapproved	= ($row['topic_visibility'] == ITEM_UNAPPROVED && $this->auth->acl_get('m_approve', $forum_id));
+				$posts_unapproved	= ($row['topic_visibility'] == ITEM_APPROVED && $row['topic_posts_unapproved'] && $this->auth->acl_get('m_approve', $forum_id));
+				$u_mcp_queue		= ($topic_unapproved || $posts_unapproved) ? append_sid("{$this->root_path}mcp.$this->phpEx", 'i=queue&amp;mode=' . ($topic_unapproved ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $this->user->session_id) : '';
+				$s_type_switch		= ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0;
 
 				if (!empty($this->icons[$row['icon_id']]))
 				{
