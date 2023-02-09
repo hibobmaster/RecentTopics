@@ -356,7 +356,7 @@ class recenttopics
 			}
 			else if ($this->config['load_anon_lastread'] || $this->user->data['is_registered'])
 			{
-				$tracking_topics = $this->request->variable($this->config['cookie_name'] . '_track', '', true, request_interface::COOKIE);
+				$tracking_topics = $this->request->variable($this->config['cookie_name'] . '_track', '', true, \phpbb\request\request_interface::COOKIE);
 				$tracking_topics = $tracking_topics ? tracking_unserialize($tracking_topics) : [];
 
 				$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $forum['topic_list'], $forum_id ? false : $forum['topic_list']);

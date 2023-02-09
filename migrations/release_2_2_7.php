@@ -34,14 +34,6 @@ class release_2_2_7 extends \phpbb\db\migration\migration
 		];
 	}
 
-	public function revert_data()
-	{
-		return [
-			['permission.remove', ['u_rt_number']],
-			['config.update', ['rt_version', '2.2.6']],
-		];
-	}
-
 	public function update_schema()
 	{
 		return [

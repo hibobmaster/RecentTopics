@@ -72,18 +72,4 @@ class release_2_0_6 extends \phpbb\db\migration\migration
 			['permission.permission_set', ['GUESTS', 'u_rt_view', 'group']],
 		];
 	}
-
-	public function revert_data()
-	{
-		return [
-			['config.remove', ['rt_unread_only']],
-			['config.remove', ['rt_alt_location']],
-
-			['permission.remove', ['u_rt_view']],
-			['permission.remove', ['u_rt_enable']],
-			['permission.remove', ['u_rt_alt_location']],
-			['permission.remove', ['u_rt_sort_start_time']],
-			['permission.remove', ['u_rt_unread_only']],
-		];
-	}
 }
