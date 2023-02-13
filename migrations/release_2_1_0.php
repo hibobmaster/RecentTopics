@@ -68,13 +68,4 @@ class release_2_1_0 extends \phpbb\db\migration\migration
 
 		];
 	}
-
-	public function revert_data()
-	{
-		return [
-			['config.remove', ['rt_location']],
-			['permission.remove', ['u_rt_location']],
-
-		];
-	}
 }

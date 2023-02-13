@@ -120,31 +120,4 @@ class release_2_0_0 extends \phpbb\db\migration\migration
 			]],
 		];
 	}
-
-	public function revert_data()
-	{
-		return [
-			['config.remove', ['rt_version']],
-			['config.remove', ['rt_number']],
-			['config.remove', ['rt_page_number']],
-			['config.remove', ['rt_anti_topics']],
-			['config.remove', ['rt_parents']],
-			['config.remove', ['rt_unreadonly']],
-			['config.remove', ['rt_index']],
-
-			['module.remove', [
-				'acp',
-				'RECENT_TOPICS',
-				[
-					'module_basename'	 => '\paybas\recenttopics\acp\recenttopics_module',
-					'modes'	   => ['recenttopics_config'],
-				],
-			]],
-			['module.remove', [
-				'acp',
-				'ACP_CAT_DOT_MODS',
-				'RECENT_TOPICS'
-			]],
-		];
-	}
 }

@@ -34,14 +34,4 @@ class release_2_2_2 extends \phpbb\db\migration\migration
 			['config.update', ['rt_page_numbermax', '10']],
 		];
 	}
-
-	public function revert_data()
-	{
-		return [
-			// fixes bug in 2.0.6 migration
-			['config.remove', ['rt_unreadonly']],
-			// fixes bug in 2.1.2 migration
-			['permission.remove', ['u_rt_view']],
-		];
-	}
 }
