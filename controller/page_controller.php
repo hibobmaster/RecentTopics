@@ -86,6 +86,13 @@ class page_controller
 		{
 			// Displays ResentTopics in a simple page for further use
 			case 'simple':
+				// Tropics per page, 0 use default settings
+				$this->rt_functions->topics_per_page = 0;
+
+				// Numbers of pages, 0 use default settings
+				$this->rt_functions->topics_page_number = 0;
+
+				// Set template
 				$rt_page  = "@paybas_recenttopics/recenttopics_body_simple.html";
 
 				if (isset($this->config['rt_index']) && $this->config['rt_index'])
@@ -96,22 +103,30 @@ class page_controller
 
 			// Displays ResentTopics in a separate page
 			case 'separate':
+				// Tropics per page, 0 use default settings
+				$this->rt_functions->topics_per_page = 0;
+
+				// Numbers of pages, 0 use default settings
+				$this->rt_functions->topics_page_number = 0;
+
+				// Set template
 				$rt_page  = "@paybas_recenttopics/recenttopics_body_separate.html";
-
-				if (!function_exists('make_jumpbox'))
-				{
-					include($this->phpbb_root_path . 'includes/functions_content.' . $this->phpEx);
-				}
-
-				make_jumpbox(append_sid($this->phpbb_root_path . 'viewforum.' . $this->phpEx));
-
-				$this->template->assign_block_vars('navlinks', [
-					'BREADCRUMB_NAME'	=> $title,
-					'U_BREADCRUMB'		=> $this->helper->route('paybas_recenttopics_page_controller', ['page' => 'separate']),
-				]);
 
 				if (isset($this->config['rt_index']) && $this->config['rt_index'])
 				{
+					// Generate jumpbox
+					if (!function_exists('make_jumpbox'))
+					{
+						include($this->phpbb_root_path . 'includes/functions_content.' . $this->phpEx);
+					}
+					make_jumpbox(append_sid($this->phpbb_root_path . 'viewforum.' . $this->phpEx));
+
+					// Generate link in NavBar
+					$this->template->assign_block_vars('navlinks', [
+						'BREADCRUMB_NAME'	=> $title,
+						'U_BREADCRUMB'		=> $this->helper->route('paybas_recenttopics_page_controller', ['page' => 'separate']),
+					]);
+
 					$this->rt_functions->display_recent_topics();
 				}
 			break;

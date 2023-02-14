@@ -141,7 +141,7 @@ class recenttopics
 	/**
 	 * @var int
 	 */
-	private $topics_per_page;
+	public $topics_per_page;
 
 	/**
 	 * @var int
@@ -174,6 +174,11 @@ class recenttopics
 	 * @var string
 	 */
 	private $excluded_topics;
+
+	/**
+	 * @var int
+	 */
+	public $topics_page_number;
 
 	/**
 	 * recenttopics constructor.
@@ -231,6 +236,9 @@ class recenttopics
 		$this->topicprefixes		= $topicprefixes;
 		$this->prefixed				= $prefixed;
 		$this->collapsable_categories = $collapsable_categories;
+		$this->topics_per_page		= 0;
+		$this->total_topics_limit	= 0;
+		$this->topics_page_number	= 0;
 	}
 
 	/**
@@ -286,10 +294,13 @@ class recenttopics
 		$this->rtstart = $this->request->variable($tpl_loopname . '_start', 0);
 
 		// set # topics shown per page
-		$this->topics_per_page = (int) $this->config['rt_number'];
-		if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
+		if ($this->topics_per_page == 0)
 		{
-			$this->topics_per_page = (int) $this->user->data['user_rt_number'];
+			$this->topics_per_page = (int) $this->config['rt_number'];
+			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
+			{
+				$this->topics_per_page = (int) $this->user->data['user_rt_number'];
+			}
 		}
 
 		$this->excluded_topics = explode(',', $this->config['rt_anti_topics']);
@@ -305,8 +316,12 @@ class recenttopics
 
 		// limit number of pages to be shown
 		// compute as product of topics per page and max number of pages.
-		$this->total_topics_limit = 0;
-		if ((int) $this->config['rt_page_number'] == 0)
+		if ($this->topics_page_number)
+		{
+			// Set in page controller
+			$this->total_topics_limit = $this->topics_per_page * $this->topics_page_number;
+		}
+		else if ((int) $this->config['rt_page_number'] == 0)
 		{
 			$this->total_topics_limit = $this->topics_per_page * (int) $this->config['rt_page_numbermax'];
 		}
@@ -731,7 +746,7 @@ class recenttopics
 				if ($this->unread_only)
 				{
 					topic_status($row, $replies, true, $folder_img, $folder_alt, $topic_type);
-					$unread_topic = true;
+					$unread_topic = ($this->user->data['user_id'] != ANONYMOUS) ?? false;
 				}
 				else
 				{
