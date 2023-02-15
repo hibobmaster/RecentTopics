@@ -19,7 +19,7 @@
 
 	<fieldset>
 		<legend>{{ lang('RT_GLOBAL_SETTINGS') }}</legend>
-		
+
 		<dl>
 			<dt>
 				<label>{{ lang('INDEX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_DISPLAY_INDEX') }}</span>
@@ -37,7 +37,7 @@
 				<input type="number" name="rt_page_numbermax" size="3" min="1" max="999" value="{{ RT_PAGE_NUMBERMAX }}">
 			</dd>
 		</dl>
-		
+
 		<dl>
 			<dt>
 				<label>{{ lang('RT_PAGE_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PAGE_NUMBER_EXP') }}</span>
@@ -46,7 +46,7 @@
 				{{ _self.switch('rt_page_number', RT_PAGE_NUMBER) }}
 			</dd>
 		</dl>
-		
+
 		<dl>
 			<dt>
 				<label>{{ lang('RT_MIN_TOPIC_LEVEL') ~ lang('COLON') }}</label><br><span>{{ lang('RT_MIN_TOPIC_LEVEL_EXP') }}</span>
@@ -64,7 +64,7 @@
 				<input type="text" name="rt_anti_topics" size="30" value="{{ RT_ANTI_TOPICS }}">
 			</dd>
 		</dl>
-		
+
 		<dl>
 			<dt>
 				<label>{{ lang('RT_PARENTS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PARENTS_EXP') }}</span>
