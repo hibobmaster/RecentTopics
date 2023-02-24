@@ -30,9 +30,6 @@ class page_controller
 	/** @var recenttopics */
 	protected $rt_functions;
 
-	/** @var \Symfony\Component\HttpFoundation\Response */
-	protected $response;
-
 	/** @var string phpBB root path	*/
 	protected $phpbb_root_path;
 
@@ -86,7 +83,7 @@ class page_controller
 		{
 			// Displays ResentTopics in a simple page for further use
 			case 'simple':
-				// Tropics per page, 0 use default settings
+				// Topics per page, 0 use default settings
 				$this->rt_functions->topics_per_page = 0;
 
 				// Numbers of pages, 0 use default settings
@@ -103,7 +100,7 @@ class page_controller
 
 			// Displays ResentTopics in a separate page
 			case 'separate':
-				// Tropics per page, 0 use default settings
+				// Topics per page, 0 use default settings
 				$this->rt_functions->topics_per_page = 0;
 
 				// Numbers of pages, 0 use default settings

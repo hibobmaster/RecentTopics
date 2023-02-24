@@ -1,4 +1,4 @@
-{% if S_RT_VIEW %}
+{% if S_RT_LINK_IN_NAVBAR %}
 <li {% if !S_USER_LOGGED_IN %}data-skip-responsive="true"{% else %}data-last-responsive="true"{% endif %}>
 	<a href="{{ U_RT_PAGE_SEPARATE }}" title="{{ lang('RECENT_TOPICS') }}" role="menuitem">
 		<i class="icon fa-list fa-fw" aria-hidden="true"></i>{{ lang('RECENT_TOPICS') }}

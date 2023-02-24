@@ -280,13 +280,13 @@ class recenttopics
 		$this->location = $this->config['rt_location'];
 
 		// if user can set location and it is set then use the preference
-		if ($this->auth->acl_get('u_rt_location') && isset($this->user->data['user_rt_location']))
+		if ($this->auth->acl_get('u_rt_location'))
 		{
 			$this->location = $this->user->data['user_rt_location'];
 		}
 
 		$this->unread_only = $this->config['rt_unread_only'];
-		if ($this->auth->acl_get('u_rt_unread_only') && isset($this->user->data['user_rt_unread_only']))
+		if ($this->auth->acl_get('u_rt_unread_only'))
 		{
 			$this->unread_only = $this->user->data['user_rt_unread_only'];
 		}
@@ -297,7 +297,7 @@ class recenttopics
 		if ($this->topics_per_page == 0)
 		{
 			$this->topics_per_page = (int) $this->config['rt_number'];
-			if ($this->auth->acl_get('u_rt_number') && isset($this->user->data['user_rt_number']))
+			if ($this->auth->acl_get('u_rt_number'))
 			{
 				$this->topics_per_page = (int) $this->user->data['user_rt_number'];
 			}
@@ -341,7 +341,7 @@ class recenttopics
 		$this->sort_topics = $this->config['rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
 
 		// if user can set recent topic sorting order and it is set then use the preference
-		if ($this->auth->acl_get('u_rt_sort_start_time') && isset($this->user->data['user_rt_sort_start_time']))
+		if ($this->auth->acl_get('u_rt_sort_start_time'))
 		{
 			$this->sort_topics = $this->user->data['user_rt_sort_start_time'] ? 'topic_time' : 'topic_last_post_time';
 		}
