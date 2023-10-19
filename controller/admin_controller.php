@@ -92,10 +92,7 @@ class admin_controller
 
 			// Upate user settings whith default data
 			$overwrite_userset = $this->request->variable('rt_reset_default', 0);
-			if ($overwrite_userset)
-			{
-				$this->set_user_table();
-			}
+			$this->set_user_table((bool) $overwrite_userset);
 
 			trigger_error($this->language->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 		}
@@ -212,7 +209,7 @@ class admin_controller
 	 * @return null
 	 * @access protected
 	 */
-	protected function set_user_table()
+	protected function set_user_table($all_user)
 	{
 		$sql_ary = [
 			'user_rt_enable'		  => (int) $this->config['rt_index'],
@@ -222,8 +219,10 @@ class admin_controller
 			'user_rt_number'		  => ((int) $this->config['rt_number'] > 0 ? (int) $this->config['rt_number'] : 5 )
 		];
 
+		$sql_where = $all_user ? '' : ' WHERE user_id = ' . ANONYMOUS;
+
 		$sql = 'UPDATE ' . USERS_TABLE . '
-				SET ' . $this->db->sql_build_array('UPDATE', $sql_ary);
+				SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . $sql_where;
 
 		$this->db->sql_query($sql);
 	}
