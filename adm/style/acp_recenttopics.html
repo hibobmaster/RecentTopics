@@ -122,6 +122,7 @@
 			</dt>
 			<dd>
 				{{ _self.switch('rt_reset_default') }}
+				{{ _self.confirmbox('rt_reset_default', lang('RT_RESET_ASK_BEFORE_EXP')) }}
 			</dd>
 		</dl>
 	</fieldset>
@@ -146,8 +147,7 @@
 		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden>
-			<input class="button1" type="button" id="ask_for_write" onclick="RecentTopics.askForWrite()" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">
 			<input class="button2" type="reset"  id="reset" name="reset" value="{{ lang('RESET') }}">
 		</p>
 	</fieldset>
@@ -168,21 +168,11 @@
 	{{ S_FORM_TOKEN }}
 </form>
 
-<div id="ask_before_submit" style="display: none;">
-	<div class="errorbox">
-		<p>{{ lang('RT_RESET_ASK_BEFORE') }}<br><br>{{ lang('RT_RESET_ASK_BEFORE_EXP') }}</p>
-	</div>
-
-	<p class="submit-buttons">
-		<input class="button1" type="button" name="write_data" onclick="RecentTopics.writeData()" value="{{ lang('EXPORT_STORE') }}">&nbsp;
-		<input class="button2" type="button" name="cancel" onclick="RecentTopics.abortWrite()" value="{{ lang('CANCEL') }}">
-	</p>
-</div>
-
 {% include 'overall_footer.html' %}
 
 {% INCLUDECSS '@paybas_recenttopics/acp_toggle.css' %}
-{% INCLUDEJS '@paybas_recenttopics/acp_recenttopics.js' %}
+{% INCLUDECSS '@paybas_recenttopics/acp_confirm.css' %}
+{% INCLUDEJS  '@paybas_recenttopics/acp_confirm.js' %}
 
 {% macro switch(name, checked = false) -%}
 	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
@@ -194,4 +184,15 @@
 			<option value="{{ array_row.VALUE }}"{{ array_row.SELECTED }}>{{ array_row.OPTION }}</option>
 		{% endfor %}
 	</select>
+{%- endmacro %}
+
+{% macro confirmbox(name, message, default = false) -%}
+	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">
+		<h2>{{ lang('CONFIRM') }}</h2>
+		<p>{{ message }}</p>
+		<p class="submit-buttons">
+			<input type="button" class="button1" name="{{ name }}_confirm_yes" value="{{ lang('YES') }}">&nbsp;
+			<input type="button" class="button2" name="{{ name }}_confirm_no" value="{{ lang('NO') }}">
+		</p>
+	</div>
 {%- endmacro %}

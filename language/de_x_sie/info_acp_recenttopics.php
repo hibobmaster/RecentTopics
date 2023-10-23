@@ -78,8 +78,7 @@ $lang = array_merge($lang, [
 	'RT_UNREAD_ONLY_EXP'			=> 'Diese Option zeigt nur ungelesene Themen an (egal ob diese aktuell sind oder nicht). Diese Funktion nutzt die gleichen Einstellungen (Ausgeschlossene Foren / Themen, etc.) wie die normale Version. Hinweis: diese Funktion steht nur angemeldeten Benutzern zur Verfügung; Gäste sehen die normale „Aktuelle Themen“ Liste.',
 	'RT_RESET_DEFAULT'				=> 'Benutzereinstellungen überschreiben',
 	'RT_RESET_DEFAULT_EXP'			=> 'Bei der Aktivierung dieser Option werden die Einstellungen aller Benutzer überschrieben. Ohne die Aktivierung werden nur Standardwerte für neue Benutzer und Gäste gesetzt.',
-	'RT_RESET_ASK_BEFORE'			=> 'Sind Sie sich sicher, dass Sie die Benutzereinstellungen überschreiben möchten?',
-	'RT_RESET_ASK_BEFORE_EXP'		=> 'Dadurch werden alle Einstellungen der Benutzer mit ihren Vorgaben überschrieben. <strong>Dieser Vorgang kann nicht rückgängig gemacht werden!</strong>',
+	'RT_RESET_ASK_BEFORE_EXP'		=> 'Diese Einstellung überschreibt alle Benutzereinstellungen mit Ihren Standardwerten.<br><strong>Dieser Vorgang kann nicht rückgängig gemacht werden!</strong>',
 
 	//Enable for extensions
 	'RT_NICKVERGESSEN_NEWSPAGE'		=> 'Unterstützung für die Erweiterung „Newspage“ von Nickvergessen',
