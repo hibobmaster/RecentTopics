@@ -147,8 +147,8 @@
 		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 
 		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">
-			<input class="button2" type="reset"  id="reset" name="reset" value="{{ lang('RESET') }}">
+			<input class="button1" type="submit" name="submit" value="{{ lang('SUBMIT') }}">
+			<input class="button2" type="reset" name="reset" value="{{ lang('RESET') }}">
 		</p>
 	</fieldset>
 
@@ -170,9 +170,8 @@
 
 {% include 'overall_footer.html' %}
 
-{% INCLUDECSS '@paybas_recenttopics/acp_toggle.css' %}
-{% INCLUDECSS '@paybas_recenttopics/acp_confirm.css' %}
-{% INCLUDEJS  '@paybas_recenttopics/acp_confirm.js' %}
+{% INCLUDECSS '@paybas_recenttopics/acp_recenttopics.css' %}
+{% INCLUDEJS '@paybas_recenttopics/acp_recenttopics.js' %}
 
 {% macro switch(name, checked = false) -%}
 	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
@@ -187,10 +186,10 @@
 {%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}
-	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">
+	<div id="{{ name }}_confirmbox" data-default="{{ default ? 1 : 0 }}" style="display: none;">
 		<h2>{{ lang('CONFIRM') }}</h2>
 		<p>{{ message }}</p>
-		<p class="submit-buttons">
+		<p>
 			<input type="button" class="button1" name="{{ name }}_confirm_yes" value="{{ lang('YES') }}">&nbsp;
 			<input type="button" class="button2" name="{{ name }}_confirm_no" value="{{ lang('NO') }}">
 		</p>
