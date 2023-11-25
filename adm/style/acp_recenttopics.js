@@ -18,64 +18,65 @@ var RecentTopics = {};
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes - v1.1.0
+* phpBB ConfirmBox class for checkboxes - v1.3.0
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
-	constructor(submitSelector) {
+	constructor(submitSelector, animDuration = 0) {
 		this.$submitObject = $(submitSelector);
+		this.$formObject = this.$submitObject.parents('form');
+		this.animDuration = animDuration;
 		var _this = this;
 
-		$('div[id$="_confirmbox"]').each(function () {
-			var elementName = $(this)[0].id.replace('_confirmbox', '')
+		this.$formObject.find('div[id$="_confirmbox"]').each(function () {
+			var elementName = this.id.replace('_confirmbox', '');
 
-			$('input[name="' + elementName + '"]')				.on('change'	, _this.Show);
-			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.Button);
+			$('input[name="' + elementName + '"]')				.on('change'	, _this.#Show);
+			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.#Button);
 		});
-		this.$submitObject.parents('form')						.on('reset'		, this.HideAll);
+		this.$formObject										.on('reset'		, _this.HideAll);
 	}
 
-	Show = (e) => {
-		var elementDefault = $('div[id="' + e.target.name + '_confirmbox"]').attr('data-default') == 1;
-		var $elementObject = $('input[name="' + e.target.name + '"]');
+	#Show = (e) => {
+		var $elementObject		= $('input[name="' + e.target.name + '"]');
+		var $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
 
-		if ($elementObject.prop('checked') != elementDefault) {
-			$elementObject									.prop('disabled', true)
-			$elementObject									.addClass('confirmbox_active');
-			$('div[id="' + e.target.name + '_confirmbox"]')	.show();
-			this.$submitObject								.prop('disabled', true);
+		if ($elementObject.prop('checked') != $confirmBoxObject.attr('data-default')) {
+			this.#changeBoxState($elementObject, $confirmBoxObject, true);
 		}
 	}
 
-	Button = (e) => {
-		var elementName = e.target.name.replace(/_confirm_.*/, '');
-		var elementDefault = $('div[id="' + elementName + '_confirmbox"]').attr('data-default') == 1;
-		var $elementObject = $('input[name="' + elementName + '"]');
+	#Button = (e) => {
+		var elementName			= e.target.name.replace(/_confirm_.*/, '');
+		var $elementObject		= $('input[name="' + elementName + '"]');
+		var $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
 
 		if (e.target.name.endsWith('_confirm_no')) {
-			$elementObject.prop('checked', elementDefault);
+			$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
 		}
 
-		$elementObject									.prop('disabled', false);
-		$elementObject									.removeClass('confirmbox_active');
-		$('div[id="' + elementName + '_confirmbox"]')	.hide();
-		this.$submitObject								.prop('disabled', $('input[class*="confirmbox_active"]').length);
+		this.#changeBoxState($elementObject, $confirmBoxObject, null);
 	}
 
 	HideAll = () => {
-		var $elementObject = $('input[class*="confirmbox_active"]');
+		var $elementObject		= this.$formObject.find('input.confirmbox_active');
+		var $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
 
-		$elementObject				.prop('disabled', false);
-		$elementObject				.removeClass('confirmbox_active');
-		$('div[id$="_confirmbox"]')	.hide();
-		this.$submitObject			.prop('disabled', false);
+		this.#changeBoxState($elementObject, $confirmBoxObject, false);
+	}
+
+	#changeBoxState = ($elementObject, $confirmBoxObject, showBox) => {
+		$elementObject		.prop('disabled', !!showBox);
+		$elementObject		.toggleClass('confirmbox_active', !!showBox);
+		$confirmBoxObject	[!!showBox ? 'show' : 'hide'](this.animDuration);
+		this.$submitObject	.prop('disabled', showBox ?? this.$formObject.find('input.confirmbox_active').length);
 	}
 }
 
 // Register events
 
 $(window).ready(function() {
-	RecentTopics.ConfirmBox = new LukeWCSphpBBConfirmBox('input[name="submit"]');
+	RecentTopics.ConfirmBox = new LukeWCSphpBBConfirmBox('input[name="submit"]', 300);
 });
 
 })();	// IIFE end
