@@ -97,52 +97,33 @@ class admin_controller
 			trigger_error($this->language->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 		}
 
-		$topic_types = [
-			0 => $this->language->lang('POST') ,
-			1 => $this->language->lang('POST_STICKY'),
-			2 => $this->language->lang('ANNOUNCEMENTS'),
-			3 => $this->language->lang('GLOBAL_ANNOUNCEMENT'),
-		];
-
-		foreach ($topic_types as $key => $topic_type)
-		{
-			$this->template->assign_block_vars('topiclevel_row', [
-				'VALUE'		=> $key,
-				'SELECTED'	=> ($this->config['rt_min_topic_level'] == $key) ? ' selected' : '',
-				'OPTION'	=> $topic_type,
-			]);
-		}
-
-		$display_types = [
-			'RT_TOP'	 => $this->language->lang('RT_TOP'),
-			'RT_BOTTOM'	 => $this->language->lang('RT_BOTTOM'),
-			'RT_SIDE'	 => $this->language->lang('RT_SIDE'),
-			'RT_SEPARAT' => $this->language->lang('RT_SEPARAT'),
-		];
-
-		foreach ($display_types as $key => $display_type)
-		{
-			$this->template->assign_block_vars('location_row', [
-				'VALUE'    => $key,
-				'SELECTED' => ($this->config['rt_location'] == $key) ? ' selected' : '',
-				'OPTION'   => $display_type,
-			]);
-		}
-
 		$this->template->assign_vars([
-			'U_ACTION'				=> $this->u_action,
-			'RT_INDEX'				=> (int) $this->config['rt_index'],
-			'RT_PAGE_NUMBER'		=> (int) $this->config['rt_page_number'],
-			'RT_PAGE_NUMBERMAX'		=> (int) $this->config['rt_page_numbermax'],
-			'RT_ANTI_TOPICS'		=> $this->config['rt_anti_topics'],
-			'RT_PARENTS'			=> (int) $this->config['rt_parents'],
-			'RT_NUMBER'				=> (int) $this->config['rt_number'],
-			'RT_SORT_START_TIME'	=> (int) $this->config['rt_sort_start_time'],
-			'RT_UNREAD_ONLY'		=> (int) $this->config['rt_unread_only'],
-			'RT_ON_NEWSPAGE'		=> $this->config['rt_on_newspage'],
-			'S_RT_NEWSPAGE'			=> $this->ext_manager->is_enabled('nickvergessen/newspage'),
+			'U_ACTION'						=> $this->u_action,
+			'RT_INDEX'						=> (int) $this->config['rt_index'],
+			'RT_PAGE_NUMBER'				=> (int) $this->config['rt_page_number'],
+			'RT_PAGE_NUMBERMAX'				=> (int) $this->config['rt_page_numbermax'],
+			'RT_ANTI_TOPICS'				=> $this->config['rt_anti_topics'],
+			'RT_PARENTS'					=> (int) $this->config['rt_parents'],
+			'RT_NUMBER'						=> (int) $this->config['rt_number'],
+			'RT_SORT_START_TIME'			=> (int) $this->config['rt_sort_start_time'],
+			'RT_UNREAD_ONLY'				=> (int) $this->config['rt_unread_only'],
+			'RT_ON_NEWSPAGE'				=> $this->config['rt_on_newspage'],
+			'S_RT_NEWSPAGE'					=> $this->ext_manager->is_enabled('nickvergessen/newspage'),
+			'RT_MIN_TOPIC_LEVEL'			=> (int) $this->config['rt_min_topic_level'],
+			'RT_MIN_TOPIC_LEVEL_OPTIONS' => [
+				'POST'						=> '0',
+				'POST_STICKY'				=> '1',
+				'ANNOUNCEMENTS'				=> '2',
+				'GLOBAL_ANNOUNCEMENT'		=> '3',
+			],
+			'RT_LOCATION'					=> $this->config['rt_location'],
+			'RT_LOCATION_OPTIONS' => [
+				'RT_TOP'	 				=> 'RT_TOP',
+				'RT_BOTTOM'	 				=> 'RT_BOTTOM',
+				'RT_SIDE'	 				=> 'RT_SIDE',
+				'RT_SEPARAT' 				=> 'RT_SEPARAT',
+			],
 		]);
-
 	}
 
 	/**

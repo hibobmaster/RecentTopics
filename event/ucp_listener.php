@@ -144,24 +144,15 @@ class ucp_listener implements EventSubscriberInterface
 					'A_RT_LOCATION' => true,
 				];
 
-				$display_types = [
-					'RT_TOP'	 => $this->language->lang('RT_TOP'),
-					'RT_BOTTOM'	 => $this->language->lang('RT_BOTTOM'),
-					'RT_SIDE'	 => $this->language->lang('RT_SIDE'),
-					'RT_SEPARAT' => $this->language->lang('RT_SEPARAT'),
+				$template_vars += [
+					'RT_LOCATION'				=> $event['data']['rt_location'],
+					'RT_LOCATION_OPTIONS' => [
+						'RT_TOP'				=> 'RT_TOP',
+						'RT_BOTTOM'				=> 'RT_BOTTOM',
+						'RT_SIDE'				=> 'RT_SIDE',
+						'RT_SEPARAT'			=> 'RT_SEPARAT',
+					],
 				];
-
-				foreach ($display_types as $key => $display_type)
-				{
-					$this->template->assign_block_vars(
-						'location_row',
-						[
-							'VALUE'	   => $key,
-							'SELECTED' => ($event['data']['rt_location'] == $key) ? ' selected' : '',
-							'OPTION'   => $display_type,
-						]
-					);
-				}
 			}
 
 			if ($this->auth->acl_get('u_rt_number'))
@@ -175,16 +166,16 @@ class ucp_listener implements EventSubscriberInterface
 			if ($this->auth->acl_get('u_rt_sort_start_time'))
 			{
 				$template_vars += [
-				'A_RT_SORT_START_TIME' => true,
-				'S_RT_SORT_START_TIME' => $event['data']['rt_sort_start_time'],
+					'A_RT_SORT_START_TIME' => true,
+					'S_RT_SORT_START_TIME' => $event['data']['rt_sort_start_time'],
 				];
 			}
 
 			if ($this->auth->acl_get('u_rt_unread_only'))
 			{
 				$template_vars += [
-				'A_RT_UNREAD_ONLY' => true,
-				'S_RT_UNREAD_ONLY' => $event['data']['rt_unread_only'],
+					'A_RT_UNREAD_ONLY' => true,
+					'S_RT_UNREAD_ONLY' => $event['data']['rt_unread_only'],
 				];
 			}
 
