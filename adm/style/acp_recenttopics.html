@@ -10,6 +10,9 @@
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  #}
 
+{% import '@paybas_recenttopics/recenttopics_macros.html' as common %}
+{% set switch_type = TOGGLECTRL_TYPE ?? 'toggle' %}
+
 {% include 'overall_header.html' %}
 
 <h1>{{ lang('RECENT_TOPICS') }}</h1>
@@ -22,46 +25,51 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('INDEX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_DISPLAY_INDEX') }}</span>
+				<label>{{ lang('INDEX') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_DISPLAY_INDEX') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_enable', RT_INDEX) }}
+				{{ common.switch('rt_enable', RT_INDEX, switch_type) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_PAGE_NUMBERMAX') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PAGE_NUMBERMAX_EXP') }}</span>
+				<label>{{ lang('RT_PAGE_NUMBERMAX') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_PAGE_NUMBERMAX_EXP') }}</span>
 			</dt>
 			<dd>
-				<input type="number" name="rt_page_numbermax" size="3" min="1" max="999" value="{{ RT_PAGE_NUMBERMAX }}">
+				{{ common.number('rt_page_numbermax', RT_PAGE_NUMBERMAX, 1, 999) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_PAGE_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PAGE_NUMBER_EXP') }}</span>
+				<label>{{ lang('RT_PAGE_NUMBER') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_PAGE_NUMBER_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_page_number', RT_PAGE_NUMBER) }}
+				{{ common.switch('rt_page_number', RT_PAGE_NUMBER, switch_type) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_MIN_TOPIC_LEVEL') ~ lang('COLON') }}</label><br><span>{{ lang('RT_MIN_TOPIC_LEVEL_EXP') }}</span>
+				<label>{{ lang('RT_MIN_TOPIC_LEVEL') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_MIN_TOPIC_LEVEL_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.select('rt_min_topic_level', loops.topiclevel_row) }}
+				{{ common.select('rt_min_topic_level', RT_MIN_TOPIC_LEVEL, RT_MIN_TOPIC_LEVEL_OPTIONS) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_ANTI_TOPICS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_ANTI_TOPICS_EXP') }}</span>
+				<label>{{ lang('RT_ANTI_TOPICS') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_ANTI_TOPICS_EXP') }}</span>
 			</dt>
 			<dd>
-				<input type="text" name="rt_anti_topics" size="30" value="{{ RT_ANTI_TOPICS }}">
+				{{ common.text('rt_anti_topics', RT_ANTI_TOPICS, 30) }}
 			</dd>
 		</dl>
 
@@ -70,7 +78,7 @@
 				<label>{{ lang('RT_PARENTS') ~ lang('COLON') }}</label><br><span>{{ lang('RT_PARENTS_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_parents', RT_PARENTS) }}
+				{{ common.switch('rt_parents', RT_PARENTS, switch_type) }}
 			</dd>
 		</dl>
 	</fieldset>
@@ -80,37 +88,41 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br><span>{{ lang('RT_LOCATION_EXP') }}</span>
+				<label>{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_LOCATION_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.select('rt_location', loops.location_row) }}
+				{{ common.select('rt_location', RT_LOCATION, RT_LOCATION_OPTIONS) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_NUMBER_EXP') }}</span>
+				<label>{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_NUMBER_EXP') }}</span>
 			</dt>
 			<dd>
-				<input type="number" name="rt_number" size="3" min="0" max="999" value="{{ RT_NUMBER }}">
+				{{ common.number('rt_number', RT_NUMBER, 0, 999) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br><span>{{ lang('RT_SORT_START_TIME_EXP') }}</span>
+				<label>{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_SORT_START_TIME_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_sort_start_time', RT_SORT_START_TIME) }}
+				{{ common.switch('rt_sort_start_time', RT_SORT_START_TIME, switch_type) }}
 			</dd>
 		</dl>
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label><br><span>{{ lang('RT_UNREAD_ONLY_EXP') }}</span>
+				<label>{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_UNREAD_ONLY_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_unread_only', RT_UNREAD_ONLY) }}
+				{{ common.switch('rt_unread_only', RT_UNREAD_ONLY, switch_type) }}
 			</dd>
 		</dl>
 
@@ -118,10 +130,11 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_RESET_DEFAULT') ~ lang('COLON') }}</label><br><span>{{ lang('RT_RESET_DEFAULT_EXP') }}</span>
+				<label>{{ lang('RT_RESET_DEFAULT') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_RESET_DEFAULT_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_reset_default') }}
+				{{ common.switch('rt_reset_default', false, switch_type) }}
 				{{ _self.confirmbox('rt_reset_default', lang('RT_RESET_ASK_BEFORE_EXP')) }}
 			</dd>
 		</dl>
@@ -129,18 +142,18 @@
 
 
 	{% if S_RT_NEWSPAGE %}
-	<fieldset>
-		<legend>{{ lang('RT_VIEW_ON') }}</legend>
+		<fieldset>
+			<legend>{{ lang('RT_VIEW_ON') }}</legend>
 
-		<dl>
-			<dt>
-				<label>{{ lang('RT_NICKVERGESSEN_NEWSPAGE') ~ lang('COLON') }}</label>
-			</dt>
-			<dd>
-				{{ _self.switch('rt_on_newspage', RT_ON_NEWSPAGE) }}
-			</dd>
-		</dl>
-	</fieldset>
+			<dl>
+				<dt>
+					<label>{{ lang('RT_NICKVERGESSEN_NEWSPAGE') ~ lang('COLON') }}</label>
+				</dt>
+				<dd>
+					{{ common.switch('rt_on_newspage', RT_ON_NEWSPAGE, switch_type) }}
+				</dd>
+			</dl>
+		</fieldset>
 	{% endif %}
 
 	<fieldset>
@@ -157,7 +170,8 @@
 
 		<dl>
 			<dt>
-				<label>{{ lang('RT_DONATE_SHORT') ~ lang('COLON') }}</label><br><span>{{ lang('RT_DONATE_EXPLAIN') }}</span>
+				<label>{{ lang('RT_DONATE_SHORT') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_DONATE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
 				<a href="{{ lang('RT_DONATE_URL') }}" target="_blank"><img src="{{ lang('RT_PAYPAL_IMAGE_URL') }}" border="0" alt="{{ lang('RT_PAYPAL_ALT') }}" style="cursor:pointer"></a>
@@ -172,18 +186,6 @@
 
 {% INCLUDECSS '@paybas_recenttopics/acp_recenttopics.css' %}
 {% INCLUDEJS '@paybas_recenttopics/acp_recenttopics.js' %}
-
-{% macro switch(name, checked = false) -%}
-	<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
-{%- endmacro %}
-
-{% macro select(name, array) -%}
-	<select class="input" name="{{ name }}">
-		{% for array_row in array %}
-			<option value="{{ array_row.VALUE }}"{{ array_row.SELECTED }}>{{ array_row.OPTION }}</option>
-		{% endfor %}
-	</select>
-{%- endmacro %}
 
 {% macro confirmbox(name, message, default = false) -%}
 	<div id="{{ name }}_confirmbox" data-default="{{ default }}" style="display: none;">

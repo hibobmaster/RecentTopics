@@ -10,6 +10,8 @@
  * Based on the original NV Recent Topics by Joas Schilling (nickvergessen)
  #}
 
+{% import '@paybas_recenttopics/recenttopics_macros.html' as common %}
+
 {% if S_RT_SHOW %}
 	<hr>
 	{% if A_RT_ENABLE %}
@@ -18,27 +20,29 @@
 				<label>{{ lang('RT_ENABLE') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_enable', S_RT_ENABLE) }}
+				{{ common.switch('rt_enable', S_RT_ENABLE, 'radio') }}
 			</dd>
 		</dl>
 	{% endif %}
 	{% if A_RT_LOCATION %}
 		<dl>
 			<dt>
-				<label>{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br><span>{{ lang('RT_LOCATION_EXP') }}</span>
+				<label>{{ lang('RT_LOCATION') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_LOCATION_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ _self.select('rt_location', loops.location_row) }}
+				{{ common.select('rt_location', RT_LOCATION, RT_LOCATION_OPTIONS) }}
 			</dd>
 		</dl>
 	{% endif %}
 	{% if A_RT_NUMBER %}
 		<dl>
 			<dt>
-				<label>{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br><span>{{ lang('RT_NUMBER_EXP') }}</span>
+				<label>{{ lang('RT_NUMBER') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_NUMBER_EXP') }}</span>
 			</dt>
 			<dd>
-				<input type="number" name="rt_number" size="3" min="0" max="999" value="{{ RT_NUMBER }}">
+				{{ common.number('rt_number', RT_NUMBER, 0, 999) }}
 			</dd>
 		</dl>
 	{% endif %}
@@ -46,10 +50,11 @@
 	{% if A_RT_SORT_START_TIME %}
 		<dl>
 			<dt>
-				<label>{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br><span>{{ lang('RT_SORT_START_TIME_EXP') }}
+				<label>{{ lang('RT_SORT_START_TIME') ~ lang('COLON') }}</label><br>
+				<span>{{ lang('RT_SORT_START_TIME_EXP') }}
 			</dt>
 			<dd>
-				{{ _self.switch('rt_sort_start_time', S_RT_SORT_START_TIME) }}
+				{{ common.switch('rt_sort_start_time', S_RT_SORT_START_TIME, 'radio') }}
 			</dd>
 		</dl>
 	{% endif %}
@@ -59,21 +64,8 @@
 				<label>{{ lang('RT_UNREAD_ONLY') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				{{ _self.switch('rt_unread_only', S_RT_UNREAD_ONLY) }}
+				{{ common.switch('rt_unread_only', S_RT_UNREAD_ONLY, 'radio') }}
 			</dd>
 		</dl>
 	{% endif %}
 {% endif %}
-
-{% macro switch(name, checked = false) %}
-	<label><input type="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
-	<label><input type="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
-{% endmacro %}
-
-{% macro select(name, array) %}
-	<select class="input" name="{{ name }}">
-		{% for array_row in array %}
-			<option value="{{ array_row.VALUE }}"{{ array_row.SELECTED }}>{{ array_row.OPTION }}</option>
-		{% endfor %}
-	</select>
-{% endmacro %}
