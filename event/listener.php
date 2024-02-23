@@ -199,13 +199,16 @@ class listener implements EventSubscriberInterface
 	public function add_permission($event)
 	{
 		$permissions = $event['permissions'];
-		$permissions['u_rt_view']				= ['lang' => 'ACL_U_RT_VIEW', 'cat' => 'misc'];
-		$permissions['u_rt_enable']				= ['lang' => 'ACL_U_RT_ENABLE', 'cat' => 'misc'];
-		$permissions['u_rt_location']			= ['lang' => 'ACL_U_RT_LOCATION', 'cat' => 'misc'];
-		$permissions['u_rt_sort_start_time']	= ['lang' => 'ACL_U_RT_SORT_START_TIME', 'cat' => 'misc'];
-		$permissions['u_rt_unread_only']		= ['lang' => 'ACL_U_RT_UNREAD_ONLY', 'cat' => 'misc'];
-		$permissions['u_rt_number']				= ['lang' => 'ACL_U_RT_NUMBER', 'cat' => 'misc'];
+		$categories = $event['categories'];
+		$categories['recenttopics'] = 'ACL_CAT_RTNG';
+		$permissions['u_rt_view']				= ['lang' => 'ACL_U_RTNG_VIEW'				, 'cat' => 'recenttopics'];
+		$permissions['u_rt_enable']				= ['lang' => 'ACL_U_RTNG_ENABLE'			, 'cat' => 'recenttopics'];
+		$permissions['u_rt_location']			= ['lang' => 'ACL_U_RTNG_LOCATION'			, 'cat' => 'recenttopics'];
+		$permissions['u_rt_sort_start_time']	= ['lang' => 'ACL_U_RTNG_SORT_START_TIME'	, 'cat' => 'recenttopics'];
+		$permissions['u_rt_unread_only']		= ['lang' => 'ACL_U_RTNG_UNREAD_ONLY'		, 'cat' => 'recenttopics'];
+		$permissions['u_rt_number']				= ['lang' => 'ACL_U_RTNG_NUMBER'			, 'cat' => 'recenttopics'];
 		$event['permissions'] = $permissions;
+		$event['categories'] = $categories;
 	}
 
 	/**

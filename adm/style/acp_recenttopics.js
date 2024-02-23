@@ -12,24 +12,24 @@
 
 var RecentTopics = {};
 
-(function () {	// IIFE start
+(function ($) {	// IIFE start
 
 'use strict';
 
 class LukeWCSphpBBConfirmBox {
 /*
-* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.0
+* phpBB ConfirmBox class for checkboxes and yes/no radio buttons - v1.4.3
 * @copyright (c) 2023, LukeWCS, https://www.wcsaga.org
 * @license GNU General Public License, version 2 (GPL-2.0-only)
 */
 	constructor(submitSelector, animDuration = 0) {
+		let _this = this;
 		this.$submitObject	= $(submitSelector);
 		this.$formObject	= this.$submitObject.parents('form');
 		this.animDuration	= animDuration;
-		var _this = this;
 
 		this.$formObject.find('div[id$="_confirmbox"]').each(function () {
-			var elementName = this.id.replace('_confirmbox', '');
+			const elementName = this.id.replace('_confirmbox', '');
 
 			$('input[name="' + elementName + '"]')				.on('change'	, _this.#Show);
 			$('input[name^="' + elementName + '_confirm_"]')	.on('click'		, _this.#Button);
@@ -38,8 +38,8 @@ class LukeWCSphpBBConfirmBox {
 	}
 
 	#Show = (e) => {
-		var $elementObject		= $('input[name="' + e.target.name + '"]');
-		var $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
+		const $elementObject	= $('input[name="' + e.target.name + '"]');
+		const $confirmBoxObject	= $('div[id="' + e.target.name + '_confirmbox"]');
 
 		if ($elementObject.prop('checked') != $confirmBoxObject.attr('data-default')) {
 			this.#changeBoxState($elementObject, $confirmBoxObject, true);
@@ -47,24 +47,24 @@ class LukeWCSphpBBConfirmBox {
 	}
 
 	#Button = (e) => {
-		var elementName			= e.target.name.replace(/_confirm_.*/, '');
-		var $elementObject		= $('input[name="' + elementName + '"]');
-		var $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
+		const elementName		= e.target.name.replace(/_confirm_.*/, '');
+		const $elementObject	= $('input[name="' + elementName + '"]');
+		const $confirmBoxObject	= $('div[id="' + elementName + '_confirmbox"]');
+		const elementType		= $elementObject.attr('type');
 
 		if (e.target.name.endsWith('_confirm_no')) {
-			if ($elementObject.get(0).type == 'checkbox') {
+			if (elementType == 'checkbox') {
 				$elementObject.prop('checked', $confirmBoxObject.attr('data-default'));
-			} else if ($elementObject.get(0).type == 'radio') {
+			} else if (elementType == 'radio') {
 				$elementObject.filter('[value="' + ($confirmBoxObject.attr('data-default') ? '1' : '0') + '"]').prop('checked', true);
 			}
 		}
-
 		this.#changeBoxState($elementObject, $confirmBoxObject, null);
 	}
 
 	HideAll = () => {
-		var $elementObject		= this.$formObject.find('input.confirmbox_active');
-		var $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
+		const $elementObject	= this.$formObject.find('input.confirmbox_active');
+		const $confirmBoxObject	= this.$formObject.find('div[id$="_confirmbox"]');
 
 		this.#changeBoxState($elementObject, $confirmBoxObject, false);
 	}
@@ -83,4 +83,4 @@ $(window).ready(function() {
 	RecentTopics.ConfirmBox = new LukeWCSphpBBConfirmBox('input[name="submit"]', 300);
 });
 
-})();	// IIFE end
+})(jQuery);	// IIFE end
