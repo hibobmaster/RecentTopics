@@ -39,10 +39,11 @@ if (empty($lang) || !is_array($lang))
 // ‚ ‘ ’ « » “ ” … „ “
 //
 $lang = array_merge($lang, [
-	'ACL_U_RT_VIEW'            => 'Aktuelle Themen: Kann „Aktuelle Themen“ sehen.',
-	'ACL_U_RT_ENABLE'          => 'Aktuelle Themen: Kann „Aktuelle Themen“ aktivieren / deaktivieren.',
-	'ACL_U_RT_LOCATION'        => 'Aktuelle Themen: Kann den Anzeigeort des Blocks „Aktuelle Themen“ ändern.',
-	'ACL_U_RT_SORT_START_TIME' => 'Aktuelle Themen: Kann Sortierung des Blocks „Aktuelle Themen“ ändern.',
-	'ACL_U_RT_UNREAD_ONLY'     => 'Aktuelle Themen: Kann „Aktuelle Themen“-Modus auf „nur ungelesene“ ändern.',
-	'ACL_U_RT_NUMBER'          => 'Aktuelle Themen: Kann Anzahl der aktuellen Themen pro Seite ändern.',
+	'ACL_CAT_RTNG' 					=> 'Aktuelle Themen',
+	'ACL_U_RTNG_VIEW'				=> 'Kann „Aktuelle Themen“ sehen.',
+	'ACL_U_RTNG_ENABLE'				=> 'Kann „Aktuelle Themen“ aktivieren / deaktivieren.',
+	'ACL_U_RTNG_LOCATION'			=> 'Kann den Anzeigeort des Blocks „Aktuelle Themen“ ändern.',
+	'ACL_U_RTNG_SORT_START_TIME'	=> 'Kann Sortierung des Blocks „Aktuelle Themen“ ändern.',
+	'ACL_U_RTNG_UNREAD_ONLY'		=> 'Kann „Aktuelle Themen“-Modus auf „nur ungelesene“ ändern.',
+	'ACL_U_RTNG_NUMBER'				=> 'Kann Anzahl der aktuellen Themen pro Seite ändern.',
 ]);

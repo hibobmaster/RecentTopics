@@ -39,10 +39,11 @@ if (empty($lang) || !is_array($lang))
 // ‚ ‘ ’ « » “ ” … „ “
 //
 $lang = array_merge($lang, [
-	'ACL_U_RT_VIEW'            => 'Recent Topics: can view Recent topics.',
-	'ACL_U_RT_ENABLE'          => 'Recent Topics: can enable or disable Displaying Recent Topics.',
-	'ACL_U_RT_LOCATION'        => 'Recent Topics: can select display location of Recent topics blocks.',
-	'ACL_U_RT_SORT_START_TIME' => 'Recent Topics: can change topic sort order.',
-	'ACL_U_RT_UNREAD_ONLY'     => 'Recent Topics: can change setting to only display unread topics.',
-	'ACL_U_RT_NUMBER'          => 'Recent Topics: can change setting of number of recent topics to show per page.',
+	'ACL_CAT_RTNG' 					=> 'Recent Topics',
+	'ACL_U_RTNG_VIEW'				=> 'Can view Recent Topics.',
+	'ACL_U_RTNG_ENABLE'				=> 'Can enable or disable Recent Topics.',
+	'ACL_U_RTNG_LOCATION'			=> 'Can select display location of Recent Topics blocks.',
+	'ACL_U_RTNG_SORT_START_TIME'	=> 'Can change topic sort order.',
+	'ACL_U_RTNG_UNREAD_ONLY'		=> 'Can change setting to only display unread topics.',
+	'ACL_U_RTNG_NUMBER'				=> 'Can change setting of number of recent topics to show per page.',
 ]);
