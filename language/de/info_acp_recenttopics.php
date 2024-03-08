@@ -80,10 +80,6 @@ $lang = array_merge($lang, [
 	'RT_RESET_DEFAULT_EXP'			=> 'Bei der Aktivierung dieser Option werden die Einstellungen aller Benutzer überschrieben. Ohne die Aktivierung werden nur Standardwerte für neue Benutzer und Gäste gesetzt.',
 	'RT_RESET_ASK_BEFORE_EXP'		=> 'Diese Einstellung überschreibt alle Benutzereinstellungen mit deinen Standardwerten.<br><strong>Dieser Vorgang kann nicht rückgängig gemacht werden!</strong>',
 
-	//Enable for extensions
-	'RT_NICKVERGESSEN_NEWSPAGE'		=> 'Unterstützung für die Erweiterung „Newspage“ von Nickvergessen',
-	'RT_VIEW_ON'					=> 'Aktuelle Themen anzeigen auf:',
-
 	//Donatiies
 	'RT_DONATE_URL'					=> 'http://www.avathar.be/forum/app.php/page/donate',
 	'RT_PAYPAL_IMAGE_URL'			=> 'https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-pill-paypal-26px.png',

@@ -86,16 +86,6 @@ class recenttopics
 	protected $phpEx;
 
 	/**
-	 * @var topicprefixes
-	 */
-	private $topicprefixes;
-
-	/**
-	 * @var manager
-	 */
-	private $prefixed;
-
-	/**
 	 * array of allowable forum id's
 	 *
 	 * @var array
@@ -196,8 +186,6 @@ class recenttopics
 	 * @param \phpbb\user                                         $user
 	 * @param                                                     $root_path
 	 * @param                                                     $phpEx
-	 * @param \part3\topicprefixes\core\topicprefixes|NULL        $topicprefixes
-	 * @param \imkingdavid\prefixed\core\manager|NULL             $prefixed
 	 * @param \phpbb\collapsiblecategories\operator\operator|NULL $collapsable_categories
 	 */
 	public function __construct
@@ -215,8 +203,6 @@ class recenttopics
 		\phpbb\user $user,
 		$root_path,
 		$phpEx,
-		\part3\topicprefixes\core\topicprefixes $topicprefixes = null,
-		\imkingdavid\prefixed\core\manager $prefixed = null,
 		\phpbb\collapsiblecategories\operator\operator $collapsable_categories = null
 	)
 	{
@@ -233,8 +219,6 @@ class recenttopics
 		$this->user					= $user;
 		$this->root_path			= $root_path;
 		$this->phpEx				= $phpEx;
-		$this->topicprefixes		= $topicprefixes;
-		$this->prefixed				= $prefixed;
 		$this->collapsable_categories = $collapsable_categories;
 		$this->topics_per_page		= 0;
 		$this->total_topics_limit	= 0;
@@ -603,7 +587,6 @@ class recenttopics
 		extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_list', compact($vars)));
 
 		return $sql_array;
-
 	}
 
 	/**
@@ -665,10 +648,12 @@ class recenttopics
 			'WHERE'     => $this->db->sql_in_set('t.topic_id', $this->topic_list),
 			'ORDER_BY'  => 't.' . $this->sort_topics . ' DESC',
 		];
+
 		if ($this->display_parent_forums)
 		{
 			$sql_array['SELECT'] .= ', f.parent_id, f.forum_parents, f.left_id, f.right_id';
 		}
+
 		/**
 		 * Event to modify the SQL query before the topics data is retrieved
 		 *
@@ -676,12 +661,8 @@ class recenttopics
 		 * @var   array    sql_array        The SQL array
 		 * @since 2.0.0
 		 */
-		extract(
-			$this->dispatcher->trigger_event(
-				'paybas.recenttopics.sql_pull_topics_data',
-				['sql_array' => $sql_array]
-			)
-		);
+		extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_data', ['sql_array' => $sql_array]));
+
 		$sql    = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query_limit($sql, $this->topics_per_page);
 		$rowset = [];
@@ -717,12 +698,8 @@ class recenttopics
 			 * @var   array    rowset            The full topics list array
 			 * @since 2.0.1
 			 */
-			extract(
-				$this->dispatcher->trigger_event(
-					'paybas.recenttopics.modify_topics_list',
-					['topic_list' => $this->topic_list, 'rowset' => $rowset]
-				)
-			);
+			extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topics_list', ['topic_list' => $this->topic_list, 'rowset' => $rowset]));
+
 			foreach ($rowset as $row)
 			{
 				$topic_id = $row['topic_id'];
@@ -768,6 +745,7 @@ class recenttopics
 						$unread_topic = false;
 					}
 				}
+
 				$view_topic_url		= append_sid("{$this->root_path}viewtopic.$this->phpEx", 't=' . $topic_id);
 				$view_last_post_url	= append_sid("{$this->root_path}viewtopic.$this->phpEx", 'p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
 				$view_report_url	= append_sid("{$this->root_path}mcp.$this->phpEx", 'i=reports&amp;mode=reports&amp;t=' . $topic_id, true, $this->user->session_id);
@@ -786,20 +764,11 @@ class recenttopics
 				$topic_title = censor_text($row['topic_title']);
 				$prefix		 = '';
 
-				if ($this->topicprefixes !== null)
-				{
-					// Topic Prefix extension Stathis
-					if (!empty($row['topic_prefix']))
-					{
-						$prefix = '[' . $row['topic_prefix'] . '] ';
-					}
-				}
-
 				/**
 				 * Event to remove re
 				 *
-				 * @event paybas.recenttopics.topictitle_remove_re
-				 * @var   array    row      the forum row
+				 * @event	paybas.recenttopics.topictitle_remove_re
+				 * @var		array	row	the forum row
 				 * @since 2.2.11
 				 */
 				$vars = ['row'];
@@ -808,32 +777,13 @@ class recenttopics
 				/**
 				 * Event to modify the topic title
 				 *
-				 * @event paybas.recenttopics.modify_topictitle
-				 * @var   array    row      the forum row
-				 * @var   string    prefix  the topic title prefix
+				 * @event	paybas.recenttopics.modify_topictitle
+				 * @var		array	row		the forum row
+				 * @var		string	prefix	the topic title prefix
 				 * @since 2.1.3
 				 */
-
 				$vars = ['row', 'prefix'];
 				extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topictitle', compact($vars)));
-
-				//fallback if there is no listener
-				if (!$this->is_listening('imkingdavid\prefixed\event\listener', 'paybas.recenttopics.modify_topictitle'))
-				{
-					if ($this->prefixed !== null)
-					{
-						// pre:fixed extension
-						$prefix_instances = $this->prefixed->get_prefix_instances();
-						foreach ($prefix_instances as $key1)
-						{
-							if ($row['topic_id'] == $key1['topic'])
-							{
-								$prefixes = $this->prefixed->get_prefixes();
-								$prefix   = '[' . $prefixes[$key1['prefix']]['title'] . '] ';
-							}
-						}
-					}
-				}
 
 				$topic_title = $prefix === '' ? $topic_title : $prefix . ' ' . $topic_title;
 				$last_post_subject = censor_text($row['topic_last_post_subject']);
@@ -906,8 +856,10 @@ class recenttopics
 				 */
 				$vars = ['row', 'tpl_ary'];
 				extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_tpl_ary', compact($vars)));
+
 				$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
 				$this->pagination->generate_template_pagination($view_topic_url, $tpl_loopname . '.pagination', 'start', $replies + 1, $this->config['posts_per_page'], 1, true, true);
+
 				if ($this->display_parent_forums)
 				{
 					$forum_parents = get_forum_parents($row);
@@ -922,7 +874,7 @@ class recenttopics
 						);
 					}
 				}
-			}// end rowsset
+			} // end rowsset
 
 			// Get URL-parameters for pagination
 			$url_params		= explode('&', $this->user->page['query_string']);
@@ -953,11 +905,10 @@ class recenttopics
 			$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
 			$this->pagination->generate_template_pagination($pagination_url, 'pagination',
 				$tpl_loopname . '_start', $topics_count, $this->topics_per_page, max(0, min((int) $this->rtstart, $this->total_topics_limit)));
-			$this->template->assign_vars(
-				[
-					'S_TOPIC_ICONS' => count($topic_icons) ? true : false,
-				]
-			);
-		}// topics found
+
+			$this->template->assign_vars([
+				'S_TOPIC_ICONS' => count($topic_icons) ? true : false,
+			]);
+		} // topics found
 	}
 }

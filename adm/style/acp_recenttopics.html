@@ -102,7 +102,7 @@
 				<span>{{ lang('RT_NUMBER_EXP') }}</span>
 			</dt>
 			<dd>
-				{{ common.number('rt_number', RT_NUMBER, 0, 999) }}
+				{{ common.number('rt_number', RT_NUMBER, 1, 999) }}
 			</dd>
 		</dl>
 
@@ -139,22 +139,6 @@
 			</dd>
 		</dl>
 	</fieldset>
-
-
-	{% if S_RT_NEWSPAGE %}
-		<fieldset>
-			<legend>{{ lang('RT_VIEW_ON') }}</legend>
-
-			<dl>
-				<dt>
-					<label>{{ lang('RT_NICKVERGESSEN_NEWSPAGE') ~ lang('COLON') }}</label>
-				</dt>
-				<dd>
-					{{ common.switch('rt_on_newspage', RT_ON_NEWSPAGE, switch_type) }}
-				</dd>
-			</dl>
-		</fieldset>
-	{% endif %}
 
 	<fieldset>
 		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>

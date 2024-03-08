@@ -18,7 +18,6 @@ services:
             - '@language'
             - '@request'
             - '@dbal.conn'
-            - '@ext.manager'
 
     paybas.recenttopics.functions:
         class: paybas\recenttopics\core\recenttopics
@@ -36,8 +35,6 @@ services:
             - '@user'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '@?part3.topicprefixes.functions'
-            - '@?prefixed.manager'
             - '@?phpbb.collapsiblecategories.operator'
 
     paybas.recenttopics.listener:

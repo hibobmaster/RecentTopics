@@ -93,8 +93,8 @@ class ucp_listener implements EventSubscriberInterface
 	{
 		return [
 		'core.ucp_prefs_view_data'        	=> 'ucp_prefs_get_data',
-		'core.ucp_prefs_view_update_data' 	=> 'ucp_prefs_set_data',
-		'core.ucp_register_welcome_email_before' => 'ucp_register_set_data'
+		'core.ucp_prefs_view_update_data'	=> 'ucp_prefs_set_data',
+		'core.ucp_register_register_after'	=> 'ucp_register_set_data'
 		];
 	}
 
@@ -145,12 +145,12 @@ class ucp_listener implements EventSubscriberInterface
 				];
 
 				$template_vars += [
-					'RT_LOCATION'				=> $event['data']['rt_location'],
+					'RT_LOCATION'		  => $event['data']['rt_location'],
 					'RT_LOCATION_OPTIONS' => [
-						'RT_TOP'				=> 'RT_TOP',
-						'RT_BOTTOM'				=> 'RT_BOTTOM',
-						'RT_SIDE'				=> 'RT_SIDE',
-						'RT_SEPARAT'			=> 'RT_SEPARAT',
+						'RT_TOP'	 => 'RT_TOP',
+						'RT_BOTTOM'	 => 'RT_BOTTOM',
+						'RT_SIDE'	 => 'RT_SIDE',
+						'RT_SEPARAT' => 'RT_SEPARAT',
 					],
 				];
 			}

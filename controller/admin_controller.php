@@ -33,9 +33,6 @@ class admin_controller
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
-	/** @var \phpbb\extension\manager */
-	protected $ext_manager;
-
 	/**
 	 * Constructor
 	 *
@@ -44,7 +41,6 @@ class admin_controller
 	 * @param \phpbb\language\language			$language
 	 * @param \phpbb\request\request			$request
 	 * @param \phpbb\db\driver\driver_interface $db
-	 * @param \phpbb\extension\manager			$ext_manager
 	 *
 	 */
 	public function __construct
@@ -53,8 +49,7 @@ class admin_controller
 		\phpbb\template\template $template,
 		\phpbb\language\language $language,
 		\phpbb\request\request $request,
-		\phpbb\db\driver\driver_interface $db,
-		\phpbb\extension\manager $ext_manager
+		\phpbb\db\driver\driver_interface $db
 	)
 	{
 		$this->config		= $config;
@@ -62,7 +57,6 @@ class admin_controller
 		$this->language		= $language;
 		$this->request		= $request;
 		$this->db			= $db;
-		$this->ext_manager	= $ext_manager;
 	}
 
 	/**
@@ -107,8 +101,6 @@ class admin_controller
 			'RT_NUMBER'						=> (int) $this->config['rt_number'],
 			'RT_SORT_START_TIME'			=> (int) $this->config['rt_sort_start_time'],
 			'RT_UNREAD_ONLY'				=> (int) $this->config['rt_unread_only'],
-			'RT_ON_NEWSPAGE'				=> $this->config['rt_on_newspage'],
-			'S_RT_NEWSPAGE'					=> $this->ext_manager->is_enabled('nickvergessen/newspage'),
 			'RT_MIN_TOPIC_LEVEL'			=> (int) $this->config['rt_min_topic_level'],
 			'RT_MIN_TOPIC_LEVEL_OPTIONS' => [
 				'POST'						=> '0',
@@ -179,9 +171,6 @@ class admin_controller
 		$this->config->set('rt_sort_start_time', $this->request->variable('rt_sort_start_time', 0));
 
 		$this->config->set('rt_unread_only', $this->request->variable('rt_unread_only', 0));
-
-		// Enable on other extension pages?
-		$this->config->set('rt_on_newspage', $this->request->variable('rt_on_newspage', 0));
 	}
 
 	/**

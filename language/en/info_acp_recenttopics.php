@@ -80,10 +80,6 @@ $lang = array_merge($lang, [
 	'RT_RESET_DEFAULT_EXP'			=> 'When this option is enabled, the settings of all users are overwritten. Without the activation only default values for new users and guests are set.',
 	'RT_RESET_ASK_BEFORE_EXP'		=> 'This setting will overwrite all user settings with your defaults.<br><strong>This process cannot be reversed!</strong>',
 
-	//Enable for extensions
-	'RT_NICKVERGESSEN_NEWSPAGE'		=> 'Support for NewsPage Extension',
-	'RT_VIEW_ON'					=> 'Display recent topics on:',
-
 	//Donation
 	'RT_DONATE_URL'					=> 'http://www.avathar.be/forum/app.php/page/donate',
 	'RT_PAYPAL_IMAGE_URL'			=> 'https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-pill-paypal-26px.png',
