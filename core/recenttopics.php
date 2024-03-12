@@ -580,7 +580,7 @@ class recenttopics
 		 * Event to modify the SQL query before the allowed topics list data is retrieved
 		 *
 		 * @event paybas.recenttopics.sql_pull_topics_list
-		 * @var   array    sql_array        The SQL array
+		 * @var	array	sql_array	The SQL array
 		 * @since 2.0.4
 		 */
 		$vars = ['sql_array'];
@@ -658,10 +658,11 @@ class recenttopics
 		 * Event to modify the SQL query before the topics data is retrieved
 		 *
 		 * @event paybas.recenttopics.sql_pull_topics_data
-		 * @var   array    sql_array        The SQL array
+		 * @var	array	sql_array	The SQL array
 		 * @since 2.0.0
 		 */
-		extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_data', ['sql_array' => $sql_array]));
+		$vars = ['sql_array'];
+		extract($this->dispatcher->trigger_event('paybas.recenttopics.sql_pull_topics_data', compact($vars)));
 
 		$sql    = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query_limit($sql, $this->topics_per_page);
@@ -690,15 +691,20 @@ class recenttopics
 		// if topics returned by DB
 		if (count($rowset))
 		{
+			$topic_list = $this->topic_list;
+
 			/**
 			 * Event to modify the topics list data before we start the display loop
 			 *
 			 * @event paybas.recenttopics.modify_topics_list
-			 * @var   array    topic_list        Array of all the topic IDs
-			 * @var   array    rowset            The full topics list array
+			 * @var	array	topic_list	Array of all the topic IDs
+			 * @var	array	rowset		The full topics list array
 			 * @since 2.0.1
 			 */
-			extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topics_list', ['topic_list' => $this->topic_list, 'rowset' => $rowset]));
+			$vars = ['topic_list', 'rowset'];
+			extract($this->dispatcher->trigger_event('paybas.recenttopics.modify_topics_list', compact($vars)));
+
+			$this->topic_list = $topic_list;
 
 			foreach ($rowset as $row)
 			{
@@ -767,8 +773,8 @@ class recenttopics
 				/**
 				 * Event to remove re
 				 *
-				 * @event	paybas.recenttopics.topictitle_remove_re
-				 * @var		array	row	the forum row
+				 * @event paybas.recenttopics.topictitle_remove_re
+				 * @var	array	row		the forum row
 				 * @since 2.2.11
 				 */
 				$vars = ['row'];
@@ -777,9 +783,9 @@ class recenttopics
 				/**
 				 * Event to modify the topic title
 				 *
-				 * @event	paybas.recenttopics.modify_topictitle
-				 * @var		array	row		the forum row
-				 * @var		string	prefix	the topic title prefix
+				 * @event paybas.recenttopics.modify_topictitle
+				 * @var	array	row		the forum row
+				 * @var	string	prefix	the topic title prefix
 				 * @since 2.1.3
 				 */
 				$vars = ['row', 'prefix'];
@@ -850,8 +856,8 @@ class recenttopics
 				 * Modify the topic data before it is assigned to the template
 				 *
 				 * @event paybas.recenttopics.modify_tpl_ary
-				 * @var   array    row            Array with topic data
-				 * @var   array    tpl_ary        Template block array with topic data
+				 * @var	array	row		Array with topic data
+				 * @var	array	tpl_ary	Template block array with topic data
 				 * @since 2.0.0
 				 */
 				$vars = ['row', 'tpl_ary'];
